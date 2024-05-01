@@ -1,8 +1,8 @@
 
 from .permissions import Permissions
 from .user import Playstyle
-from .modes import Mode
 from .grade import Grade
+from .modes import Mode
 from .mods import Mods
 
 from .bancho import (
