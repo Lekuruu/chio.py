@@ -15,7 +15,7 @@ class Writer(BaseWriter):
         self.stream.float(info.accuracy)
         self.stream.s32(info.playcount)
         self.stream.s64(info.tscore)
-        self.stream.u16(info.rank)
+        self.stream.u16(min(info.rank, 65535))
 
         # Presence
         self.stream.string(info.username)
