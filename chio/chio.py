@@ -8,6 +8,7 @@ from .versions.reader import BaseReader
 from .versions.writer import BaseWriter
 
 from .versions import b20130815
+from .versions import b20130329
 
 import gzip
 
