@@ -17,6 +17,7 @@ from .versions import b20120725
 from .versions import b20120704
 from .versions import b1700
 from .versions import b1150
+from .versions import b675
 
 import gzip
 
