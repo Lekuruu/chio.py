@@ -1,7 +1,6 @@
 
-from chio.objects import bUserStats, bUserPresence
-
 from typing import Callable, Optional
+from chio.objects import bUserInfo
 
 from .. import register_encoder
 from . import ResponsePacket
@@ -16,10 +15,7 @@ def register(packet: ResponsePacket) -> Callable:
     return wrapper
 
 @register(ResponsePacket.USER_STATS)
-def send_stats(stats: bUserStats, presence: Optional[bUserPresence] = None):
+def send_stats(info: bUserInfo):
     writer = Writer()
-    if presence:
-        writer.write_presence(presence, stats)
-    else:
-        writer.write_stats(stats)
+    writer.write_presence(info)
     return writer.stream.get()

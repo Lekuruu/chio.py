@@ -1,9 +1,8 @@
 
 from chio.objects import (
     bReplayFrameBundle,
-    bUserPresence,
     bScoreFrame,
-    bUserStats,
+    bUserInfo,
     bMatch
 )
 
@@ -47,12 +46,9 @@ def match_start(match: bMatch):
     return writer.stream.get()
 
 @register(ResponsePacket.USER_STATS)
-def send_stats(stats: bUserStats, presence: Optional[bUserPresence] = None):
+def send_stats(info: bUserInfo):
     writer = Writer()
-    if presence:
-        writer.write_presence(presence, stats)
-    else:
-        writer.write_stats(stats)
+    writer.write_presence(info)
     return writer.stream.get()
 
 @register(ResponsePacket.SPECTATE_FRAMES)

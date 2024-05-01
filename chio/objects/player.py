@@ -20,22 +20,16 @@ class StatusUpdate:
     beatmap_id: int = -1
 
 @dataclass
-class UserPresence:
+class UserInfo:
     user_id: int
     is_irc: bool
     username: str
+    country_index: int # Index of a country in "chio.objects.Countries"
     timezone: int
-    country_code: int
     permissions: Permissions
     mode: Mode
     longitude: float
     latitude: float
-    rank: int
-    city: Optional[str] = None
-
-@dataclass
-class UserStats:
-    user_id: int
     status: StatusUpdate
     rscore: int
     tscore: int
@@ -43,10 +37,11 @@ class UserStats:
     playcount: int
     rank: int
     pp: int
+    city: Optional[str] = None
+    stats_update: bool = False # Required for b319 and lower
 
 @dataclass
 class UserQuit:
     user_id: int
-    presence: UserPresence
-    stats: UserStats
+    info: UserInfo
     quit_state: QuitState

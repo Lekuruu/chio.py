@@ -1,5 +1,5 @@
 
-from chio.objects import bUserPresence
+from chio.objects import bUserInfo
 
 from .. import register_encoder
 from . import ResponsePacket
@@ -16,7 +16,7 @@ def register(packet: ResponsePacket) -> Callable:
     return wrapper
 
 @register(ResponsePacket.USER_PRESENCE)
-def presence(presence: bUserPresence):
+def presence(info: bUserInfo):
     writer = Writer()
-    writer.write_presence(presence)
+    writer.write_presence(info)
     return writer.stream.get()

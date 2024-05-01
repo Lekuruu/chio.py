@@ -1,30 +1,25 @@
 
-from chio.objects import bUserPresence, bUserStats
+from chio.objects import bUserInfo
 
 from ..b1700.writer import Writer as BaseWriter
 from ..b1700.constants import Completeness
 
-from typing import Optional
-
 class Writer(BaseWriter):
-    def write_presence(self, presence: bUserPresence, stats: bUserStats):
-        if stats.user_id <= 0:
-            stats.user_id = -stats.user_id
-
-        self.stream.s32(stats.user_id)
+    def write_presence(self, info: bUserInfo):
+        self.stream.s32(info.user_id)
         self.stream.u8(Completeness.Full.value)
-        self.write_status(stats.status)
+        self.write_status(info.status)
 
         # Stats
-        self.stream.s64(stats.rscore)
-        self.stream.float(stats.accuracy)
-        self.stream.s32(stats.playcount)
-        self.stream.s64(stats.tscore)
-        self.stream.s32(stats.rank)
+        self.stream.s64(info.rscore)
+        self.stream.float(info.accuracy)
+        self.stream.s32(info.playcount)
+        self.stream.s64(info.tscore)
+        self.stream.s32(info.rank)
 
         # Presence
-        self.stream.string(presence.username)
-        self.stream.string(f'{stats.user_id}') # Avatar Filename
-        self.stream.u8(presence.timezone + 24)
-        self.stream.string(presence.city)
-        self.stream.u8(presence.permissions.value)
+        self.stream.string(info.username)
+        self.stream.string(f'{info.user_id}') # Avatar Filename
+        self.stream.u8(info.timezone + 24)
+        self.stream.string(info.city)
+        self.stream.u8(info.permissions.value)

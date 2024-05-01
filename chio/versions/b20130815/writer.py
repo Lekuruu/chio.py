@@ -5,11 +5,10 @@ from chio.objects import (
     bReplayFrameBundle,
     bBeatmapInfoReply,
     bStatusUpdate,
-    bUserPresence,
     bBeatmapInfo,
     bReplayFrame,
     bScoreFrame,
-    bUserStats,
+    bUserInfo,
     bUserQuit,
     bMessage,
     bChannel,
@@ -49,28 +48,28 @@ class Writer(BaseWriter):
         self.stream.string(msg.target)
         self.stream.s32(msg.sender_id)
 
-    def write_presence(self, presence: bUserPresence):
-        if presence.is_irc:
-            presence.user_id = -presence.user_id
+    def write_presence(self, info: bUserInfo):
+        if info.is_irc:
+            info.user_id = -info.user_id
 
-        self.stream.s32(presence.user_id)
-        self.stream.string(presence.username)
-        self.stream.u8(presence.timezone + 24)
-        self.stream.u8(presence.country_code)
-        self.stream.u8(presence.permissions.value | presence.mode.value << 5)
-        self.stream.float(presence.longitude)
-        self.stream.float(presence.latitude)
-        self.stream.s32(presence.rank)
+        self.stream.s32(info.user_id)
+        self.stream.string(info.username)
+        self.stream.u8(info.timezone + 24)
+        self.stream.u8(info.country_index)
+        self.stream.u8(info.permissions.value | info.mode.value << 5)
+        self.stream.float(info.longitude)
+        self.stream.float(info.latitude)
+        self.stream.s32(info.rank)
 
-    def write_stats(self, stats: bUserStats):
-        self.stream.s32(stats.user_id)
-        self.write_status(stats.status)
-        self.stream.u64(stats.rscore)
-        self.stream.float(stats.accuracy)
-        self.stream.s32(stats.playcount)
-        self.stream.u64(stats.tscore)
-        self.stream.s32(stats.rank)
-        self.stream.u16(round(stats.pp))
+    def write_stats(self, info: bUserInfo):
+        self.stream.s32(info.user_id)
+        self.write_status(info.status)
+        self.stream.u64(info.rscore)
+        self.stream.float(info.accuracy)
+        self.stream.s32(info.playcount)
+        self.stream.u64(info.tscore)
+        self.stream.s32(info.rank)
+        self.stream.u16(round(info.pp))
 
     def write_status(self, status: bStatusUpdate):
         self.stream.u8(status.action.value)

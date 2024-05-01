@@ -1,5 +1,5 @@
 
-from chio.objects import bUserStats
+from chio.objects import bUserInfo
 
 from .. import register_encoder
 from . import ResponsePacket
@@ -16,7 +16,7 @@ def register(packet: ResponsePacket) -> Callable:
     return wrapper
 
 @register(ResponsePacket.USER_STATS)
-def user_stats(stats: bUserStats):
+def user_stats(info: bUserInfo):
     writer = Writer()
-    writer.write_stats(stats)
+    writer.write_stats(info)
     return writer.stream.get()

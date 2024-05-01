@@ -1,5 +1,5 @@
 
-from chio.objects import bMatch, bUserStats
+from chio.objects import bMatch, bUserInfo
 
 from .. import register_encoder
 from . import ResponsePacket
@@ -15,9 +15,9 @@ def register(packet: ResponsePacket) -> Callable:
     return wrapper
 
 @register(ResponsePacket.USER_STATS)
-def send_stats(stats: bUserStats):
+def send_stats(info: bUserInfo):
     writer = Writer()
-    writer.write_stats(stats)
+    writer.write_stats(info)
     return writer.stream.get()
 
 @register(ResponsePacket.NEW_MATCH)

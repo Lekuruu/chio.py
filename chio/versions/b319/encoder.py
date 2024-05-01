@@ -2,8 +2,7 @@
 from typing import Callable
 
 from chio.objects import (
-    bUserPresence,
-    bUserStats,
+    bUserInfo,
     bUserQuit,
     bMessage,
 )
@@ -21,9 +20,9 @@ def register(packet: ResponsePacket) -> Callable:
     return wrapper
 
 @register(ResponsePacket.USER_STATS)
-def send_stats(stats: bUserStats, presence: bUserPresence, update: bool = False):
+def send_stats(info: bUserInfo):
     writer = Writer()
-    writer.write_presence(presence, stats, update)
+    writer.write_presence(info, info.stats_update)
     return writer.stream.get()
 
 @register(ResponsePacket.SEND_MESSAGE)

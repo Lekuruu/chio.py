@@ -4,9 +4,8 @@ from chio.streams import StreamOut
 from chio.objects import (
     bReplayFrameBundle,
     bBeatmapInfoReply,
-    bUserPresence,
     bScoreFrame,
-    bUserStats,
+    bUserInfo,
     bUserQuit,
     bChannel,
     bMessage,
@@ -92,12 +91,9 @@ def monitor():
     return b''
 
 @register(ResponsePacket.USER_STATS)
-def send_stats(stats: bUserStats, presence: Optional[bUserPresence] = None):
+def send_stats(info: bUserInfo):
     writer = Writer()
-    if presence:
-        writer.write_presence(presence, stats)
-    else:
-        writer.write_stats(stats)
+    writer.write_presence(info)
     return writer.stream.get()
 
 @register(ResponsePacket.IRC_JOIN)

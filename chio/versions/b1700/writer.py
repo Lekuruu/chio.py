@@ -4,11 +4,10 @@ from chio.objects import (
     bReplayFrameBundle,
     bBeatmapInfoReply,
     bStatusUpdate,
-    bUserPresence,
     bBeatmapInfo,
     bReplayFrame,
     bScoreFrame,
-    bUserStats,
+    bUserInfo,
     bUserQuit,
     bMessage,
     bChannel,
@@ -45,44 +44,38 @@ class Writer(BaseWriter):
         self.stream.string(msg.content)
         self.stream.string(msg.target)
 
-    def write_presence(self, presence: bUserPresence, stats: bUserStats):
-        if stats.user_id <= 0:
-            stats.user_id = -stats.user_id
-
-        self.stream.s32(stats.user_id)
+    def write_presence(self, info: bUserInfo):
+        self.stream.s32(info.user_id)
         self.stream.u8(Completeness.Full.value)
-        self.write_status(stats.status)
+        self.write_status(info.status)
 
         # Stats
-        self.stream.s64(stats.rscore)
-        self.stream.float(stats.accuracy)
-        self.stream.s32(stats.playcount)
-        self.stream.s64(stats.tscore)
-        self.stream.s32(stats.rank)
+        self.stream.s64(info.rscore)
+        self.stream.float(info.accuracy)
+        self.stream.s32(info.playcount)
+        self.stream.s64(info.tscore)
+        self.stream.s32(info.rank)
 
         # Presence
-        self.stream.string(presence.username)
-        self.stream.string(f'{stats.user_id}') # Avatar Filename
-        self.stream.u8(presence.timezone + 24)
-        self.stream.string(presence.city)
-        self.stream.u8(presence.permissions.value)
-        self.stream.float(presence.longitude)
-        self.stream.float(presence.latitude)
+        self.stream.string(info.username)
+        self.stream.string(f'{info.user_id}') # Avatar Filename
+        self.stream.u8(info.timezone + 24)
+        self.stream.string(info.city)
+        self.stream.u8(info.permissions.value)
+        self.stream.float(info.longitude)
+        self.stream.float(info.latitude)
 
-    def write_stats(self, stats: bUserStats):
-        if stats.user_id <= 0:
-            stats.user_id = -stats.user_id
-
-        self.stream.s32(stats.user_id)
+    def write_stats(self, info: bUserInfo):
+        self.stream.s32(info.user_id)
         self.stream.u8(Completeness.Statistics.value)
-        self.write_status(stats.status)
+        self.write_status(info.status)
 
         # Stats
-        self.stream.s64(stats.rscore)
-        self.stream.float(stats.accuracy)
-        self.stream.s32(stats.playcount)
-        self.stream.s64(stats.tscore)
-        self.stream.s32(stats.rank)
+        self.stream.s64(info.rscore)
+        self.stream.float(info.accuracy)
+        self.stream.s32(info.playcount)
+        self.stream.s64(info.tscore)
+        self.stream.s32(info.rank)
 
     def write_status(self, status: bStatusUpdate):
         self.stream.u8(status.action.value)

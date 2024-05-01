@@ -1,9 +1,8 @@
 
-from typing import Callable, Optional
+from typing import Callable
 
 from chio.objects import (
-    bUserPresence,
-    bUserStats,
+    bUserInfo,
     bUserQuit
 )
 
@@ -20,12 +19,9 @@ def register(packet: ResponsePacket) -> Callable:
     return wrapper
 
 @register(ResponsePacket.USER_STATS)
-def send_stats(stats: bUserStats, presence: Optional[bUserPresence] = None):
+def send_stats(info: bUserInfo):
     writer = Writer()
-    if presence:
-        writer.write_presence(presence, stats)
-    else:
-        writer.write_stats(stats)
+    writer.write_presence(info)
     return writer.stream.get()
 
 @register(ResponsePacket.USER_QUIT)

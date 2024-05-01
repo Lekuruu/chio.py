@@ -4,32 +4,32 @@ from ..b323 import Writer as BaseWriter
 from chio.constants import ClientStatus
 from chio.objects import (
     bStatusUpdate,
-    bUserPresence,
     bUserQuit,
-    bUserStats,
+    bUserInfo,
     bMessage
 )
 
 class Writer(BaseWriter):
-    def write_presence(self, presence: bUserPresence, stats: bUserStats, update: bool = False):
-        self.stream.u32(presence.user_id)
-        self.stream.string(presence.username)
+    def write_presence(self, info: bUserInfo, update: bool = False):
+        self.stream.u32(info.user_id)
+        self.stream.string(info.username)
 
-        self.stream.s64(stats.rscore)
-        self.stream.double(stats.accuracy)
-        self.stream.s32(stats.playcount)
-        self.stream.s64(stats.tscore)
-        self.stream.s32(stats.rank)
+        self.stream.s64(info.rscore)
+        self.stream.double(info.accuracy)
+        self.stream.s32(info.playcount)
+        self.stream.s64(info.tscore)
+        self.stream.s32(info.rank)
 
-        self.stream.string(f'{stats.user_id}_000.png') # Avatar Filename
-        self.write_status(stats.status, update)
-        self.stream.u8(presence.timezone + 24)
-        self.stream.string(presence.city)
+        self.stream.string(f'{info.user_id}_000.png') # Avatar Filename
+        self.write_status(info.status, update)
+        self.stream.u8(info.timezone + 24)
+        self.stream.string(info.city)
 
     def write_status(self, status: bStatusUpdate, update: bool = False):
         if update:
             # Set to "StatusUpdate"
             status.action = ClientStatus.Paused
+
         elif status.action > 9:
             # Workaround because of different enum values
             status.action = ClientStatus(status.action - 1)

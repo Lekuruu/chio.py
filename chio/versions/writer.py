@@ -4,11 +4,10 @@ from chio.objects import (
     bReplayFrameBundle,
     bBeatmapInfoReply,
     bStatusUpdate,
-    bUserPresence,
     bBeatmapInfo,
     bReplayFrame,
     bScoreFrame,
-    bUserStats,
+    bUserInfo,
     bUserQuit,
     bMessage,
     bChannel,
@@ -23,15 +22,6 @@ class BaseWriter(ABC):
     def __init__(self) -> None:
         self.stream = StreamOut()
 
-    def write_header(self, packet: Enum, size: Optional[int] = None):
-        if not size:
-            size = self.stream.size()
-
-        header = StreamOut()
-        header.header(packet, size)
-
-        self.stream.write_to_start(header.get())
-
     def write_intlist(self, list: List[int]):
         ...
 
@@ -41,10 +31,10 @@ class BaseWriter(ABC):
     def write_message(self, msg: bMessage):
         ...
 
-    def write_presence(self, presence: bUserPresence):
+    def write_presence(self, presence: bUserInfo):
         ...
 
-    def write_stats(self, stats: bUserStats):
+    def write_stats(self, info: bUserInfo):
         ...
 
     def write_quit(self, state: bUserQuit):

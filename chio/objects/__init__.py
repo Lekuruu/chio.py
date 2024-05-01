@@ -8,9 +8,8 @@ from .multiplayer import (
 )
 
 from .player import (
-    UserPresence as bUserPresence,
     StatusUpdate as bStatusUpdate,
-    UserStats as bUserStats,
+    UserInfo as bUserInfo,
     UserQuit as bUserQuit
 )
 
