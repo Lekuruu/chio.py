@@ -35,13 +35,13 @@ import gzip
 # TODO: Make this dynamic, based on the version
 MULTIPLAYER_MAX_SLOTS = 8
 
-def encode(version: int, packet: ResponsePacket, object: Any) -> bytes:
+def encode(version: int, packet: ResponsePacket, *objects) -> bytes:
     client_version = versions.get_next_version(version)
     packets = client_version.response_packets
     encoders = client_version.encoders
 
     stream = StreamOut()
-    data = encoders[packet](object)
+    data = encoders[packet](*objects)
 
     if version <= 323:
         # In version 323 and below, the data is compressed by default

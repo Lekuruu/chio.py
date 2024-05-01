@@ -15,14 +15,14 @@ pip install git+https://github.com/Lekuruu/chio.py.git
 Encode & decode packets like this:
 
 ```python
-from chio import ResponsePacket, RequestPacket
 from chio.objects import bMessage
+from chio import ResponsePacket
 import chio
 
 encoded = chio.encode(
-    version=20130716,
-    packet=ResponsePacket.SEND_MESSAGE,
-    object=bMessage(
+    20130716,
+    ResponsePacket.SEND_MESSAGE,
+    bMessage(
         "peppy",
         "Hello, World!",
         "#osu",
