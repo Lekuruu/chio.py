@@ -14,8 +14,7 @@ from chio.objects import (
     bMatch
 )
 
-from typing import Optional, List
-from enum import Enum
+from typing import List
 from abc import ABC
 
 class BaseWriter(ABC):

@@ -23,15 +23,6 @@ class Writer(BaseWriter):
     def __init__(self) -> None:
         self.stream = StreamOut()
 
-    def write_header(self, packet: ResponsePacket, size: Optional[int] = None):
-        if not size:
-            size = self.stream.size()
-
-        header = StreamOut()
-        header.header(packet, size)
-
-        self.stream.write_to_start(header.get())
-
     def write_intlist(self, list: List[int]):
         self.stream.s32(len(list))
         [self.stream.s32(num) for num in list]
