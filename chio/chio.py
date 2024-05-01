@@ -10,6 +10,7 @@ from .versions.writer import BaseWriter
 from .versions import b20130815
 from .versions import b20130329
 from .versions import b20121223
+from .versions import b20121119
 
 import gzip
 
