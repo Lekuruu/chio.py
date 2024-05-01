@@ -1,7 +1,7 @@
 
 # Chio
 
-Chio is a python library for serializing and deserializing bancho packets, with support for all versions of osu!.
+Chio (Bancho I/O) is a python library for serializing and deserializing bancho packets, with support for all versions of osu!.
 I will probably change the structure of the library in the near future, as I must admit that the code is pretty messy (but works at least). Once this "rewrite" is done, feel free to give me feedback on it.
 
 ## Example
