@@ -6,7 +6,7 @@ from ..constants import (
     ClientStatus,
     Permissions,
     QuitState,
-    GameMode,
+    Mode,
     Mods
 )
 
@@ -15,7 +15,7 @@ class StatusUpdate:
     action: ClientStatus
     text: str = ""
     mods: Mods = Mods.NoMod
-    mode: GameMode = GameMode.Osu
+    mode: Mode = Mode.Osu
     beatmap_checksum: str = ""
     beatmap_id: int = -1
 
@@ -27,7 +27,7 @@ class UserPresence:
     timezone: int
     country_code: int
     permissions: Permissions
-    mode: GameMode
+    mode: Mode
     longitude: float
     latitude: float
     rank: int

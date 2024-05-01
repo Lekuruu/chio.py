@@ -1,7 +1,7 @@
 
 from enum import IntEnum
 
-class GameMode(IntEnum):
+class Mode(IntEnum):
     Osu          = 0
     Taiko        = 1
     CatchTheBeat = 2
@@ -13,26 +13,26 @@ class GameMode(IntEnum):
             return
 
         return {
-            'osu': GameMode.Osu,
-            'taiko': GameMode.Taiko,
-            'fruits': GameMode.CatchTheBeat,
-            'mania': GameMode.OsuMania
+            'osu': Mode.Osu,
+            'taiko': Mode.Taiko,
+            'fruits': Mode.CatchTheBeat,
+            'mania': Mode.OsuMania
         }[input]
 
     @property
     def formatted(self) -> str:
         return {
-            GameMode.Osu: 'osu!',
-            GameMode.Taiko: 'Taiko',
-            GameMode.CatchTheBeat: 'CatchTheBeat',
-            GameMode.OsuMania: 'osu!mania'
+            Mode.Osu: 'osu!',
+            Mode.Taiko: 'Taiko',
+            Mode.CatchTheBeat: 'CatchTheBeat',
+            Mode.OsuMania: 'osu!mania'
         }[self]
 
     @property
     def alias(self) -> str:
         return {
-            GameMode.Osu: 'osu',
-            GameMode.Taiko: 'taiko',
-            GameMode.CatchTheBeat: 'fruits',
-            GameMode.OsuMania: 'mania'
+            Mode.Osu: 'osu',
+            Mode.Taiko: 'taiko',
+            Mode.CatchTheBeat: 'fruits',
+            Mode.OsuMania: 'mania'
         }[self]

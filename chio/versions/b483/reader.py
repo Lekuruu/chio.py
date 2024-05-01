@@ -15,7 +15,7 @@ from chio.constants import (
     SlotStatus,
     MatchType,
     SlotTeam,
-    GameMode,
+    Mode,
     Mods,
 )
 
@@ -44,7 +44,7 @@ class Reader(BaseReader):
         ]
 
         host_id = self.stream.s32()
-        mode = GameMode.Osu
+        mode = Mode.Osu
 
         scoring_type = MatchScoringTypes.Combo
         team_type = MatchTeamTypes.HeadToHead

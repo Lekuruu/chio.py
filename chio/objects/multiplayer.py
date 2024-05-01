@@ -8,7 +8,7 @@ from ..constants import (
     SlotStatus,
     MatchType,
     SlotTeam,
-    GameMode,
+    Mode,
     Mods
 )
 
@@ -44,7 +44,7 @@ class Match:
     beatmap_checksum: str
     slots: List[Slot]
     host_id: int
-    mode: GameMode
+    mode: Mode
     scoring_type: MatchScoringTypes
     team_type: MatchTeamTypes
     freemod: bool

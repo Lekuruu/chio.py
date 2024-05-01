@@ -13,7 +13,7 @@ from chio.constants import (
     MatchType,
     SlotStatus,
     SlotTeam,
-    GameMode,
+    Mode,
     Mods,
 )
 
@@ -44,10 +44,10 @@ class Reader(BaseReader):
         host_id = self.stream.s32()
 
         try:
-            mode = GameMode(self.stream.u8())
+            mode = Mode(self.stream.u8())
         except OverflowError:
             # Just to be sure...
-            mode = GameMode.Osu
+            mode = Mode.Osu
 
         scoring_type = MatchScoringTypes.Combo
         team_type = MatchTeamTypes.HeadToHead

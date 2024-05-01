@@ -12,7 +12,7 @@ from chio.constants import (
     SlotStatus,
     MatchType,
     SlotTeam,
-    GameMode,
+    Mode,
     Mods
 )
 
@@ -78,7 +78,7 @@ class Reader(BaseReader):
             beatmap_hash,
             slots,
             host_id=-1,
-            mode=GameMode.Osu,
+            mode=Mode.Osu,
             scoring_type=MatchScoringTypes.Combo,
             team_type=MatchTeamTypes.HeadToHead,
             freemod=False,

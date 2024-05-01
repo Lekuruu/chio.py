@@ -5,7 +5,7 @@ from typing import List, Optional
 from ..constants import (
     ReplayAction,
     ButtonState,
-    GameMode,
+    Mode,
     Grade,
     Mods
 )

@@ -1,7 +1,7 @@
 
 from chio.constants import (
     ClientStatus,
-    GameMode,
+    Mode,
     Mods
 )
 

@@ -12,7 +12,7 @@ from chio.constants import (
     ClientStatus,
     SlotStatus,
     MatchType,
-    GameMode,
+    Mode,
     SlotTeam,
     Mods
 )
@@ -26,7 +26,7 @@ class Reader(BaseReader):
             text=self.stream.string(),
             beatmap_checksum=self.stream.string(),
             mods=Mods(self.stream.u16()),
-            mode=GameMode(self.stream.u8()),
+            mode=Mode(self.stream.u8()),
             beatmap_id=self.stream.s32()
         )
 
@@ -53,7 +53,7 @@ class Reader(BaseReader):
         ]
 
         host_id = self.stream.s32()
-        mode = GameMode(self.stream.u8())
+        mode = Mode(self.stream.u8())
 
         scoring_type = MatchScoringTypes(self.stream.u8())
         team_type = MatchTeamTypes(self.stream.u8())
