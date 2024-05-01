@@ -66,7 +66,7 @@ def decode(version: int, data: bytes) -> BanchoPacket:
     if version > 323:
         compression = stream.bool()
 
-    payload = stream.readall()
+    payload = stream.read(stream.s32())
 
     if compression:
         # Gzip compression is only used in very old clients
