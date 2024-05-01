@@ -26,6 +26,7 @@ from .versions import b483
 from .versions import b399
 from .versions import b388
 from .versions import b338
+from .versions import b337
 
 import gzip
 
