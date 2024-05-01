@@ -46,7 +46,7 @@ def encode(version: int, packet: ResponsePacket, *objects) -> bytes:
     if version <= 323:
         # In version 323 and below, the data is compressed by default
         data = gzip.compress(data)
-        stream.legacy_header(packets[packet], len(data))
+        stream.legacy_header(packets[packet.name], len(data))
         stream.write(data)
         return stream.get()
 
