@@ -31,6 +31,6 @@ packet, object = chio.decode(
     )
 )
 
-print(f'PacketId: {packet}')
+print(f'Packet: {packet.name}')
 print(f'Data: {object}')
 ```
