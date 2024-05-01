@@ -2,7 +2,6 @@
 from .permissions import Permissions
 from .user import Playstyle
 from .modes import GameMode
-from .flags import BadFlags
 from .grade import Grade
 from .mods import Mods
 
