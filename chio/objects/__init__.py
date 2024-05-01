@@ -1,6 +1,5 @@
 
 from .chat import Message as bMessage, Channel as bChannel
-from .bancho import BanchoPacket
 
 from .multiplayer import (
     MatchJoin as bMatchJoin,

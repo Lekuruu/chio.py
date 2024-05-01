@@ -1,8 +1,8 @@
 
 from chio import RequestPacket, ResponsePacket
 from chio.streams import StreamIn, StreamOut
-from chio.objects import BanchoPacket
 from chio import versions
+from typing import Any, Tuple
 
 from .versions.reader import BaseReader
 from .versions.writer import BaseWriter
@@ -54,7 +54,7 @@ def encode(version: int, packet: ResponsePacket, object: Any) -> bytes:
     stream.write(data)
     return stream.get()
 
-def decode(version: int, data: bytes) -> BanchoPacket:
+def decode(version: int, data: bytes) -> Tuple[RequestPacket, Any]:
     client_version = versions.get_next_version(version)
     packets = client_version.request_packets
     decoders = client_version.decoders
@@ -75,4 +75,4 @@ def decode(version: int, data: bytes) -> BanchoPacket:
     packet = packets(packet_id)
     decoder = decoders[packet]
 
-    return BanchoPacket(packet, compression, decoder(StreamIn(payload)))
+    return packet, decoder(StreamIn(payload))
