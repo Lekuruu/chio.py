@@ -1,5 +1,5 @@
 
-from chio import DefaultRequestPacket, DefaultResponsePacket
+from chio import RequestPacket, ResponsePacket
 from chio.streams import StreamIn, StreamOut
 from chio.objects import BanchoPacket
 from chio import versions
@@ -35,13 +35,13 @@ import gzip
 # TODO: Make this dynamic, based on the version
 MULTIPLAYER_MAX_SLOTS = 8
 
-def encode(version: int, packet: DefaultResponsePacket, *args) -> bytes:
+def encode(version: int, packet: ResponsePacket, object: Any) -> bytes:
     client_version = versions.get_next_version(version)
     packets = client_version.response_packets
     encoders = client_version.encoders
 
     stream = StreamOut()
-    data = encoders[packet](*args)
+    data = encoders[packet](object)
 
     if version <= 323:
         # In version 323 and below, the data is compressed by default

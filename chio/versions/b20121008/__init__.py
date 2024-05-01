@@ -1,7 +1,7 @@
 
 from ... import (
-    DefaultResponsePacket as ResponsePacket,
-    DefaultRequestPacket as RequestPacket
+    ResponsePacket,
+    RequestPacket
 )
 
 from .writer import Writer
