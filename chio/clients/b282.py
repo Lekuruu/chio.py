@@ -40,7 +40,9 @@ class b282(BanchoIO):
         packet_writer = getattr(cls, packet.handler_name, None)
 
         if not packet_writer:
-            raise InvalidPacketError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
+            # We won't raise an exception here, to make our lives
+            # easier later on, when we broadcast packets.
+            return
 
         packets = packet_writer(*args)
 
