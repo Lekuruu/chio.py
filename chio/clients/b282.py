@@ -17,7 +17,7 @@ class b282(BanchoIO):
 
     @classmethod
     def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:
-        packet_id = read_u16()
+        packet_id = read_u16(stream)
         packet = cls.convert_input_packet(packet_id)
 
         if not packet.is_client_packet:
@@ -28,8 +28,8 @@ class b282(BanchoIO):
         if not packet_reader:
             raise InvalidPacketError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
 
-        packet_length = read_u32()
-        packet_data = read_gzip(packet_length)
+        packet_length = read_u32(stream)
+        packet_data = read_gzip(stream, packet_length)
         return packet, packet_reader(MemoryStream(packet_data))
 
     @classmethod
