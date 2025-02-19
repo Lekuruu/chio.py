@@ -7,13 +7,6 @@ class Stream(ABC):
     """
     Abstract class for I/O operations.
     """
-    @property
-    def endian(self) -> str:
-        """
-        Can be of the following values: '<', '>', '!', or '=' (default '<').
-        """
-        return "<"
-
     @abstractmethod
     def read(self, size: int = -1) -> bytes:
         """
@@ -42,6 +35,9 @@ class MemoryStream(Stream):
     def endian(self) -> str:
         return self.struct_endian
 
+    def write(self, data: bytes) -> None:
+        self.data += data
+
     def read(self, size: int = -1) -> bytes:
         if size == -1:
             size = len(self.data) - self.position
@@ -50,9 +46,6 @@ class MemoryStream(Stream):
         self.position += size
         return data
 
-    def write(self, data: bytes) -> None:
-        self.data += data
-
 def read_s8(stream: Stream) -> int:
     return stream.read(1)[0]
 
@@ -60,31 +53,31 @@ def read_u8(stream: Stream) -> int:
     return stream.read(1)[0]
 
 def read_u16(stream: Stream) -> int:
-    return unpack(f"{stream.endian}H", stream.read(2))[0]
+    return unpack("<H", stream.read(2))[0]
 
 def read_s16(stream: Stream) -> int:
-    return unpack(f"{stream.endian}h", stream.read(2))[0]
+    return unpack("<h", stream.read(2))[0]
 
 def read_u32(stream: Stream) -> int:
-    return unpack(f"{stream.endian}I", stream.read(4))[0]
+    return unpack("<I", stream.read(4))[0]
 
 def read_s32(stream: Stream) -> int:
-    return unpack(f"{stream.endian}i", stream.read(4))[0]
+    return unpack("<i", stream.read(4))[0]
 
 def read_u64(stream: Stream) -> int:
-    return unpack(f"{stream.endian}Q", stream.read(8))[0]
+    return unpack("<Q", stream.read(8))[0]
 
 def read_s64(stream: Stream) -> int:
-    return unpack(f"{stream.endian}q", stream.read(8))[0]
+    return unpack("<q", stream.read(8))[0]
 
 def read_boolean(stream: Stream) -> bool:
     return bool(stream.read_u8())
 
 def read_f32(stream: Stream) -> float:
-    return unpack(f"{stream.endian}f", stream.read(4))[0]
+    return unpack("<f", stream.read(4))[0]
 
 def read_f64(stream: Stream) -> float:
-    return unpack(f"{stream.endian}d", stream.read(8))[0]
+    return unpack("<d", stream.read(8))[0]
 
 def read_gzip(stream: Stream, size: int = -1) -> bytes:
     return decompress(stream.read(size))
@@ -112,37 +105,37 @@ def read_string(stream: Stream) -> str:
     return stream.read(size).decode()
 
 def write_s8(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}b", value))
+    stream.write(pack("<b", value))
 
 def write_u8(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}B", value))
+    stream.write(pack("<B", value))
 
 def write_s16(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}h", value))
+    stream.write(pack("<h", value))
 
 def write_u16(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}H", value))
+    stream.write(pack("<H", value))
 
 def write_s32(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}i", value))
+    stream.write(pack("<i", value))
 
 def write_u32(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}I", value))
+    stream.write(pack("<I", value))
 
 def write_s64(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}q", value))
+    stream.write(pack("<q", value))
 
 def write_u64(stream: Stream, value: int) -> None:
-    stream.write(pack(f"{stream.endian}Q", value))
+    stream.write(pack("<Q", value))
 
 def write_boolean(stream: Stream, value: bool) -> None:
     stream.write_u8(int(value))
 
 def write_f32(stream: Stream, value: float) -> None:
-    stream.write(pack(f"{stream.endian}f", value))
+    stream.write(pack("<f", value))
 
 def write_f64(stream: Stream, value: float) -> None:
-    stream.write(pack(f"{stream.endian}d", value))
+    stream.write(pack("<d", value))
 
 def write_gzip(stream: Stream, data: bytes) -> None:
     stream.write(compress(data))
