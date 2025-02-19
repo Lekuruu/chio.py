@@ -6,5 +6,6 @@ __license__ = 'MIT'
 
 from .io import Stream
 from .chio import BanchoIO
+from .clients import select_client
 from .constants import *
 from .types import *
