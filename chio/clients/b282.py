@@ -2,7 +2,6 @@
 from typing import List, Any, Tuple, Iterable, Union
 from gzip import compress
 
-from ..errors import InvalidPacketError
 from ..chio import BanchoIO
 from ..constants import *
 from ..types import *
@@ -21,12 +20,12 @@ class b282(BanchoIO):
         packet = cls.convert_input_packet(packet_id)
 
         if not packet.is_client_packet:
-            raise InvalidPacketError(f"Packet '{packet.name}' is not a client packet")
+            raise ValueError(f"Packet '{packet.name}' is not a client packet")
 
         packet_reader = getattr(cls, packet.handler_name, None)
 
         if not packet_reader:
-            raise InvalidPacketError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
+            raise NotImplementedError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
 
         packet_length = read_u32(stream)
         packet_data = read_gzip(stream, packet_length)
@@ -35,7 +34,7 @@ class b282(BanchoIO):
     @classmethod
     def write_packet(cls, stream: Stream, packet: PacketType, *args) -> None:
         if not packet.is_server_packet:
-            raise InvalidPacketError(f"Packet '{packet.name}' is not a server packet")
+            raise ValueError(f"Packet '{packet.name}' is not a server packet")
 
         packet_writer = getattr(cls, packet.handler_name, None)
 
