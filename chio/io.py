@@ -86,7 +86,7 @@ def read_uleb128(stream: Stream) -> int:
     num = shift = 0
 
     while True:
-        byte = stream.read_s8()
+        byte = read_s8(stream)
         num |= (byte & 0x7F) << shift
         if (byte & 0x80) == 0:
             break
@@ -96,12 +96,12 @@ def read_uleb128(stream: Stream) -> int:
     return num
 
 def read_string(stream: Stream) -> str:
-    empty = stream.read_s8() == 0x00
+    empty = read_s8(stream) == 0x00
 
     if empty:
         return ""
 
-    size = stream.read_uleb128()
+    size = read_uleb128(stream)
     return stream.read(size).decode()
 
 def write_s8(stream: Stream, value: int) -> None:
