@@ -192,13 +192,13 @@ class LoginError(IntEnum):
     UnauthorizedTestBuild = -6
 
 class Permissions(IntEnum):
-    None       = 0
-    Regular    = 1 << 0
-    BAT        = 1 << 1
-    Supporter  = 1 << 2
-    Friend     = 1 << 3
-    Peppy      = 1 << 4
-    Tournament = 1 << 5
+    NoPermissions = 0
+    Regular       = 1 << 0
+    BAT           = 1 << 1
+    Supporter     = 1 << 2
+    Friend        = 1 << 3
+    Peppy         = 1 << 4
+    Tournament    = 1 << 5
 
 class QuitState(IntEnum):
     Gone         = 0
@@ -206,14 +206,14 @@ class QuitState(IntEnum):
     IrcRemaining = 2
 
 class AvatarExtension(IntEnum):
-    None = 0
-    Png  = 1
-    Jpg  = 2
+    Empty = 0
+    Png   = 1
+    Jpg   = 2
 
 class PresenceFilter(IntEnum):
-    None    = 0
-    All     = 1
-    Friends = 2
+    NoPlayers = 0
+    All       = 1
+    Friends   = 2
 
 class Completeness(IntEnum):
     StatusOnly = 0
