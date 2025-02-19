@@ -82,7 +82,7 @@ class b282(BanchoIO):
     @classmethod
     def write_login_reply(cls, reply: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_u32(stream, reply)
+        write_s32(stream, reply)
         yield PacketType.BanchoLoginReply, stream.data
 
     @classmethod
