@@ -46,6 +46,9 @@ class MemoryStream(Stream):
         self.position += size
         return data
 
+    def available(self) -> int:
+        return len(self.data) - self.position
+
 def read_s8(stream: Stream) -> int:
     return stream.read(1)[0]
 
@@ -71,7 +74,7 @@ def read_s64(stream: Stream) -> int:
     return unpack("<q", stream.read(8))[0]
 
 def read_boolean(stream: Stream) -> bool:
-    return bool(stream.read_u8())
+    return bool(read_u8(stream))
 
 def read_f32(stream: Stream) -> float:
     return unpack("<f", stream.read(4))[0]
@@ -129,7 +132,7 @@ def write_u64(stream: Stream, value: int) -> None:
     stream.write(pack("<Q", value))
 
 def write_boolean(stream: Stream, value: bool) -> None:
-    stream.write_u8(int(value))
+    write_u8(stream, int(value))
 
 def write_f32(stream: Stream, value: float) -> None:
     stream.write(pack("<f", value))
