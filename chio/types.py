@@ -77,6 +77,10 @@ class Message:
     target: str
     sender_id: int = -1
 
+    @property
+    def is_direct_message(self) -> bool:
+        return not self.target.startswith("#")
+
 @dataclass
 class Channel:
     name: str
