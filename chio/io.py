@@ -68,8 +68,12 @@ class MemoryStream(Stream):
     def __init__(self, data: bytes = b"", endian: str = "<") -> None:
         self.data = data
         self.position = 0
-        self.endian = endian
         self.is_closed = False
+        self.struct_endian = endian
+
+    @property
+    def endian(self) -> str:
+        return self.struct_endian
 
     def read(self, size: int = -1) -> bytes:
         if self.is_closed:
