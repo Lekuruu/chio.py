@@ -1,5 +1,5 @@
 
-from .constants import RankedStatus, SlotStatus
+from .constants import *
 from dataclasses import dataclass
 from typing import List, Optional
 from hashlib import md5
@@ -45,21 +45,21 @@ class UserStats:
 
 @dataclass
 class UserStatus:
-    action: int
-    text: str
-    mods: int
-    mode: int
-    beatmap_checksum: str
-    beatmap_id: int
-    update_stats: bool
+    action: Status = Status.Idle
+    text: str = ""
+    mods: Mods = Mods.NoMod
+    mode: Mode = Mode.Osu
+    beatmap_checksum: str = ""
+    beatmap_id: int = -1
+    update_stats: bool = False
 
 @dataclass
 class UserInfo:
     id: int
     name: str
-    presence: Optional[UserPresence]
-    status: Optional[UserStatus]
-    stats: Optional[UserStats]
+    presence: UserPresence
+    status: UserStatus
+    stats: UserStats
 
     @property
     def avatar_filename(self) -> str:
@@ -67,7 +67,7 @@ class UserInfo:
 
 @dataclass
 class UserQuit:
-    info: Optional[UserInfo]
+    info: UserInfo
     quit_state: int
 
 @dataclass
@@ -75,7 +75,7 @@ class Message:
     sender: str
     content: str
     target: str
-    sender_id: int
+    sender_id: int = -1
 
 @dataclass
 class Channel:
@@ -88,13 +88,13 @@ class Channel:
 class BeatmapInfo:
     index: int
     beatmap_id: int
-    beatmap_set_id: int
+    beatmapset_id: int
     thread_id: int
-    ranked_status: int
-    osu_rank: int
-    taiko_rank: int
-    fruits_rank: int
-    mania_rank: int
+    ranked_status: RankedStatus
+    osu_rank: Rank
+    taiko_rank: Rank
+    fruits_rank: Rank
+    mania_rank: Rank
     checksum: str
 
     @property
@@ -112,11 +112,11 @@ class BeatmapInfoRequest:
 
 @dataclass
 class ReplayFrame:
-    button_state: int
-    legacy_byte: int
-    mouse_x: float
-    mouse_y: float
-    time: int
+    button_state: ButtonState = ButtonState.NoButton
+    legacy_byte: int = 0
+    mouse_x: float = 0.0
+    mouse_y: float = 0.0
+    time: int = 0
 
 @dataclass
 class ScoreFrame:
@@ -150,17 +150,17 @@ class ScoreFrame:
 
 @dataclass
 class ReplayFrameBundle:
-    action: int
-    extra: int
+    action: ReplayAction
     frames: List[ReplayFrame]
-    frame: Optional[ScoreFrame]
+    frame: Optional[ScoreFrame] = None
+    extra: int = -1
 
 @dataclass
 class MatchSlot:
     user_id: int
-    status: int
-    team: int
-    mods: int
+    status: SlotStatus
+    team: TeamType
+    mods: Mods
 
     @property
     def has_player(self) -> bool:
@@ -170,8 +170,8 @@ class MatchSlot:
 class Match:
     id: int
     in_progress: bool
-    type: int
-    mods: int
+    type: MatchType
+    mods: Mods
     name: str
     password: str
     beatmap_text: str
@@ -179,9 +179,9 @@ class Match:
     beatmap_checksum: str
     slots: List[MatchSlot]
     host_id: int
-    mode: int
-    scoring_type: int
-    team_type: int
+    mode: Mode
+    scoring_type: ScoringType
+    team_type: TeamType
     freemod: bool
     seed: int
 
