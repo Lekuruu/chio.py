@@ -48,13 +48,7 @@ class b294(b291):
         write_u16(stream, len(bundle.frames))
 
         for frame in bundle.frames:
-            left_mouse = ButtonState.Left1 in frame.button_state or ButtonState.Left2 in frame.button_state
-            right_mouse = ButtonState.Right1 in frame.button_state or ButtonState.Right2 in frame.button_state
-            write_boolean(stream, left_mouse)
-            write_boolean(stream, right_mouse)
-            write_f32(stream, frame.mouse_x)
-            write_f32(stream, frame.mouse_y)
-            write_s32(stream, frame.time)
+            stream.write(cls.write_replay_frame(frame))
 
         write_u8(stream, bundle.action)
 
