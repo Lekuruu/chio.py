@@ -31,4 +31,4 @@ class BanchoIO:
         """
         Returns whether the current client version implements the given packet.
         """
-        ...
+        return getattr(self, packet.handler_name, None) is not None
