@@ -8,10 +8,12 @@ class b291(b282):
     """
     b291 implements the GetAttension & Announce packets.
     """
-    def write_get_attension(self) -> Iterable[Tuple[PacketType, bytes]]:
-        yield PacketType.GetAttension, b''
+    @classmethod
+    def write_get_attension(cls) -> Iterable[Tuple[PacketType, bytes]]:
+        yield PacketType.BanchoGetAttention, b''
 
-    def write_announce(self, message: str) -> Iterable[Tuple[PacketType, bytes]]:
+    @classmethod
+    def write_announce(cls, message: str) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_string(stream, message)
-        yield PacketType.Announce, stream.data
+        yield PacketType.BanchoAnnounce, stream.data
