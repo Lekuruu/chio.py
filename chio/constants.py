@@ -55,7 +55,7 @@ class PacketType(IntEnum):
     BanchoSpectatorCantSpectate    = 22
     BanchoGetAttention             = 23
     BanchoAnnounce                 = 24
-    OsuSendIrcMessagePrivate       = 25
+    OsuPrivateMessage              = 25
     BanchoMatchUpdate              = 26
     BanchoMatchNew                 = 27
     BanchoMatchDisband             = 28

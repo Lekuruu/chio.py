@@ -1,5 +1,5 @@
 
-from typing import List, Any, Tuple, Iterable
+from typing import List, Any, Tuple, Iterable, Union
 from gzip import compress
 
 from ..errors import InvalidPacketError
@@ -71,16 +71,16 @@ class b282(BanchoIO):
             # "IrcJoin" packet
             return 11
 
-        if packet.value >= 11 and packet.value < 45:
+        if packet >= 11 and packet < 45:
             return packet.value + 1
 
-        if packet.value > 50:
+        if packet > 50:
             return packet.value + 1
 
         return packet.value
 
     @classmethod
-    def write_login_reply(cls, reply: int) -> Iterable[Tuple[PacketType, bytes]]:
+    def write_login_reply(cls, reply: Union[int, LoginError]) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_s32(stream, reply)
         yield PacketType.BanchoLoginReply, stream.data
@@ -131,12 +131,12 @@ class b282(BanchoIO):
     def write_status_update(cls, status: UserStatus) -> bytes:
         action = status.action if not status.update_stats else Status.StatsUpdate
         stream = MemoryStream()
-        write_u8(stream, action.value)
+        write_u8(stream, action)
 
         if action != Status.Unknown:
             write_string(stream, status.text)
             write_string(stream, status.beatmap_checksum)
-            write_u16(stream, status.mods.value)
+            write_u16(stream, status.mods)
 
         return stream.data
 
@@ -180,7 +180,7 @@ class b282(BanchoIO):
             write_f32(stream, frame.mouse_y)
             write_s32(stream, frame.time)
 
-        write_u8(stream, bundle.action.value)
+        write_u8(stream, bundle.action)
         yield PacketType.BanchoSpectateFrames, stream.data
 
     @classmethod
@@ -230,6 +230,26 @@ class b282(BanchoIO):
         )
 
     @classmethod
+    def read_exit(cls, stream: MemoryStream) -> bool:
+        return False
+
+    @classmethod
+    def read_status_update_request(cls, stream: MemoryStream) -> None:
+        pass
+
+    @classmethod
+    def read_pong(cls, stream: MemoryStream) -> None:
+        pass
+
+    @classmethod
+    def read_start_spectating(cls, stream: MemoryStream) -> int:
+        return read_s32(stream)
+
+    @classmethod
+    def read_stop_spectating(cls, stream: MemoryStream) -> None:
+        pass
+
+    @classmethod
     def read_spectate_frames(cls, stream: MemoryStream) -> ReplayFrameBundle:
         frames = [
             cls.read_replay_frame(stream)
@@ -253,3 +273,11 @@ class b282(BanchoIO):
             frame.button_state |= ButtonState.Right1
 
         return frame
+
+    @classmethod
+    def read_error_report(cls, stream: MemoryStream) -> str:
+        return read_string(stream)
+
+    @classmethod
+    def read_cant_spectate(cls, stream: MemoryStream) -> None:
+        pass
