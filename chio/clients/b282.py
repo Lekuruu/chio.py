@@ -206,7 +206,7 @@ class b282(BanchoIO):
     @classmethod
     def write_user_presence_bundle(cls, infos: List[UserInfo]) -> Iterable[Tuple[PacketType, bytes]]:
         for info in infos:
-            yield cls.write_user_presence_single(info)
+            yield next(cls.write_user_presence_single(info))
 
     @classmethod
     def read_user_status(cls, stream: MemoryStream) -> UserStatus:
