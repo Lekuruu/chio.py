@@ -30,19 +30,19 @@ __all__ = [
 convert_pattern = compile(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
 
 class PacketType(IntEnum):
-    OsuSendUserStatus              = 0
-    OsuSendIrcMessage              = 1
+    OsuUserStatus                  = 0
+    OsuMessage                     = 1
     OsuExit                        = 2
-    OsuRequestStatusUpdate         = 3
+    OsuStatusUpdateRequest         = 3
     OsuPong                        = 4
     BanchoLoginReply               = 5
     BanchoCommandError             = 6
-    BanchoSendMessage              = 7
+    BanchoMessage                  = 7
     BanchoPing                     = 8
-    BanchoHandleIrcChangeUsername  = 9
-    BanchoHandleIrcQuit            = 10
-    BanchoHandleOsuUpdate          = 11
-    BanchoHandleOsuQuit            = 12
+    BanchoIrcChangeUsername        = 9
+    BanchoIrcQuit                  = 10
+    BanchoStatsUpdate              = 11
+    BanchoUserQuit                 = 12
     BanchoSpectatorJoined          = 13
     BanchoSpectatorLeft            = 14
     BanchoSpectateFrames           = 15
@@ -140,7 +140,7 @@ class PacketType(IntEnum):
     OsuTournamentLeaveMatchChannel = 109
 
     # Packets that are unused today, but used in legacy clients
-    BanchoHandleIrcJoin   = 0xFFFF
+    BanchoIrcJoin         = 0xFFFF
     OsuMatchChangeBeatmap = 0xFFFE
 
     @cached_property
