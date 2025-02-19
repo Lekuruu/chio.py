@@ -1,12 +1,12 @@
 
-from typing import List, Any, Tuple
+from typing import List, Any, Tuple, Iterable
 from gzip import compress
 
 from ..errors import InvalidPacketError
-from ..io import MemoryStream
 from ..chio import BanchoIO
 from ..constants import *
 from ..types import *
+from ..io import *
 
 class b282(BanchoIO):
     """
@@ -15,45 +15,47 @@ class b282(BanchoIO):
     """
     version = 282
 
-    def read_packet(self) -> Tuple[PacketType, Any]:
-        packet_id = self.stream.read_u16()
-        packet = self.convert_input_packet(packet_id)
+    @classmethod
+    def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:
+        packet_id = read_u16()
+        packet = cls.convert_input_packet(packet_id)
 
         if not packet.is_client_packet:
             raise InvalidPacketError(f"Packet '{packet.name}' is not a client packet")
 
-        packet_reader = getattr(self, packet.handler_name, None)
+        packet_reader = getattr(cls, packet.handler_name, None)
 
         if not packet_reader:
-            raise InvalidPacketError(f"Version '{self.version}' does not implement packet '{packet.name}'")
+            raise InvalidPacketError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
 
-        packet_length = self.stream.read_u32()
-        packet_data = self.stream.read_gzip(packet_length)
+        packet_length = read_u32()
+        packet_data = read_gzip(packet_length)
         return packet, packet_reader(MemoryStream(packet_data))
 
-    def write_packet(self, packet: PacketType, *args) -> None:
+    @classmethod
+    def write_packet(cls, stream: Stream, packet: PacketType, *args) -> None:
         if not packet.is_server_packet:
             raise InvalidPacketError(f"Packet '{packet.name}' is not a server packet")
 
-        packet_writer = getattr(self, packet.handler_name, None)
+        packet_writer = getattr(cls, packet.handler_name, None)
 
         if not packet_writer:
-            raise InvalidPacketError(f"Version '{self.version}' does not implement packet '{packet.name}'")
+            raise InvalidPacketError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
 
-        packet, packet_data = compress(packet_writer(*args))
+        packets = packet_writer(*args)
 
-        if not packet_data:
-            return
+        for packet, packet_data in packets:
+            packet_id = cls.convert_output_packet(packet)
+            packet_data = compress(packet_data)
+            write_u16(stream, packet_id)
+            write_u32(stream, len(packet_data))
+            stream.write(packet_data)
 
-        packet_id = self.convert_output_packet(packet)
-        self.stream.write_u16(packet_id)
-        self.stream.write_u32(len(packet_data))
-        self.stream.write(packet_data)
-
-    def convert_input_packet(self, packet: int) -> PacketType:
+    @classmethod
+    def convert_input_packet(cls, packet: int) -> PacketType:
         if packet == 11:
             # "IrcJoin" packet
-            return PacketType.BanchoHandleIrcJoin
+            return PacketType.BanchoIrcJoin
 
         if packet > 11 and packet <= 45:
             return PacketType(packet - 1)
@@ -63,8 +65,9 @@ class b282(BanchoIO):
 
         return PacketType(packet)
 
-    def convert_output_packet(self, packet: PacketType) -> int:
-        if packet is PacketType.BanchoHandleIrcJoin:
+    @classmethod
+    def convert_output_packet(cls, packet: PacketType) -> int:
+        if packet is PacketType.BanchoIrcJoin:
             # "IrcJoin" packet
             return 11
 
@@ -76,155 +79,173 @@ class b282(BanchoIO):
 
         return packet.value
 
-    def write_login_reply(self, reply: int) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_login_reply(cls, reply: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        stream.write_u32(reply)
-        return PacketType.BanchoLoginReply, stream.data
+        write_u32(stream, reply)
+        yield PacketType.BanchoLoginReply, stream.data
 
-    def write_ping(self) -> Tuple[PacketType, bytes]:
-        return PacketType.BanchoPing, b""
+    @classmethod
+    def write_ping(cls) -> Iterable[Tuple[PacketType, bytes]]:
+        yield PacketType.BanchoPing, b""
 
-    def write_message(self, message: Message) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
         if message.target != "#osu":
             # Private messages & channels have not been implemented yet
-            return None, None
+            return []
 
         stream = MemoryStream()
-        stream.write_string(message.sender)
-        stream.write_string(message.content)
-        return PacketType.BanchoMessage, stream.data
+        write_string(stream, message.sender)
+        write_string(stream, message.content)
+        yield PacketType.BanchoMessage, stream.data
 
-    def write_irc_change_username(self, old_name: str, new_name: str) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_irc_change_username(cls, old_name: str, new_name: str) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        stream.write_string(f"{old_name}>>>>{new_name}")
-        return PacketType.BanchoIrcChangeUsername, stream.data
+        write_string(stream, f"{old_name}>>>>{new_name}")
+        yield PacketType.BanchoIrcChangeUsername, stream.data
 
-    def write_stats_update(self, info: UserInfo) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_stats_update(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
 
         if info.presence.is_irc:
-            stream.write_string(info.name)
-            return PacketType.BanchoHandleIrcJoin, stream.data
+            write_string(stream, info.name)
+            yield PacketType.BanchoHandleIrcJoin, stream.data
 
-        stream.write_u32(info.id)
-        stream.write_string(info.name)
-        stream.write_u64(info.stats.rscore)
-        stream.write_f64(info.stats.accuracy)
-        stream.write_u32(info.stats.playcount)
-        stream.write_u64(info.stats.tscore)
-        stream.write_u32(info.stats.rank)
-        stream.write_string(info.avatar_filename)
-        stream.write(self.write_status_update(info.status))
-        stream.write_u8(info.presence.timezone+24)
-        stream.write_string(info.presence.city)
-        return PacketType.BanchoStatsUpdate, stream.data
-    
-    def write_status_update(self, status: UserStatus) -> bytes:
+        write_u32(stream, info.id)
+        write_string(stream, info.name)
+        write_u64(stream, info.stats.rscore)
+        write_f64(stream, info.stats.accuracy)
+        write_u32(stream, info.stats.playcount)
+        write_u64(stream, info.stats.tscore)
+        write_u32(stream, info.stats.rank)
+        write_string(stream, info.avatar_filename)
+        stream.write(cls.write_status_update(info.status))
+        write_u8(stream, info.presence.timezone+24)
+        write_string(stream, info.presence.city)
+        yield PacketType.BanchoStatsUpdate, stream.data
+
+    @classmethod
+    def write_status_update(cls, status: UserStatus) -> bytes:
         action = status.action if not status.update_stats else Status.StatsUpdate
         stream = MemoryStream()
-        stream.write_u8(action.value)
+        write_u8(stream, action.value)
 
         if action != Status.Unknown:
-            stream.write_string(status.text)
-            stream.write_string(status.beatmap_checksum)
-            stream.write_u16(status.mods.value)
+            write_string(stream, status.text)
+            write_string(stream, status.beatmap_checksum)
+            write_u16(stream, status.mods.value)
 
         return stream.data
 
-    def write_user_quit(self, quit: UserQuit) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_user_quit(cls, quit: UserQuit) -> Iterable[Tuple[PacketType, bytes]]:
         if quit.info.presence.is_irc and quit.quit_state != QuitState.IrcRemaining:
             stream = MemoryStream()
-            stream.write_string(quit.info.name)
-            return PacketType.BanchoIrcQuit, stream.data
+            write_string(stream, quit.info.name)
+            yield PacketType.BanchoIrcQuit, stream.data
 
         if quit.quit_state == QuitState.OsuRemaining:
-            return None, None
+            return []
 
-        packet, data = self.write_stats_update(quit.info)
+        packet, data = cls.write_stats_update(quit.info)
         packet = PacketType.BanchoUserQuit
-        return packet, data
-    
-    def write_spectator_joined(self, user_id: int) -> Tuple[PacketType, bytes]:
-        stream = MemoryStream()
-        stream.write_u32(user_id)
-        return PacketType.BanchoSpectatorJoined, stream.data
+        yield packet, data
 
-    def write_spectator_left(self, user_id: int) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_spectator_joined(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        stream.write_u32(user_id)
-        return PacketType.BanchoSpectatorLeft, stream.data
+        write_u32(stream, user_id)
+        yield PacketType.BanchoSpectatorJoined, stream.data
 
-    def write_spectate_frames(self, bundle: ReplayFrameBundle) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_spectator_left(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        stream.write_u16(len(bundle.frames))
+        write_u32(stream, user_id)
+        yield PacketType.BanchoSpectatorLeft, stream.data
+
+    @classmethod
+    def write_spectate_frames(cls, bundle: ReplayFrameBundle) -> Iterable[Tuple[PacketType, bytes]]:
+        stream = MemoryStream()
+        write_u16(stream, len(bundle.frames))
 
         for frame in bundle.frames:
             left_mouse = ButtonState.Left1 in frame.button_state or ButtonState.Left2 in frame.button_state
             right_mouse = ButtonState.Right1 in frame.button_state or ButtonState.Right2 in frame.button_state
-            stream.write_boolean(left_mouse)
-            stream.write_boolean(right_mouse)
-            stream.write_f32(frame.mouse_x)
-            stream.write_f32(frame.mouse_y)
-            stream.write_s32(frame.time)
+            write_boolean(stream, left_mouse)
+            write_boolean(stream, right_mouse)
+            write_f32(stream, frame.mouse_x)
+            write_f32(stream, frame.mouse_y)
+            write_s32(stream, frame.time)
 
-        stream.write_u8(bundle.action.value)
-        return PacketType.BanchoSpectateFrames, stream.data
+        write_u8(stream, bundle.action.value)
+        yield PacketType.BanchoSpectateFrames, stream.data
 
-    def write_version_update(self) -> Tuple[PacketType, bytes]:
-        return PacketType.BanchoVersionUpdate, b""
+    @classmethod
+    def write_version_update(cls) -> Iterable[Tuple[PacketType, bytes]]:
+        yield PacketType.BanchoVersionUpdate, b""
 
-    def write_spectator_cant_spectate(self, user_id: int) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_spectator_cant_spectate(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        stream.write_u32(user_id)
-        return PacketType.BanchoSpectatorCantSpectate, stream.data
+        write_u32(stream, user_id)
+        yield PacketType.BanchoSpectatorCantSpectate, stream.data
 
-    def write_user_presence(self, info: UserInfo) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         # b282 does not support user presences,
         # instead we will send a stats update
-        return self.write_stats_update(info)
+        return cls.write_stats_update(info)
 
-    def write_user_presence_single(self, info: UserInfo) -> Tuple[PacketType, bytes]:
-        return self.write_stats_update(info)
+    @classmethod
+    def write_user_presence_single(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
+        return cls.write_stats_update(info)
 
-    def write_user_presence_bundle(self, infos: List[UserInfo]) -> Tuple[PacketType, bytes]:
+    @classmethod
+    def write_user_presence_bundle(cls, infos: List[UserInfo]) -> Iterable[Tuple[PacketType, bytes]]:
         for info in infos:
-            self.write_packet(PacketType.BanchoStatsUpdate, info)
-        return None, None
-    
-    def read_user_status(self, stream: MemoryStream) -> UserStatus:
+            yield cls.write_user_presence_single(info)
+
+    @classmethod
+    def read_user_status(cls, stream: MemoryStream) -> UserStatus:
         status = UserStatus()
-        status.action = Status(stream.read_u8())
+        status.action = Status(read_u8(stream))
 
         if status.action != Status.Unknown:
-            status.text = stream.read_string()
-            status.beatmap_checksum = stream.read_string()
-            status.mods = Mods(stream.read_u16())
+            status.text = read_string(stream)
+            status.beatmap_checksum = read_string(stream)
+            status.mods = Mods(read_u16(stream))
 
         return status
-    
-    def read_message(self, stream: MemoryStream) -> Message:
+
+    @classmethod
+    def read_message(cls, stream: MemoryStream) -> Message:
         # Private messages & channels have not been implemented yet
         return Message(
-            content=stream.read_string(),
+            content=read_string(stream),
             target="#osu",
             sender=""
         )
-    
-    def read_spectate_frames(self, stream: MemoryStream) -> ReplayFrameBundle:
+
+    @classmethod
+    def read_spectate_frames(cls, stream: MemoryStream) -> ReplayFrameBundle:
         frames = [
-            self.read_replay_frame(stream)
-            for _ in range(stream.read_u16())
+            cls.read_replay_frame(stream)
+            for _ in range(read_u16(stream))
         ]
-        action = ReplayAction(stream.read_u8())
+        action = ReplayAction(read_u8(stream))
         return ReplayFrameBundle(action, frames)
-    
-    def read_replay_frame(self, stream: MemoryStream) -> ReplayFrame:
+
+    @classmethod
+    def read_replay_frame(cls, stream: MemoryStream) -> ReplayFrame:
         frame = ReplayFrame()
-        mouse_left = stream.read_boolean()
-        mouse_right = stream.read_boolean()
-        frame.mouse_x = stream.read_f32()
-        frame.mouse_y = stream.read_f32()
-        frame.time = stream.read_s32()
+        mouse_left = read_boolean(stream)
+        mouse_right = read_boolean(stream)
+        frame.mouse_x = read_f32(stream)
+        frame.mouse_y = read_f32(stream)
+        frame.time = read_s32(stream)
 
         if mouse_left:
             frame.button_state |= ButtonState.Left1
