@@ -107,7 +107,7 @@ class b282(BanchoIO):
         yield PacketType.BanchoIrcChangeUsername, stream.data
 
     @classmethod
-    def write_stats_update(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
+    def write_user_stats(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
 
         if info.presence.is_irc:
@@ -125,7 +125,7 @@ class b282(BanchoIO):
         stream.write(cls.write_status_update(info.status))
         write_u8(stream, info.presence.timezone+24)
         write_string(stream, info.presence.city)
-        yield PacketType.BanchoStatsUpdate, stream.data
+        yield PacketType.BanchoUserStats, stream.data
 
     @classmethod
     def write_status_update(cls, status: UserStatus) -> bytes:
@@ -150,7 +150,7 @@ class b282(BanchoIO):
         if quit.quit_state == QuitState.OsuRemaining:
             return []
 
-        packet, data = cls.write_stats_update(quit.info)
+        packet, data = cls.write_user_stats(quit.info)
         packet = PacketType.BanchoUserQuit
         yield packet, data
 
@@ -197,11 +197,11 @@ class b282(BanchoIO):
     def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         # b282 does not support user presences,
         # instead we will send a stats update
-        return cls.write_stats_update(info)
+        return cls.write_user_stats(info)
 
     @classmethod
     def write_user_presence_single(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
-        return cls.write_stats_update(info)
+        return cls.write_user_stats(info)
 
     @classmethod
     def write_user_presence_bundle(cls, infos: List[UserInfo]) -> Iterable[Tuple[PacketType, bytes]]:

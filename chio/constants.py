@@ -41,7 +41,7 @@ class PacketType(IntEnum):
     BanchoPing                     = 8
     BanchoIrcChangeUsername        = 9
     BanchoIrcQuit                  = 10
-    BanchoStatsUpdate              = 11
+    BanchoUserStats                = 11
     BanchoUserQuit                 = 12
     BanchoSpectatorJoined          = 13
     BanchoSpectatorLeft            = 14
