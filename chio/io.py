@@ -157,12 +157,12 @@ def write_uleb128(stream: Stream, value: int) -> None:
 
 def write_string(stream: Stream, value: str) -> None:
     if not value:
-        stream.write_s8(0x00)
+        write_s8(stream, 0x00)
         return
 
     string = value.encode()
     length = len(string)
 
-    stream.write_s8(0x0b)
-    stream.write_uleb128(length)
+    write_s8(stream, 0x0b)
+    write_uleb128(stream, length)
     stream.write(string)
