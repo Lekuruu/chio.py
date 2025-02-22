@@ -53,6 +53,15 @@ class UserStatus:
     beatmap_id: int = -1
     update_stats: bool = False
 
+    def reset(self) -> None:
+        self.action = Status.Idle
+        self.text = ""
+        self.mods = Mods.NoMod
+        self.mode = Mode.Osu
+        self.beatmap_checksum = ""
+        self.beatmap_id = -1
+        self.update_stats = False
+
 @dataclass
 class UserInfo:
     id: int
@@ -86,7 +95,7 @@ class Channel:
     name: str
     topic: str
     owner: str
-    user_count: int
+    user_count: int = 0
 
 @dataclass
 class BeatmapInfo:
