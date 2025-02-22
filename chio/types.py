@@ -1,6 +1,6 @@
 
 from .constants import *
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Optional
 from hashlib import md5
 
@@ -163,17 +163,17 @@ class ScoreFrame:
 
 @dataclass
 class ReplayFrameBundle:
-    action: ReplayAction
-    frames: List[ReplayFrame]
+    action: ReplayAction = ReplayAction.Standard
+    frames: List[ReplayFrame] = field(default_factory=list)
     frame: Optional[ScoreFrame] = None
     extra: int = -1
 
 @dataclass
 class MatchSlot:
-    user_id: int
-    status: SlotStatus
-    team: TeamType
-    mods: Mods
+    user_id: int = -1
+    status: SlotStatus = SlotStatus.Open
+    team: SlotTeam = SlotTeam.Neutral
+    mods: Mods = Mods.NoMod
 
     @property
     def has_player(self) -> bool:
@@ -182,28 +182,28 @@ class MatchSlot:
 @dataclass
 class Match:
     id: int
-    in_progress: bool
-    type: MatchType
-    mods: Mods
-    name: str
-    password: str
-    beatmap_text: str
-    beatmap_id: int
-    beatmap_checksum: str
-    slots: List[MatchSlot]
-    host_id: int
-    mode: Mode
-    scoring_type: ScoringType
-    team_type: TeamType
-    freemod: bool
-    seed: int
+    in_progress: bool = False
+    type: MatchType = MatchType.Standard
+    mods: Mods = Mods.NoMod
+    name: str = ""
+    password: str = ""
+    beatmap_text: str = ""
+    beatmap_id: int = -1
+    beatmap_checksum: str = ""
+    slots: List[MatchSlot] = field(default_factory=list)
+    host_id: int = -1
+    mode: Mode = Mode.Osu
+    scoring_type: ScoringType = ScoringType.Score
+    team_type: TeamType = TeamType.HeadToHead
+    freemod: bool = False
+    seed: int = 0
 
 @dataclass
 class MatchJoin:
-    match_id: int
-    password: str
+    match_id: int = -1
+    password: str = ""
 
 @dataclass
 class TitleUpdate:
-    image_url: str
-    redirect_url: str
+    image_url: str = ""
+    redirect_url: str = ""
