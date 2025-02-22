@@ -58,7 +58,7 @@ class b323(b320):
         if write_stats:
             write_string(stream, info.name)
             write_u64(stream, info.stats.rscore)
-            write_f64(stream, info.stats.accuracy)
+            write_f32(stream, info.stats.accuracy)
             write_u32(stream, info.stats.playcount)
             write_u64(stream, info.stats.tscore)
             write_u32(stream, info.stats.rank)
