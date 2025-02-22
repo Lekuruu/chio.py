@@ -208,7 +208,7 @@ class b282(BanchoIO):
 
     @classmethod
     def write_user_presence_single(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
-        return cls.write_user_stats(info)
+        return cls.write_user_presence(info)
 
     @classmethod
     def write_user_presence_bundle(cls, infos: List[UserInfo]) -> Iterable[Tuple[PacketType, bytes]]:
