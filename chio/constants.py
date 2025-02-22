@@ -1,6 +1,6 @@
 
 from functools import cached_property
-from enum import Enum, IntEnum
+from enum import IntFlag, IntEnum
 from re import compile
 
 __all__ = [
@@ -191,7 +191,7 @@ class LoginError(IntEnum):
     ServerError           = -5
     UnauthorizedTestBuild = -6
 
-class Permissions(IntEnum):
+class Permissions(IntFlag):
     NoPermissions = 0
     Regular       = 1 << 0
     BAT           = 1 << 1
@@ -231,7 +231,7 @@ class ReplayAction(IntEnum):
     SongSelect    = 7
     WatchingOther = 8
 
-class ButtonState(IntEnum):
+class ButtonState(IntFlag):
     NoButton = 0
     Left1    = 1 << 0
     Right1   = 1 << 1
@@ -251,7 +251,7 @@ class Rank(IntEnum):
     F  = 8
     N  = 9
 
-class Mods(IntEnum):
+class Mods(IntFlag):
     NoMod       = 0
     NoFail      = 1 << 0
     Easy        = 1 << 1
@@ -301,7 +301,7 @@ class TeamType(IntEnum):
     TeamVs     = 2
     TagTeam    = 3
 
-class SlotStatus(IntEnum):
+class SlotStatus(IntFlag):
     Open      = 1 << 0
     Locked    = 1 << 1
     NotReady  = 1 << 2
