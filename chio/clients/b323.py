@@ -74,10 +74,10 @@ class b323(b320):
         # We assume that the client has not seen this user before, so
         # we send two packets: one for the user stats, and one for the "presence".
         info.status.update_stats = True
-        yield cls.write_user_stats(info)
+        yield next(cls.write_user_stats(info))
 
         info.status.update_stats = False
-        yield cls.write_user_stats(info)
+        yield next(cls.write_user_stats(info))
 
     @classmethod
     def read_match_change_beatmap(cls, stream: Stream) -> Match:
