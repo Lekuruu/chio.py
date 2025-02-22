@@ -59,10 +59,10 @@ class b282(BanchoIO):
             return PacketType.BanchoIrcJoin
 
         if packet > 11 and packet <= 45:
-            return PacketType(packet - 1)
+            packet -= 1
 
         if packet > 50:
-            return PacketType(packet - 1)
+            packet -= 1
 
         return PacketType(packet)
 
