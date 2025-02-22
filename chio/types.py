@@ -181,7 +181,7 @@ class MatchSlot:
 
 @dataclass
 class Match:
-    id: int
+    id: int = 0
     in_progress: bool = False
     type: MatchType = MatchType.Standard
     mods: Mods = Mods.NoMod
