@@ -75,12 +75,12 @@ class b294(b291):
     def write_score_frame(cls, stream: MemoryStream, frame: ScoreFrame) -> None:
         write_string(stream, frame.checksum)
         write_u8(stream, frame.id)
-        write_u16(stream, frame.count_300)
-        write_u16(stream, frame.count_100)
-        write_u16(stream, frame.count_50)
-        write_u16(stream, frame.count_geki)
-        write_u16(stream, frame.count_katu)
-        write_u16(stream, frame.count_miss)
+        write_u16(stream, frame.total_300)
+        write_u16(stream, frame.total_100)
+        write_u16(stream, frame.total_50)
+        write_u16(stream, frame.total_geki)
+        write_u16(stream, frame.total_katu)
+        write_u16(stream, frame.total_miss)
         write_u32(stream, frame.total_score)
         write_u16(stream, frame.max_combo)
         write_u16(stream, frame.current_combo)
@@ -89,18 +89,22 @@ class b294(b291):
 
     @classmethod
     def read_score_frame(cls, stream: MemoryStream) -> ScoreFrame:
+        # TODO: Validate checksum
+        frame_checksum = read_string(stream)
+
         return ScoreFrame(
-            checksum=read_string(stream),
+            time=0,
             id=read_u8(stream),
-            count_300=read_u16(stream),
-            count_100=read_u16(stream),
-            count_50=read_u16(stream),
-            count_geki=read_u16(stream),
-            count_katu=read_u16(stream),
-            count_miss=read_u16(stream),
+            total_300=read_u16(stream),
+            total_100=read_u16(stream),
+            total_50=read_u16(stream),
+            total_geki=read_u16(stream),
+            total_katu=read_u16(stream),
+            total_miss=read_u16(stream),
             total_score=read_u32(stream),
             max_combo=read_u16(stream),
             current_combo=read_u16(stream),
             perfect=read_boolean(stream),
-            hp=read_u8(stream)
+            hp=read_u8(stream),
+            tag_byte=0
         )
