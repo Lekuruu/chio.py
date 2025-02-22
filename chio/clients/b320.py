@@ -29,4 +29,4 @@ class b320(b312):
     
     @classmethod
     def read_private_message(cls, stream: MemoryStream) -> Message:
-        return super().read_message(stream)
+        return cls.read_message(stream)
