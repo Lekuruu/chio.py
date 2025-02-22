@@ -1,4 +1,5 @@
 
+from typing import Iterable, Tuple
 from .b291 import b291
 from ..constants import *
 from ..types import *
@@ -11,7 +12,7 @@ class b294(b291):
     version = 294
 
     @classmethod
-    def write_message(cls, message: Message):
+    def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
         if not message.is_direct_message and message.target != "#osu":
             # Channel selection has not been implemented yet
             return []
@@ -43,7 +44,7 @@ class b294(b291):
         return Message("", content, target)
 
     @classmethod
-    def write_spectate_frames(cls, bundle: ReplayFrameBundle):
+    def write_spectate_frames(cls, bundle: ReplayFrameBundle) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_u16(stream, len(bundle.frames))
 
