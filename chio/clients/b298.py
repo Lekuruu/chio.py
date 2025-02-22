@@ -49,10 +49,10 @@ class b298(b296):
     def write_fellow_spectator_joined(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_s32(stream, user_id)
-        # Weirdly enough, the client seems to need both of these packets to be sent.
+        # Weirdly enough, the client seems to need both of these packets to be sent?
         # If only one is sent, the client will not display the fellow spectator.
+        # yield PacketType.BanchoSpectatorJoined, stream.data
         yield PacketType.BanchoFellowSpectatorJoined, stream.data
-        yield PacketType.BanchoSpectatorJoined, stream.data
 
     @classmethod
     def write_fellow_spectator_left(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
