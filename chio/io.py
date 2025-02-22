@@ -2,6 +2,7 @@
 from gzip import decompress, compress
 from abc import ABC, abstractmethod
 from struct import pack, unpack
+from typing import List
 
 class Stream(ABC):
     """
@@ -107,6 +108,10 @@ def read_string(stream: Stream) -> str:
     size = read_uleb128(stream)
     return stream.read(size).decode()
 
+def read_bool_list(stream: Stream, size: int = 8) -> List[bool]:
+    byte = read_u8(stream)
+    return [((byte >> index) & 1) > 0 for index in range(size)]
+
 def write_s8(stream: Stream, value: int) -> None:
     stream.write(pack("<b", value))
 
@@ -169,3 +174,14 @@ def write_string(stream: Stream, value: str) -> None:
     write_s8(stream, 0x0b)
     write_uleb128(stream, length)
     stream.write(string)
+
+def write_bool_list(stream: Stream, values: List[bool]) -> None:
+    byte = 0
+
+    for index in range(len(values)-1, -1, -1):
+        if values[index]:
+            byte |= 1
+        if index > 0:
+            byte = byte << 1
+
+    write_u8(stream, byte)
