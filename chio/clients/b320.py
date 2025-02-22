@@ -16,7 +16,7 @@ class b320(b312):
         stream = MemoryStream()
         write_string(stream, message.sender)
         write_string(stream, message.content)
-        write_boolean(stream, message.target)
+        write_string(stream, message.target)
         yield PacketType.BanchoMessage, stream.data
 
     @classmethod
