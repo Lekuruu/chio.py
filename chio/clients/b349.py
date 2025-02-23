@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b340 import b340
+from .b342 import b342
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b349(b340):
+class b349(b342):
     """
     b349 adds the channel datatype and packets.
     """
