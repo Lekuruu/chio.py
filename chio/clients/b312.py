@@ -85,7 +85,7 @@ class b312(b298):
         slots_ready = read_bool_list(stream)
         match.slots = []
 
-        for i in range(8):
+        for i in range(cls.slot_size):
             slot = MatchSlot()
             slot.status = SlotStatus.Open if slots_open[i] else SlotStatus.Locked
             slot.status = SlotStatus.NotReady if slots_used[i] else slot.status
