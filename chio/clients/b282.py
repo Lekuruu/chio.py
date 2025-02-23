@@ -55,6 +55,10 @@ class b282(BanchoIO):
 
     @classmethod
     def convert_input_packet(cls, packet: int) -> PacketType:
+        """
+        Convert a packet from the client to a modern packet
+        type that can be handled by the server.
+        """
         if packet == 11:
             # "IrcJoin" packet
             return PacketType.BanchoIrcJoin
@@ -69,6 +73,10 @@ class b282(BanchoIO):
 
     @classmethod
     def convert_output_packet(cls, packet: PacketType) -> int:
+        """
+        Convert a modern packet type from the server
+        that the client can understand.
+        """
         if packet is PacketType.BanchoIrcJoin:
             # "IrcJoin" packet
             return 11
