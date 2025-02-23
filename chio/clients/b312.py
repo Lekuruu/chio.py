@@ -68,13 +68,13 @@ class b312(b298):
                 write_s32(stream, slot.user_id)
 
         return stream.data
-    
+
     @classmethod
     def read_match(cls, stream: Stream) -> Match:
         match = Match()
         match.id = read_u8(stream)
         match.in_progress = read_boolean(stream)
-        match.type = read_u8(stream)
+        match.type = MatchType(read_u8(stream))
         match.name = read_string(stream)
         match.beatmap_text = read_string(stream)
         match.beatmap_id = read_s32(stream)

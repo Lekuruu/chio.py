@@ -134,7 +134,7 @@ class b298(b296):
     def read_match(cls, stream: Stream) -> Match:
         match = Match()
         match.id = read_u8(stream)
-        match.type = read_u8(stream)
+        match.type = MatchType(read_u8(stream))
         match.name = read_string(stream)
         match.beatmap_text = read_string(stream)
         match.beatmap_id = read_s32(stream)
