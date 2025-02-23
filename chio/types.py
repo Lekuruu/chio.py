@@ -178,7 +178,7 @@ class MatchSlot:
     @property
     def has_player(self) -> bool:
         return bool(SlotStatus.HasPlayer & self.status)
-    
+
     def reset(self) -> None:
         self.user_id = -1
         self.status = SlotStatus.Open
