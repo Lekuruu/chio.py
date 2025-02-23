@@ -14,6 +14,7 @@ from .b340 import b340
 from .b342 import b342
 from .b349 import b349
 from .b354 import b354
+from .b374 import b374
 from .b388 import b388
 
 ClientDict = {
@@ -30,7 +31,8 @@ ClientDict = {
     340: b340(), 341: b340(),
     342: b342(), 348: b342(),
     349: b349(), 353: b349(),
-    354: b354(), 387: b354(),
+    354: b354(), 373: b354(),
+    374: b374(), 387: b374(),
     388: b388()
 }
 

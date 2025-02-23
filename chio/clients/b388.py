@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b354 import b354
+from .b374 import b374
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b388(b354):
+class b388(b374):
     """
     b388 changes ranked status from bool->int in beatmap info packets.
     """
