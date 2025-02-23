@@ -48,8 +48,7 @@ class b323(b320):
         write_stats = info.status.update_stats
 
         if info.presence.is_irc:
-            write_string(stream, info.name)
-            yield PacketType.BanchoIrcJoin, stream.data
+            yield next(cls.write_irc_join(info.name))
             return
 
         write_u32(stream, info.id)
@@ -71,6 +70,10 @@ class b323(b320):
 
     @classmethod
     def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
+        if info.presence.is_irc:
+            yield next(cls.write_irc_join(info.name))
+            return
+
         # We assume that the client has not seen this user before, so
         # we send two packets: one for the user stats, and one for the "presence".
         info.status.update_stats = True

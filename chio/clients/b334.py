@@ -83,11 +83,11 @@ class b334(b323):
 
     @classmethod
     def convert_output_packet(cls, packet: PacketType) -> int:
-        if packet is PacketType.BanchoIrcJoin:
+        if packet == PacketType.BanchoIrcJoin:
             # "IrcJoin" packet
             return 11
 
-        if packet is PacketType.OsuMatchChangeBeatmap:
+        if packet == PacketType.OsuMatchChangeBeatmap:
             # "MatchChangeBeatmap" packet
             return 51
 

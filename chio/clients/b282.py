@@ -113,8 +113,7 @@ class b282(BanchoIO):
         stream = MemoryStream()
 
         if info.presence.is_irc:
-            write_string(stream, info.name)
-            yield PacketType.BanchoIrcJoin, stream.data
+            yield next(cls.write_irc_join(info.name))
             return
 
         write_u32(stream, info.id)
@@ -148,7 +147,7 @@ class b282(BanchoIO):
         if quit.info.presence.is_irc and quit.quit_state != QuitState.IrcRemaining:
             stream = MemoryStream()
             write_string(stream, quit.info.name)
-            yield PacketType.BanchoIrcQuit, stream.data
+            return [(PacketType.BanchoIrcQuit, stream.data)]
 
         if quit.quit_state == QuitState.OsuRemaining:
             return []
@@ -156,6 +155,12 @@ class b282(BanchoIO):
         packet, data = cls.write_user_stats(quit.info)
         packet = PacketType.BanchoUserQuit
         yield packet, data
+
+    @classmethod
+    def write_irc_join(cls, name: str) -> Iterable[Tuple[PacketType, bytes]]:
+        stream = MemoryStream()
+        write_string(stream, name)
+        yield PacketType.BanchoIrcJoin, stream.data
 
     @classmethod
     def write_spectator_joined(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
