@@ -24,7 +24,7 @@ class b320(b312):
         return Message(
             sender=read_string(stream),
             content=read_string(stream),
-            target=read_boolean(stream)
+            target=read_string(stream)
         )
     
     @classmethod
