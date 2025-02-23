@@ -20,7 +20,7 @@ class b312(b298):
     def write_match_score_update(cls, frame: ScoreFrame) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         cls.write_score_frame(stream, frame)
-        yield PacketType.BanchoMatchUpdate, stream.data
+        yield PacketType.BanchoMatchScoreUpdate, stream.data
 
     @classmethod
     def read_match_start(cls, stream: Stream) -> None:
@@ -29,6 +29,10 @@ class b312(b298):
     @classmethod
     def read_match_score_update(cls, stream: Stream) -> ScoreFrame:
         return cls.read_score_frame(stream)
+    
+    @classmethod
+    def read_match_complete(cls, stream: Stream) -> None:
+        pass
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
