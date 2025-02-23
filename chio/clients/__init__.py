@@ -10,6 +10,7 @@ from .b320 import b320
 from .b323 import b323
 from .b334 import b334
 from .b338 import b338
+from .b340 import b340
 
 ClientDict = {
     282: b282(), 290: b282(),
@@ -22,6 +23,7 @@ ClientDict = {
     323: b323(), 333: b323(),
     334: b334(), 337: b334(),
     338: b338(), 339: b338(),
+    340: b340(), 341: b340()
 }
 
 HighestVersion = max(ClientDict.keys())
