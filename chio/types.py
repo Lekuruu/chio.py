@@ -116,12 +116,12 @@ class BeatmapInfo:
 
 @dataclass
 class BeatmapInfoReply:
-    beatmaps: List[BeatmapInfo]
+    beatmaps: List[BeatmapInfo] = field(default_factory=list)
 
 @dataclass
 class BeatmapInfoRequest:
-    filenames: List[str]
-    ids: List[int]
+    filenames: List[str] = field(default_factory=list)
+    ids: List[int] = field(default_factory=list)
 
 @dataclass
 class ReplayFrame:
