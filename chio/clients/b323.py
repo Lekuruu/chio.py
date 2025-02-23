@@ -10,7 +10,6 @@ class b323(b320):
     b323 changes the structure of user stats
     and adds the "MatchChangeBeatmap" packet
     """
-    user_map = {}
     version = 323
 
     @classmethod
