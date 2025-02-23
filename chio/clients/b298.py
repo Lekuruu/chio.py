@@ -22,7 +22,7 @@ class b298(b296):
     @classmethod
     def write_match_disband(cls, match_id: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_u8(stream, match_id)
+        write_s32(stream, match_id)
         yield PacketType.BanchoMatchDisband, stream.data
 
     @classmethod
