@@ -114,7 +114,8 @@ class b282(BanchoIO):
 
         if info.presence.is_irc:
             write_string(stream, info.name)
-            yield PacketType.BanchoHandleIrcJoin, stream.data
+            yield PacketType.BanchoIrcJoin, stream.data
+            return
 
         write_u32(stream, info.id)
         write_string(stream, info.name)

@@ -49,7 +49,8 @@ class b323(b320):
 
         if info.presence.is_irc:
             write_string(stream, info.name)
-            yield PacketType.BanchoHandleIrcJoin, stream.data
+            yield PacketType.BanchoIrcJoin, stream.data
+            return
 
         write_u32(stream, info.id)
         write_boolean(stream, write_stats)
