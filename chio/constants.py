@@ -317,6 +317,10 @@ class SlotTeam(IntEnum):
     Blue    = 1
     Red     = 2
 
+    @property
+    def opposite(self) -> "SlotTeam":
+        return SlotTeam.Red if self != SlotTeam.Red else SlotTeam.Blue
+
 class RankedStatus(IntEnum):
     Pending   = 0
     Ranked    = 1
