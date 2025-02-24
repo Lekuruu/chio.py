@@ -25,7 +25,9 @@ class b489(b487):
             write_string(stream, status.text)
             write_string(stream, status.beatmap_checksum)
             write_u16(stream, status.mods)
-            write_u8(stream, status.mode)
+
+            if cls.protocol_version >= 1:
+                write_u8(stream, status.mode)
 
         return stream.data
 
@@ -39,6 +41,8 @@ class b489(b487):
             status.text = read_string(stream)
             status.beatmap_checksum = read_string(stream)
             status.mods = Mods(read_u16(stream))
-            status.mode = Mode(read_u8(stream))
+
+            if cls.protocol_version >= 1:
+                status.mode = Mode(read_u8(stream))
 
         return status

@@ -33,7 +33,10 @@ class b536(b504):
 
         write_s32(stream, match.host_id)
         write_u8(stream, match.mode)
-        write_u8(stream, match.scoring_type)
+
+        if cls.protocol_version >= 3:
+            write_u8(stream, match.scoring_type)
+
         return stream.data
 
     @classmethod
@@ -58,5 +61,8 @@ class b536(b504):
 
         match.host_id = read_s32(stream)
         match.mode = Mode(read_u8(stream))
-        match.scoring_type = ScoringType(read_u8(stream))
+
+        if cls.protocol_version >= 3:
+            match.scoring_type = ScoringType(read_u8(stream))
+
         return match

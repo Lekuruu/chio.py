@@ -24,8 +24,11 @@ class b504(b490):
             write_s32(stream, info.thread_id)
             write_s8(stream, info.ranked_status)
             write_s8(stream, info.osu_rank)
-            write_s8(stream, info.fruits_rank)
-            write_s8(stream, info.taiko_rank)
+
+            if cls.protocol_version >= 2:
+                write_s8(stream, info.fruits_rank)
+                write_s8(stream, info.taiko_rank)
+
             write_string(stream, info.checksum)
 
         yield PacketType.BanchoBeatmapInfoReply, stream.data
