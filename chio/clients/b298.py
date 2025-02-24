@@ -73,8 +73,8 @@ class b298(b296):
         return cls.read_match(stream)
 
     @classmethod
-    def read_match_join(cls, stream: MemoryStream) -> int:
-        return read_s32(stream)
+    def read_match_join(cls, stream: MemoryStream) -> MatchJoin:
+        return MatchJoin(read_s32(stream))
 
     @classmethod
     def read_match_part(cls, stream: MemoryStream) -> None:
