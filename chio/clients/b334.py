@@ -14,6 +14,7 @@ class b334(b323):
     - Packet IDs 50-58
     """
     version = 334
+    header_size = 7
 
     @classmethod
     def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:
