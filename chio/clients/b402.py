@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b374 import b374
+from .b388 import b388
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b402(b374):
+class b402(b388):
     """
     b402 adds support for changing host players inside multiplayer matches.
     """
