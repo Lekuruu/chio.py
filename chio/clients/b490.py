@@ -7,7 +7,8 @@ from ..io import *
 
 class b490(b489):
     """
-    b490 now sends the beatmap ID in user status updates.
+    b490 now sends the beatmap ID in user status updates and
+    can request a list of set IDs inside of the beatmap info request.
     """
     version = 490
 
@@ -43,3 +44,10 @@ class b490(b489):
             status.beatmap_id = read_s32(stream)
 
         return status
+    
+    @classmethod
+    def read_beatmap_info_request(cls, stream: MemoryStream) -> BeatmapInfoRequest:
+        return BeatmapInfoRequest(
+            [read_string(stream) for _ in range(read_u32(stream))],
+            [read_s32(stream) for _ in range(read_u32(stream))]
+        )
