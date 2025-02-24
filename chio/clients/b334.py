@@ -166,7 +166,7 @@ class b334(b323):
         write_u8(stream, frame.hp)
 
     @classmethod
-    def read_score_frame(cls, stream: Stream) -> ScoreFrame:
+    def read_score_frame(cls, stream: MemoryStream) -> ScoreFrame:
         frame = ScoreFrame(
             time=read_s32(stream),
             id=read_u8(stream),
@@ -213,7 +213,7 @@ class b334(b323):
         return stream.data
 
     @classmethod
-    def read_match(cls, stream: Stream) -> Match:
+    def read_match(cls, stream: MemoryStream) -> Match:
         match = Match()
         match.id = read_u8(stream)
         match.in_progress = read_boolean(stream)

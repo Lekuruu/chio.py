@@ -16,5 +16,5 @@ class b342(b340):
         yield PacketType.BanchoMatchSkip, b''
 
     @classmethod
-    def read_match_skip_request(cls, stream: Stream) -> None:
+    def read_match_skip_request(cls, stream: MemoryStream) -> None:
         pass

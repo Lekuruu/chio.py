@@ -35,7 +35,7 @@ class b470(b452):
         return stream.data
 
     @classmethod
-    def read_match(cls, stream: Stream) -> Match:
+    def read_match(cls, stream: MemoryStream) -> Match:
         match = Match()
         match.id = read_u8(stream)
         match.in_progress = read_boolean(stream)

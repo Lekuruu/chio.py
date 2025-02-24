@@ -83,5 +83,5 @@ class b323(b320):
         yield next(cls.write_user_stats(info))
 
     @classmethod
-    def read_match_change_beatmap(cls, stream: Stream) -> Match:
+    def read_match_change_beatmap(cls, stream: MemoryStream) -> Match:
         return cls.read_match(stream)

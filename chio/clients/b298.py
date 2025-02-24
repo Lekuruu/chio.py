@@ -61,39 +61,39 @@ class b298(b296):
         yield PacketType.BanchoFellowSpectatorLeft, stream.data
 
     @classmethod
-    def read_lobby_join(cls, stream: Stream) -> None:
+    def read_lobby_join(cls, stream: MemoryStream) -> None:
         pass
 
     @classmethod
-    def read_lobby_part(cls, stream: Stream) -> None:
+    def read_lobby_part(cls, stream: MemoryStream) -> None:
         pass
 
     @classmethod
-    def read_match_create(cls, stream: Stream) -> Match:
+    def read_match_create(cls, stream: MemoryStream) -> Match:
         return cls.read_match(stream)
 
     @classmethod
-    def read_match_join(cls, stream: Stream) -> int:
+    def read_match_join(cls, stream: MemoryStream) -> int:
         return read_s32(stream)
 
     @classmethod
-    def read_match_part(cls, stream: Stream) -> None:
+    def read_match_part(cls, stream: MemoryStream) -> None:
         pass
 
     @classmethod
-    def read_match_change_slot(cls, stream: Stream) -> int:
+    def read_match_change_slot(cls, stream: MemoryStream) -> int:
         return read_s32(stream)
     
     @classmethod
-    def read_match_ready(cls, stream: Stream) -> None:
+    def read_match_ready(cls, stream: MemoryStream) -> None:
         pass
 
     @classmethod
-    def read_match_lock(cls, stream: Stream) -> int:
+    def read_match_lock(cls, stream: MemoryStream) -> int:
         return read_s32(stream)
 
     @classmethod
-    def read_match_change_settings(cls, stream: Stream) -> Match:
+    def read_match_change_settings(cls, stream: MemoryStream) -> Match:
         return cls.read_match(stream)
 
     @classmethod
@@ -131,7 +131,7 @@ class b298(b296):
         return stream.data
     
     @classmethod
-    def read_match(cls, stream: Stream) -> Match:
+    def read_match(cls, stream: MemoryStream) -> Match:
         match = Match()
         match.id = read_u8(stream)
         match.type = MatchType(read_u8(stream))

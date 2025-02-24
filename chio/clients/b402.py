@@ -12,7 +12,7 @@ class b402(b388):
     version = 402
 
     @classmethod
-    def read_match_transfer_host(cls, stream: Stream) -> int:
+    def read_match_transfer_host(cls, stream: MemoryStream) -> int:
         return read_s32(stream)
 
     @classmethod
@@ -38,7 +38,7 @@ class b402(b388):
         return stream.data
 
     @classmethod
-    def read_match(cls, stream: Stream) -> Match:
+    def read_match(cls, stream: MemoryStream) -> Match:
         match = Match()
         match.id = read_u8(stream)
         match.in_progress = read_boolean(stream)

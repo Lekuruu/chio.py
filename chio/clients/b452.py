@@ -41,9 +41,9 @@ class b452(b425):
         yield PacketType.BanchoFriendsList, stream.data
 
     @classmethod
-    def read_friends_add(cls, stream: Stream) -> int:
+    def read_friends_add(cls, stream: MemoryStream) -> int:
         return read_s32(stream)
 
     @classmethod
-    def read_friends_remove(cls, stream: Stream) -> int:
+    def read_friends_remove(cls, stream: MemoryStream) -> int:
         return read_s32(stream)

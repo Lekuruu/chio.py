@@ -33,5 +33,5 @@ class b340(b338):
         return packet.value
 
     @classmethod
-    def read_match_change_beatmap(cls, stream: Stream) -> ...:
+    def read_match_change_beatmap(cls, stream: MemoryStream) -> ...:
         ...
