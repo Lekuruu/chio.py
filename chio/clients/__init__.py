@@ -18,6 +18,7 @@ from .b374 import b374
 from .b388 import b388
 from .b402 import b402
 from .b425 import b425
+from .b452 import b452
 
 ClientDict = {
     282: b282(), 290: b282(),
@@ -37,7 +38,8 @@ ClientDict = {
     374: b374(), 387: b374(),
     388: b388(), 401: b388(),
     402: b402(), 424: b402(),
-    425: b425()
+    425: b425(), 451: b425(),
+    452: b452()
 }
 
 HighestVersion = max(ClientDict.keys())
