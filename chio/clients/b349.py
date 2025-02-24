@@ -16,9 +16,9 @@ class b349(b342):
         return read_string(stream)
 
     @classmethod
-    def write_channel_join_success(cls, channel: Channel) -> Iterable[Tuple[PacketType, bytes]]:
+    def write_channel_join_success(cls, channel: str) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_string(stream, channel.name)
+        write_string(stream, channel)
         yield PacketType.BanchoChannelJoinSuccess, stream.data
 
     @classmethod
