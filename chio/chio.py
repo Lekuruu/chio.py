@@ -1,7 +1,7 @@
 
-from typing import List, Any, Tuple
+from .io import Stream, MemoryStream
 from .constants import PacketType
-from .io import Stream
+from typing import Any, Tuple
 
 class BanchoIO:
     """
@@ -35,3 +35,20 @@ class BanchoIO:
         Returns whether the current client version implements the given packet.
         """
         return getattr(cls, packet.handler_name, None) is not None
+
+    @classmethod
+    def read_packet_from_bytes(cls, data: bytes) -> Tuple[PacketType, Any]:
+        """
+        Reads a packet from the given bytes, and returns the packet type and decoded data.
+        """
+        stream = MemoryStream(data)
+        return cls.read_packet(stream)
+
+    @classmethod
+    def write_packet_to_bytes(cls, packet: PacketType, *args) -> bytes:
+        """
+        Encodes a packet and returns it as bytes.
+        """
+        stream = MemoryStream()
+        cls.write_packet(stream, packet, *args)
+        return stream.data
