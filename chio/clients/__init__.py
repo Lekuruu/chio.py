@@ -1,4 +1,5 @@
 
+from typing import Dict
 from ..chio import BanchoIO
 from .b282 import b282
 from .b291 import b291
@@ -26,7 +27,7 @@ from .b490 import b490
 from .b504 import b504
 from .b536 import b536
 
-ClientDict = {
+ClientDict: Dict[int, BanchoIO] = {
     282: b282(), 290: b282(),
     291: b291(), 293: b291(),
     294: b294(), 295: b294(),
@@ -73,3 +74,6 @@ def select_client(version: int) -> BanchoIO:
 
     # This should never happen, but just in case
     return ClientDict[HighestVersion]
+
+def set_protocol_version(client: int, version: int) -> None:
+    ClientDict[client].protocol_version = version
