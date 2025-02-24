@@ -7,7 +7,7 @@ from ..io import *
 
 class b452(b425):
     """
-    b452 adds user permissions to the user's stats.
+    b452 adds friend management & user permissions to the user's stats.
     """
     version = 452
 
@@ -33,3 +33,17 @@ class b452(b425):
         write_string(stream, info.presence.city)
         write_u8(stream, info.presence.permissions)
         yield PacketType.BanchoUserStats, stream.data
+
+    @classmethod
+    def write_friends_list(cls, friends: Iterable[int]) -> Iterable[Tuple[PacketType, bytes]]:
+        stream = MemoryStream()
+        write_list_s32(stream, list(friends))
+        yield PacketType.BanchoFriendsList, stream.data
+
+    @classmethod
+    def read_friends_add(cls, stream: Stream) -> int:
+        return read_s32(stream)
+
+    @classmethod
+    def read_friends_remove(cls, stream: Stream) -> int:
+        return read_s32(stream)

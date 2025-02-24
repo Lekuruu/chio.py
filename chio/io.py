@@ -112,6 +112,9 @@ def read_bool_list(stream: Stream, size: int = 8) -> List[bool]:
     byte = read_u8(stream)
     return [((byte >> index) & 1) > 0 for index in range(size)]
 
+def read_list_s32(stream: Stream) -> List[int]:
+    return [read_s32(stream) for _ in range(read_s32(stream))]
+
 def write_s8(stream: Stream, value: int) -> None:
     stream.write(pack("<b", value))
 
@@ -185,3 +188,9 @@ def write_bool_list(stream: Stream, values: List[bool]) -> None:
             byte = byte << 1
 
     write_u8(stream, byte)
+
+def write_list_s32(stream: Stream, values: List[int]) -> None:
+    write_s32(stream, len(values))
+
+    for value in values:
+        write_s32(stream, value)
