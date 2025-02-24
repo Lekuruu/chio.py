@@ -13,7 +13,6 @@ class b282(BanchoIO):
     Every following version will be based on it.
     """
     version = 282
-    slot_size = 8
 
     @classmethod
     def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:

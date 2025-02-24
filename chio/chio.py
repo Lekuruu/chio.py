@@ -11,6 +11,7 @@ class BanchoIO:
     version: int = 0
     slot_size: int = 8
     header_size: int = 6
+    requires_status_updates: bool = True
 
     @classmethod
     def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:
