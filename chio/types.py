@@ -34,6 +34,14 @@ class UserPresence:
     latitude: float
     city: str
 
+    @property
+    def country_name(self) -> str:
+        return CountryNames[self.country_index]
+
+    @property
+    def country_acronym(self) -> str:
+        return CountryAcronyms[self.country_index]
+
 @dataclass
 class UserStats:
     rank: int
