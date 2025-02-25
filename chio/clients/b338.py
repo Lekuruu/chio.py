@@ -53,9 +53,8 @@ class b338(b334):
 
     @classmethod
     def write_status_update(cls, status: UserStatus) -> bytes:
-        action = status.action if not status.update_stats else Status.StatsUpdate
         stream = MemoryStream()
-        write_u8(stream, action)
+        write_u8(stream, status.action)
 
         beatmap_update = True
         write_boolean(stream, beatmap_update)
