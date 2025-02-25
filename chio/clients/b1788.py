@@ -58,7 +58,7 @@ class b1788(b1600):
 
         write_u32(stream, user_id)
         write_string(stream, info.name)
-        write_u8(stream, AvatarExtension.Empty)
+        write_u8(stream, AvatarExtension.Png)
         write_u8(stream, info.presence.timezone+24)
         write_string(stream, info.presence.city)
         write_u8(stream, info.presence.permissions)
