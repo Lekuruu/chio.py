@@ -30,7 +30,7 @@ class b1788(b1600):
     def write_user_stats(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
 
-        # UserIDs are now negative if they are IRC users
+        # User IDs are now negative if they are IRC users
         user_id = (
             abs(info.id) if not info.presence.is_irc else
             -abs(info.id)
@@ -49,7 +49,7 @@ class b1788(b1600):
     def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
 
-        # UserIDs are now negative if they are IRC users
+        # User IDs are now negative if they are IRC users
         user_id = (
             abs(info.id) if not info.presence.is_irc else
             -abs(info.id)
