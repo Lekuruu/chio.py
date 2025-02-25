@@ -7,7 +7,7 @@ from ..io import *
 
 class b1797(b1796):
     """
-    b1796
+    b1797 adds the rank field to re-enable user rank sorting.
     """
     version = 1797
     protocol_version = 7
