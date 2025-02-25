@@ -30,6 +30,7 @@ from .b558 import b558
 from .b591 import b591
 from .b613 import b613
 from .b634 import b634
+from .b695 import b695
 
 ClientDict: Dict[int, BanchoIO] = {
     282: b282(), 290: b282(),
@@ -60,7 +61,8 @@ ClientDict: Dict[int, BanchoIO] = {
     558: b558(), 590: b558(),
     591: b591(), 612: b591(),
     613: b613(), 633: b613(),
-    634: b634()
+    634: b634(), 678: b634(),
+    695: b695()
 }
 
 HighestVersion = max(ClientDict.keys())
