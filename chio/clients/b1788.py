@@ -16,6 +16,7 @@ class b1788(b1600):
     - The restart packet got introduced, which informs the client that bancho is restarting
     """
     version = 1788
+    protocol_version = 6
     requires_status_updates = False
 
     @classmethod
