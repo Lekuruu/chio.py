@@ -38,6 +38,7 @@ from .b1788 import b1788
 from .b1796 import b1796
 from .b1797 import b1797
 from .b1817 import b1817
+from .b20120518 import b20120518
 
 ClientDict: Dict[int, BanchoIO] = {
     282: b282(), 290: b282(),
@@ -75,7 +76,8 @@ ClientDict: Dict[int, BanchoIO] = {
     1600: b1600(), 1787: b1600(),
     1788: b1788(), 1795: b1788(),
     1796: b1796(), 1797: b1797(),
-    1817: b1817()
+    1817: b1817(), 20120517: b1817(),
+    20120518: b20120518()
 }
 
 HighestVersion = max(ClientDict.keys())
