@@ -14,7 +14,7 @@ class b20121225(b20121224):
     protocol_version = 15
 
     @classmethod
-    def write_message(cls, message) -> Iterable[Tuple[PacketType, bytes]]:
+    def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_string(stream, message.sender)
         write_string(stream, message.content)
