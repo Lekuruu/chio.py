@@ -29,7 +29,7 @@ class UserPresence:
     is_irc: bool
     timezone: int
     country_index: int
-    permissions: int
+    permissions: Permissions
     longitude: float
     latitude: float
     city: str
