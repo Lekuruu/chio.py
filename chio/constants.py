@@ -130,8 +130,8 @@ class PacketType(IntEnum):
     BanchoUserPresenceBundle       = 96
     OsuPresenceRequest             = 97
     OsuPresenceRequestAll          = 98
-    OsuChangeFriendOnlyDMs         = 99
-    BanchoUserDMsBlocked           = 100
+    OsuChangeFriendOnlyDms         = 99
+    BanchoUserDmsBlocked           = 100
     BanchoTargetIsSilenced         = 101
     BanchoVersionUpdateForced      = 102
     BanchoSwitchServer             = 103
