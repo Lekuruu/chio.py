@@ -12,8 +12,8 @@ class b20130131(b20130118):
     version = 20130131
 
     @classmethod
-    def write_user_dms_blocked(cls, msg: Message) -> Iterable[Tuple[PacketType, bytes]]:
-        _, data = cls.write_message(msg)
+    def write_user_dms_blocked(cls, username: str) -> Iterable[Tuple[PacketType, bytes]]:
+        _, data = cls.write_message(Message("", "", username))
         yield PacketType.BanchoUserDmsBlocked, data
 
     @classmethod
