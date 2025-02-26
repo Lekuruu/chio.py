@@ -14,5 +14,5 @@ class b20130209(b20130131):
 
     @classmethod
     def write_target_is_silenced(cls, username: str) -> Iterable[Tuple[PacketType, bytes]]:
-        _, data = cls.write_message(Message("", "", username))
+        _, data = next(cls.write_message(Message("", "", username)))
         yield PacketType.BanchoTargetIsSilenced, data

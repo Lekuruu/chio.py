@@ -13,7 +13,7 @@ class b20130131(b20130118):
 
     @classmethod
     def write_user_dms_blocked(cls, username: str) -> Iterable[Tuple[PacketType, bytes]]:
-        _, data = cls.write_message(Message("", "", username))
+        _, data = next(cls.write_message(Message("", "", username)))
         yield PacketType.BanchoUserDmsBlocked, data
 
     @classmethod
