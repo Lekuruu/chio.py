@@ -7,9 +7,10 @@ from ..io import *
 
 class b20130303(b20130209):
     """
-    b20130303 adds the actual freemod implementation
+    b20130303 adds the actual freemod implementation.
     """
     version = 20130303
+    protocol_version = 17
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
