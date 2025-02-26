@@ -151,12 +151,12 @@ class b282(BanchoIO):
 
     @classmethod
     def write_user_quit(cls, quit: UserQuit) -> Iterable[Tuple[PacketType, bytes]]:
-        if quit.info.presence.is_irc and quit.quit_state != QuitState.IrcRemaining:
+        if quit.info.presence.is_irc and quit.state != QuitState.IrcRemaining:
             stream = MemoryStream()
             write_string(stream, quit.info.name)
             return [(PacketType.BanchoIrcQuit, stream.data)]
 
-        if quit.quit_state == QuitState.OsuRemaining:
+        if quit.state == QuitState.OsuRemaining:
             return []
 
         packet, data = cls.write_user_stats(quit.info)

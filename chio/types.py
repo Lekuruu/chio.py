@@ -85,7 +85,7 @@ class UserInfo:
 @dataclass
 class UserQuit:
     info: UserInfo
-    quit_state: int
+    state: QuitState
 
 @dataclass
 class Message:
