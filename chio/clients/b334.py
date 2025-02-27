@@ -146,11 +146,6 @@ class b334(b323):
 
     @classmethod
     def write_score_frame(cls, stream: MemoryStream, frame: ScoreFrame) -> None:
-        if frame.hp == 0:
-            # Used by old clients to determine
-            # if the player is passing
-            frame.hp = 254
-
         write_s32(stream, frame.time)
         write_u8(stream, frame.id)
         write_u16(stream, frame.total_300)
@@ -167,7 +162,7 @@ class b334(b323):
 
     @classmethod
     def read_score_frame(cls, stream: MemoryStream) -> ScoreFrame:
-        frame = ScoreFrame(
+        return ScoreFrame(
             time=read_s32(stream),
             id=read_u8(stream),
             total_300=read_u16(stream),
@@ -183,13 +178,6 @@ class b334(b323):
             hp=read_u8(stream),
             tag_byte=0
         )
-
-        if frame.hp >= 254:
-            # Used by old clients to determine
-            # if the player is passing
-            frame.hp = 0
-
-        return frame
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:

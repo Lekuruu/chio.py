@@ -81,11 +81,6 @@ class b535(b504):
 
     @classmethod
     def write_score_frame(cls, stream: MemoryStream, frame: ScoreFrame) -> None:
-        if frame.hp == 0:
-            # Used by old clients to determine
-            # if the player is passing
-            frame.hp = 254
-
         write_s32(stream, frame.time)
         write_u8(stream, frame.id)
         write_u16(stream, frame.total_300)
@@ -100,7 +95,7 @@ class b535(b504):
         write_boolean(stream, frame.perfect)
         write_u8(stream, frame.hp)
         write_u8(stream, frame.tag_byte)
-    
+
     @classmethod
     def read_score_frame(cls, stream: MemoryStream) -> ScoreFrame:
         frame = ScoreFrame(
@@ -124,11 +119,6 @@ class b535(b504):
             # Similar to the scoring type in the match data; the
             # client has a new implementation for the tag byte
             frame.tag_byte = read_u8(stream)
-
-        if frame.hp >= 254:
-            # Used by old clients to determine
-            # if the player is passing
-            frame.hp = 0
 
         return frame
     
