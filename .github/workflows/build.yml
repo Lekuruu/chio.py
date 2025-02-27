@@ -73,7 +73,7 @@ jobs:
           python setup.py build
 
       - name: Upload distribution folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: build
