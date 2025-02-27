@@ -26,13 +26,13 @@ __all__ = [
 
 @dataclass
 class UserPresence:
-    is_irc: bool
-    timezone: int
-    country_index: int
-    permissions: Permissions
-    longitude: float
-    latitude: float
-    city: str
+    is_irc: bool = False
+    timezone: int = 0
+    country_index: int = 0
+    permissions: Permissions = Permissions.Regular
+    longitude: float = 0.0
+    latitude: float = 0.0
+    city: str = ""
 
     @property
     def country_name(self) -> str:
@@ -42,14 +42,15 @@ class UserPresence:
     def country_acronym(self) -> str:
         return CountryAcronyms[self.country_index]
 
+
 @dataclass
 class UserStats:
-    rank: int
-    rscore: int
-    tscore: int
-    accuracy: float
-    playcount: int
-    pp: int
+    rank: int = 0
+    rscore: int = 0
+    tscore: int = 0
+    accuracy: float = 0.0
+    playcount: int = 0
+    pp: int = 0
 
 @dataclass
 class UserStatus:
@@ -101,8 +102,8 @@ class Message:
 @dataclass
 class Channel:
     name: str
-    topic: str
-    owner: str
+    topic: str = ""
+    owner: str = "BanchoBot"
     user_count: int = 0
 
 @dataclass
@@ -112,11 +113,11 @@ class BeatmapInfo:
     beatmapset_id: int
     thread_id: int
     ranked_status: RankedStatus
-    osu_rank: Rank
-    taiko_rank: Rank
-    fruits_rank: Rank
-    mania_rank: Rank
     checksum: str
+    osu_rank: Rank = Rank.N
+    taiko_rank: Rank = Rank.N
+    fruits_rank: Rank = Rank.N
+    mania_rank: Rank = Rank.N
 
     @property
     def is_ranked(self) -> bool:
