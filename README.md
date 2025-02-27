@@ -6,12 +6,12 @@ Chio (Bancho I/O) is a python library for serializing and deserializing bancho p
 ## Usage
 
 Install the library with pip:
-```
+```shell
 pip install chio
 ```
 
 Also installable from source directly, if preferred:
-```
+```shell
 pip install git+https://github.com/Lekuruu/chio.py
 ```
 
@@ -21,7 +21,7 @@ import chio
 # Chio expects you to have the `chio.Stream` class
 # implemented, i.e. it needs a `read()` and `write()`
 # function to work properly
-client_stream = chio.Stream()
+stream = chio.Stream()
 
 # The client version is how chio determines what
 # protocol to use. This one can be parsed through the
@@ -54,11 +54,12 @@ io.write_packet(
     chio.Message(content="Hello, World!", sender="BanchoBot", target="#osu")
 )
 
-packet, data = self.io.read_packet(client_stream)
+packet, data = io.read_packet(stream)
 print(f"Received packet '{packet.name}' with {data}.")
+```
 
-# You can also read/write from bytes directly, for example
-# when using HTTP clients instead of TCP clients.
+You can also read & write from bytes directly, for example when using HTTP clients instead of TCP clients.
+```python
 encoded = io.write_packet_to_bytes(chio.PacketType.BanchoLoginReply, info.id)
-packet, data = self.io.read_packet_from_bytes(b"...")
+packet, data = io.read_packet_from_bytes(b"...")
 ```
