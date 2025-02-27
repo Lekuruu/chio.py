@@ -155,6 +155,9 @@ class ScoreFrame:
     perfect: bool
     hp: int
     tag_byte: int
+    using_scorev2: bool = False
+    combo_portion: float = 0.0
+    bonus_portion: float = 0.0
 
     @property
     def passed(self) -> bool:
