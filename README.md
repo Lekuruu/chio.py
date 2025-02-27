@@ -5,41 +5,51 @@ Chio (Bancho I/O) is a python library for serializing and deserializing bancho p
 
 ## Usage
 
+Install the library with pip:
+```
+pip install chio
+```
+
+Also installable from source directly, if preferred:
+```
+pip install git+https://github.com/Lekuruu/chio.py
+```
+
 ```python
 import chio
 
-# Assuming you got a client already connected
-client_stream = ...
+# Chio expects you to have the `chio.Stream` class
+# implemented, i.e. it needs a `read()` and `write()`
+# function to work properly
+client_stream = chio.Stream()
+
+# The client version is how chio determines what
+# protocol to use. This one can be parsed through the
+# initial login request, that the client makes.
 client_version = 282
 
 info = chio.UserInfo(
     id=2,
-    name="Levi",
-    presence=chio.UserPresence(
-        is_irc=False,
-        timezone=0,
-        country_index=0,
-        permissions=Permissions.Regular|Permissions.Supporter,
-        longitude=0,
-        latitude=0,
-        city="idk, figure it out yourself",
-    ),
-    stats=chio.UserStats(
-        rank=1,
-        rscore=245768,
-        tscore=46794679,
-        accuracy=0.99367,
-        playcount=69,
-        pp=4200,
-    ),
+    name="peppy",
+    presence=chio.UserPresence(),
+    stats=chio.UserStats(),
     status=chio.UserStatus()
 )
 
+# Select a client protocol to use for encoding/decoding
 io = chio.select_client(client_version)
-io.write_packet(chio.PacketType.BanchoLoginReply, info.id)
-io.write_packet(chio.PacketType.BanchoUserPresence, info)
-io.write_packet(chio.PacketType.BanchoUserStats, info)
+
+# Send the users information (userId, presence & stats)
+io.write_packet(stream, chio.PacketType.BanchoLoginReply, info.id)
+io.write_packet(stream, chio.PacketType.BanchoUserPresence, info)
+io.write_packet(stream, chio.PacketType.BanchoUserStats, info)
+
+# Force client to join #osu
+io.write_packet(stream, chio.PacketType.BanchoChannelJoinSuccess, "#osu")
+
+# Send a message in #osu from BanchoBot
 io.write_packet(
+    stream,
     chio.PacketType.BanchoMessage,
     chio.Message(content="Hello, World!", sender="BanchoBot", target="#osu")
 )
@@ -47,7 +57,8 @@ io.write_packet(
 packet, data = self.io.read_packet(client_stream)
 print(f"Received packet '{packet.name}' with {data}.")
 
-# You can also read/write from bytes directly
+# You can also read/write from bytes directly, for example
+# when using HTTP clients instead of TCP clients.
 encoded = io.write_packet_to_bytes(chio.PacketType.BanchoLoginReply, info.id)
 packet, data = self.io.read_packet_from_bytes(b"...")
 ```
