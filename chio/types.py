@@ -178,6 +178,7 @@ class ReplayFrameBundle:
     frames: List[ReplayFrame] = field(default_factory=list)
     frame: Optional[ScoreFrame] = None
     extra: int = -1
+    sequence: Optional[int] = None
 
 @dataclass
 class MatchSlot:
