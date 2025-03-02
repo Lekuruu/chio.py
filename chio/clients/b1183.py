@@ -31,7 +31,7 @@ class b1183(b695):
         write_string(stream, info.name)
         write_string(stream, info.avatar_filename)
         write_u8(stream, info.presence.timezone+24)
-        write_string(stream, info.presence.city)
+        write_string(stream, info.presence.country_string)
         write_u8(stream, info.presence.permissions)
 
         if cls.protocol_version >= 5:

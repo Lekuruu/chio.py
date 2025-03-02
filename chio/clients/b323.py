@@ -63,7 +63,7 @@ class b323(b320):
             write_u32(stream, info.stats.rank)
             write_string(stream, info.avatar_filename)
             write_u8(stream, info.presence.timezone+24)
-            write_string(stream, info.presence.city)
+            write_string(stream, info.presence.country_string)
 
         stream.write(cls.write_status_update(info.status))
         yield PacketType.BanchoUserStats, stream.data

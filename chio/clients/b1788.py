@@ -50,7 +50,7 @@ class b1788(b1600):
         write_string(stream, info.name)
         write_u8(stream, AvatarExtension.Png)
         write_u8(stream, info.presence.timezone+24)
-        write_string(stream, info.presence.city)
+        write_string(stream, info.presence.country_string)
         write_u8(stream, info.presence.permissions)
         write_f32(stream, info.presence.longitude)
         write_f32(stream, info.presence.latitude)

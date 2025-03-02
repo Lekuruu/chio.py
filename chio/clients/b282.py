@@ -133,7 +133,7 @@ class b282(BanchoIO):
         write_string(stream, info.avatar_filename)
         stream.write(cls.write_status_update(info.status))
         write_u8(stream, info.presence.timezone+24)
-        write_string(stream, info.presence.city)
+        write_string(stream, info.presence.country_string)
         yield PacketType.BanchoUserStats, stream.data
 
     @classmethod
