@@ -159,7 +159,7 @@ class b282(BanchoIO):
         if quit.state == QuitState.OsuRemaining:
             return []
 
-        packet, data = cls.write_user_stats(quit.info)
+        packet, data = next(cls.write_user_stats(quit.info))
         packet = PacketType.BanchoUserQuit
         yield packet, data
 
