@@ -42,6 +42,13 @@ class UserPresence:
     def country_acronym(self) -> str:
         return CountryAcronyms[self.country_index]
 
+    @property
+    def country_string(self) -> str:
+        return (
+            self.country_name if not self.city else
+            f"{self.country_name} / {self.city}"
+        )
+
 
 @dataclass
 class UserStats:

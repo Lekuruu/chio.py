@@ -577,7 +577,7 @@ Countries = {
     "ZW": "Zimbabwe",
     "XX": "Unknown",
     "SP": "Satellite Provider",
-    "XX": "Other",
+    "XO": "Other",
     "AX": "Åland Islands",
     "GG": "Guernsey",
     "IM": "Isle of Man",
