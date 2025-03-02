@@ -15,14 +15,7 @@ class b1796(b1788):
     @classmethod
     def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-
-        # User IDs are negative if they are IRC users
-        user_id = (
-            abs(info.id) if not info.presence.is_irc else
-            -abs(info.id)
-        )
-
-        write_u32(stream, user_id)
+        write_u32(stream, cls.convert_user_id(info))
         write_string(stream, info.name)
         write_u8(stream, AvatarExtension.Png)
         write_u8(stream, info.presence.timezone+24)

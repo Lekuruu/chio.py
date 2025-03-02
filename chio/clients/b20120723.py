@@ -15,14 +15,7 @@ class b20120723(b20120703):
     @classmethod
     def write_user_stats(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-
-        # User IDs are negative if they are IRC users
-        user_id = (
-            abs(info.id) if not info.presence.is_irc else
-            -abs(info.id)
-        )
-
-        write_u32(stream, user_id)
+        write_u32(stream, cls.convert_user_id(info))
         stream.write(cls.write_status_update(info.status))
         write_u64(stream, info.stats.rscore)
         write_f32(stream, info.stats.accuracy)
