@@ -15,6 +15,7 @@ from .b340 import b340
 from .b342 import b342
 from .b349 import b349
 from .b354 import b354
+from .b365 import b365
 from .b374 import b374
 from .b388 import b388
 from .b402 import b402
@@ -30,6 +31,7 @@ from .b558 import b558
 from .b591 import b591
 from .b613 import b613
 from .b634 import b634
+from .b659 import b659
 from .b695 import b695
 from .b1183 import b1183
 from .b1365 import b1365
@@ -85,7 +87,8 @@ ClientDict: Dict[int, BanchoIO] = {
     340: b340(), 341: b340(),
     342: b342(), 348: b342(),
     349: b349(), 353: b349(),
-    354: b354(), 373: b354(),
+    354: b354(), 364: b354(),
+    365: b365(), 373: b365(),
     374: b374(), 387: b374(),
     388: b388(), 401: b388(),
     402: b402(), 424: b402(),
@@ -100,7 +103,8 @@ ClientDict: Dict[int, BanchoIO] = {
     558: b558(), 590: b558(),
     591: b591(), 612: b591(),
     613: b613(), 633: b613(),
-    634: b634(), 678: b634(),
+    634: b634(), 658: b634(),
+    659: b659(), 694: b659(),
     695: b695(), 1182: b695(),
     1183: b1183(), 1364: b1183(),
     1365: b1365(), 1599: b1365(),

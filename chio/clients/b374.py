@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b354 import b354
+from .b365 import b365
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b374(b354):
+class b374(b365):
     """
     b374 adds the ButtonState constant, which deprectaes
     the old button left/right booleans.

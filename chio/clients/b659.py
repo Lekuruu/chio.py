@@ -1,15 +1,15 @@
 
 from typing import Iterable, Tuple
-from .b659 import b659
+from .b634 import b634
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b695(b659):
+class b659(b634):
     """
-    b695 changes the rank datatype from u16 to s32.
+    b659 fixes the level overflow bug from b365.
     """
-    version = 695
+    version = 659
 
     @classmethod
     def write_user_stats(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
@@ -26,7 +26,7 @@ class b695(b659):
         write_f32(stream, info.stats.accuracy)
         write_u32(stream, info.stats.playcount)
         write_u64(stream, info.stats.tscore)
-        write_u32(stream, info.stats.rank)
+        write_u16(stream, info.stats.rank)
         yield PacketType.BanchoUserStats, stream.data
 
     @classmethod
@@ -44,7 +44,7 @@ class b695(b659):
         write_f32(stream, info.stats.accuracy)
         write_u32(stream, info.stats.playcount)
         write_u64(stream, info.stats.tscore)
-        write_u32(stream, info.stats.rank)
+        write_u16(stream, info.stats.rank)
         write_string(stream, info.name)
         write_string(stream, info.avatar_filename)
         write_u8(stream, info.presence.timezone+24)

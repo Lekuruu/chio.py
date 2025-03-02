@@ -19,6 +19,9 @@ class b452(b425):
             yield next(cls.write_irc_join(info.name))
             return
 
+        # NOTE: See b365 for the level overflow bug
+        info.stats.tscore = min(info.stats.tscore, 17705429348)
+
         write_u32(stream, info.id)
         write_u8(stream, Completeness.Full)
         stream.write(cls.write_status_update(info.status))
