@@ -1,6 +1,10 @@
 
 # Chio
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Lekuruu/chio.py/.github%2Fworkflows%2Fbuild.yml)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/chio)
+![GitHub License](https://img.shields.io/github/license/Lekuruu/chio.py)
+
 **Chio (Bancho I/O)** is a python library for serializing and deserializing bancho packets, with support for all versions of osu! that use bancho (2008-2025).
 
 It was made with the intention of documenting everything about the bancho protocol, and to provide a base for server frameworks, since the packet handling part is most often the annoying part.  
