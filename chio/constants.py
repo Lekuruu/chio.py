@@ -23,6 +23,7 @@ __all__ = [
     "SlotStatus",
     "SlotTeam",
     "RankedStatus",
+    "InactiveAccountMessage",
     "Countries",
     "CountryNames",
     "CountryAcronyms"
@@ -329,6 +330,11 @@ class RankedStatus(IntEnum):
     Ranked    = 1
     Approved  = 2
     Qualified = 3
+
+InactiveAccountMessage = (
+    "Your account is not yet activated. "
+    "Please check your email for activation instructions!"
+)
 
 Countries = {
     "XX": "Unknown",

@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b20130604 import b20130604
+from .b20130801 import b20130801
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b20140528(b20130604):
+class b20140528(b20130801):
     """
     b20140528 allows for 16-player multiplayer matches, if
     the protocol version is set to 19 or higher.
