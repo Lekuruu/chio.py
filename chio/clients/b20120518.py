@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b1817 import b1817
+from .b1820 import b1820
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b20120518(b1817):
+class b20120518(b1820):
     """
     b20120518 introduced the "ChannelInfoComplete" packet.
     """
