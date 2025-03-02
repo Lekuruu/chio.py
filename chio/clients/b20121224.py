@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b20121212 import b20121212
+from .b20121221 import b20121221
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b20121224(b20121212):
+class b20121224(b20121221):
     """
     b20121224 deprecates the irc quit packet, in favor of a unified quit packet.
     Additionally it changes the way how user presences are sent to the client,
