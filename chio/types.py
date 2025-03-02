@@ -162,7 +162,7 @@ class ScoreFrame:
 
     @property
     def passed(self) -> bool:
-        return False # TODO
+        return self.hp != 254
 
     @property
     def checksum(self) -> str:
