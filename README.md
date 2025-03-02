@@ -12,13 +12,14 @@ Having *any* client be able to connect to it is a very sweet addition on top, if
 
 ## Usage
 
-Install the library with pip:
+This library requires an installation of python **3.8** or higher.  
+You can install the library with pip:
 
 ```shell
 pip install chio
 ```
 
-You can also install it from source directly, if preferred:
+Or you can also install it from source directly, if preferred:
 
 ```shell
 pip install git+https://github.com/Lekuruu/chio.py
