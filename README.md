@@ -189,7 +189,7 @@ Here is a list of them for each packet:
 |       BanchoSwitchServer       |       `int` (After Idle Time)       |
 |    BanchoAccountRestricted     |                 N/A                 |
 |           BanchoRTX            |           `str` (Message)           |
-|         OsuMatchAbort          |                 N/A                 |
+|        BanchoMatchAbort        |                 N/A                 |
 |  BanchoSwitchTournamentServer  |           `str` (Server)            |
 | OsuTournamentJoinMatchChannel  |           `int` (MatchId)           |
 | OsuTournamentLeaveMatchChannel |           `int` (MatchId)           |
