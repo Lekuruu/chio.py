@@ -5,6 +5,7 @@ __version__ = "1.1.2"
 __license__ = "MIT"
 
 from .clients import select_client, set_protocol_version
+from .patching import patch
 from .chio import BanchoIO
 from .io import Stream
 from .constants import *
