@@ -10,6 +10,8 @@
 It was made with the intention of documenting everything about the bancho protocol, and to provide a base for server frameworks, since the packet handling part is most often the annoying part.  
 Having *any* client be able to connect to it is a very sweet addition on top, if you are interested in those as well.
 
+**If you wish to use this library, I would appreciate some credit for my work. Thanks!**
+
 ## Usage
 
 This library requires an installation of python **3.8** or higher.  
