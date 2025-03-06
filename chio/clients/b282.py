@@ -170,6 +170,12 @@ class b282(BanchoIO):
         yield PacketType.BanchoIrcJoin, stream.data
 
     @classmethod
+    def write_irc_quit(cls, name: str) -> Iterable[Tuple[PacketType, bytes]]:
+        stream = MemoryStream()
+        write_string(stream, name)
+        yield PacketType.BanchoIrcQuit, stream.data
+
+    @classmethod
     def write_spectator_joined(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_u32(stream, user_id)

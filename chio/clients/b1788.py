@@ -100,5 +100,9 @@ class b1788(b1600):
         return []
     
     @classmethod
+    def write_irc_quit(cls, name: str) -> Iterable[Tuple[PacketType, bytes]]:
+        return []
+    
+    @classmethod
     def read_exit(cls, stream: MemoryStream) -> bool:
         return read_s32(stream) == 1
