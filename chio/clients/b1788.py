@@ -14,6 +14,7 @@ class b1788(b1600):
     - The user status no longer contains a boolean for updates
     - IrcJoin packet is now deprecated, in favor of user IDs being negative if they are IRC users
     - The restart packet got introduced, which informs the client that bancho is restarting
+    - The exit packet now contains a boolean, which indicates if the client is exiting because of an update
     """
     version = 1788
     protocol_version = 6
@@ -97,3 +98,7 @@ class b1788(b1600):
     @classmethod
     def write_irc_join(cls, name: str) -> Iterable[Tuple[PacketType, bytes]]:
         return []
+    
+    @classmethod
+    def read_exit(cls, stream: MemoryStream) -> bool:
+        return read_s32(stream) == 1
