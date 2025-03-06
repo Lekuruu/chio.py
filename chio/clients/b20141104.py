@@ -18,5 +18,5 @@ class b20141104(b20140731):
         yield PacketType.BanchoSwitchTournamentServer, stream.data
 
     @classmethod
-    def read_match_abort(cls, stream: MemoryStream) -> None:
-        pass
+    def write_match_abort(cls) -> Iterable[Tuple[PacketType, bytes]]:
+        yield PacketType.BanchoMatchAbort, b''
