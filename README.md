@@ -81,6 +81,26 @@ encoded = io.write_packet_to_bytes(chio.PacketType.BanchoLoginReply, info.id)
 packet, data = io.read_packet_from_bytes(b"...")
 ```
 
+### Patching
+
+You are able to overwrite specifc packet readers/writers, with the `chio.patch` decorator.
+As an example, to patch the `BanchoUserStats` packet inside of `b20120723`:
+
+```python
+@chio.patch(PacketType.BanchoUserStats, 20120723)
+def write_user_stats(cls, info: UserInfo):
+    stream = MemoryStream()
+    write_u32(stream, cls.convert_user_id(info))
+    stream.write(cls.write_status_update(info.status))
+    write_u64(stream, info.stats.rscore)
+    write_f32(stream, info.stats.accuracy)
+    write_u32(stream, info.stats.playcount)
+    write_u64(stream, info.stats.tscore)
+    write_u32(stream, info.stats.rank)
+    write_u16(stream, info.stats.pp)
+    yield PacketType.BanchoUserStats, stream.data
+```
+
 ### Datatypes
 
 Depending on the packet you send or receive, you will need to account for different datatypes.  
