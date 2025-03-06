@@ -138,7 +138,7 @@ class PacketType(IntEnum):
     BanchoSwitchServer             = 103
     BanchoAccountRestricted        = 104
     BanchoRTX                      = 105
-    BanchoMatchAbort               = 106
+    OsuMatchAbort                  = 106
     BanchoSwitchTournamentServer   = 107
     OsuTournamentJoinMatchChannel  = 108
     OsuTournamentLeaveMatchChannel = 109
