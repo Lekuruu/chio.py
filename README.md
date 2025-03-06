@@ -80,3 +80,116 @@ You can also read & write from bytes directly, for example when using HTTP clien
 encoded = io.write_packet_to_bytes(chio.PacketType.BanchoLoginReply, info.id)
 packet, data = io.read_packet_from_bytes(b"...")
 ```
+
+### Datatypes
+
+Depending on the packet you send or receive, you will need to account for different datatypes.  
+Here is a list of them for each packet:
+
+|             Packet             |                Type                 |
+|:------------------------------:|:-----------------------------------:|
+|         OsuUserStatus          |          `chio.UserStatus`          |
+|           OsuMessage           |           `chio.Message`            |
+|            OsuExit             |         `bool` (IsUpdating)         |
+|     OsuStatusUpdateRequest     |                 N/A                 |
+|            OsuPong             |                 N/A                 |
+|        BanchoLoginReply        | `int` (UserId) or `chio.LoginError` |
+|         BanchoMessage          |           `chio.Message`            |
+|           BanchoPing           |                 N/A                 |
+|    BanchoIrcChangeUsername     | `str` (old name), `str` (new name)  |
+|         BanchoIrcQuit          |          `str` (Username)           |
+|        BanchoUserStats         |           `chio.UserInfo`           |
+|         BanchoUserQuit         |           `chio.UserQuit`           |
+|     BanchoSpectatorJoined      |           `int` (UserId)            |
+|      BanchoSpectatorLeft       |           `int` (UserId)            |
+|      BanchoSpectateFrames      |      `chio.ReplayFrameBundle`       |
+|       OsuStartSpectating       |           `int` (UserId)            |
+|       OsuStopSpectating        |           `int` (UserId)            |
+|       OsuSpectateFrames        |      `chio.ReplayFrameBundle`       |
+|      BanchoVersionUpdate       |                 N/A                 |
+|         OsuErrorReport         |          `str` (Exception)          |
+|        OsuCantSpectate         |                 N/A                 |
+|  BanchoSpectatorCantSpectate   |           `int` (UserId)            |
+|       BanchoGetAttention       |                 N/A                 |
+|         BanchoAnnounce         |           `str` (Message)           |
+|       OsuPrivateMessage        |           `chio.Message`            |
+|       BanchoMatchUpdate        |            `chio.Match`             |
+|         BanchoMatchNew         |            `chio.Match`             |
+|       BanchoMatchDisband       |           `int` (MatchId)           |
+|          OsuLobbyPart          |                 N/A                 |
+|          OsuLobbyJoin          |                 N/A                 |
+|         OsuMatchCreate         |            `chio.Match`             |
+|          OsuMatchJoin          |           `int` (MatchId)           |
+|          OsuMatchPart          |                 N/A                 |
+|        BanchoLobbyJoin         |           `int` (UserId)            |
+|        BanchoLobbyPart         |           `int` (UserId)            |
+|     BanchoMatchJoinSuccess     |            `chio.Match`             |
+|      BanchoMatchJoinFail       |                 N/A                 |
+|       OsuMatchChangeSlot       |           `int` (SlotId)            |
+|         OsuMatchReady          |                 N/A                 |
+|          OsuMatchLock          |           `int` (SlotId)            |
+|     OsuMatchChangeSettings     |            `chio.Match`             |
+|  BanchoFellowSpectatorJoined   |           `int` (UserId)            |
+|   BanchoFellowSpectatorLeft    |           `int` (UserId)            |
+|         OsuMatchStart          |                 N/A                 |
+|        BanchoMatchStart        |            `chio.Match`             |
+|      OsuMatchScoreUpdate       |          `chio.ScoreFrame`          |
+|     BanchoMatchScoreUpdate     |          `chio.ScoreFrame`          |
+|        OsuMatchComplete        |                 N/A                 |
+|    BanchoMatchTransferHost     |                 N/A                 |
+|       OsuMatchChangeMods       |             `chio.Mods`             |
+|      OsuMatchLoadComplete      |                 N/A                 |
+|  BanchoMatchAllPlayersLoaded   |                 N/A                 |
+|       OsuMatchNoBeatmap        |                 N/A                 |
+|        OsuMatchNotReady        |                 N/A                 |
+|         OsuMatchFailed         |                 N/A                 |
+|    BanchoMatchPlayerFailed     |           `int` (SlotId)            |
+|      BanchoMatchComplete       |                 N/A                 |
+|       OsuMatchHasBeatmap       |                 N/A                 |
+|      OsuMatchSkipRequest       |                 N/A                 |
+|        BanchoMatchSkip         |                 N/A                 |
+|         OsuChannelJoin         |        `str` (Channel Name)         |
+|    BanchoChannelJoinSuccess    |        `str` (Channel Name)         |
+|     BanchoChannelAvailable     |           `chio.Channel`            |
+|      BanchoChannelRevoked      |        `str` (Channel Name)         |
+| BanchoChannelAvailableAutojoin |           `chio.Channel`            |
+|     OsuBeatmapInfoRequest      |      `chio.BeatmapInfoRequest`      |
+|     BanchoBeatmapInfoReply     |       `chio.BeatmapInfoReply`       |
+|      OsuMatchTransferHost      |           `int` (SlotId)            |
+|     BanchoLoginPermissions     |     `chio.Permissions` or `int`     |
+|       BanchoFriendsList        |             `list[int]`             |
+|         OsuFriendsAdd          |           `int` (UserId)            |
+|        OsuFriendsRemove        |           `int` (UserId)            |
+|   BanchoProtocolNegotiation    |            N/A or `int`             |
+|       BanchoTitleUpdate        |         `chio.TitleUpdate`          |
+|       OsuMatchChangeTeam       |                 N/A                 |
+|        OsuChannelLeave         |        `str` (Channel Name)         |
+|       OsuReceiveUpdates        |        `chio.PresenceFilter`        |
+|         BanchoMonitor          |                 N/A                 |
+|    BanchoMatchPlayerSkipped    |           `int` (SlotId)            |
+|      OsuSetIrcAwayMessage      |           `chio.Message`            |
+|       BanchoUserPresence       |           `chio.UserInfo`           |
+|      OsuUserStatsRequest       |             `list[int]`             |
+|         BanchoRestart          |  `int` (Retry After Milliseconds)   |
+|           OsuInvite            |           `int` (UserId)            |
+|          BanchoInvite          |           `chio.Message`            |
+|     OsuMatchChangePassword     |            `chio.Match`             |
+|   BanchoMatchChangePassword    |        `str` (New Password)         |
+|       BanchoSilenceInfo        |    `int` (Locked Until Seconds)     |
+|     OsuTournamentMatchInfo     |           `int` (MatchId)           |
+|       BanchoUserSilenced       |           `int` (UserId)            |
+|    BanchoUserPresenceSingle    |           `int` (UserId)            |
+|    BanchoUserPresenceBundle    |        `list[int]` (UserIDs)        |
+|       OsuPresenceRequest       |        `list[int]` (UserIDs)        |
+|     OsuPresenceRequestAll      |                 N/A                 |
+|     OsuChangeFriendOnlyDms     |      `bool` (Enabled/Disabled)      |
+|      BanchoUserDmsBlocked      |           `chio.Message`            |
+|     BanchoTargetIsSilenced     |           `chio.Message`            |
+|   BanchoVersionUpdateForced    |                 N/A                 |
+|       BanchoSwitchServer       |       `int` (After Idle Time)       |
+|    BanchoAccountRestricted     |                 N/A                 |
+|           BanchoRTX            |           `str` (Message)           |
+|         OsuMatchAbort          |                 N/A                 |
+|  BanchoSwitchTournamentServer  |           `str` (Server)            |
+| OsuTournamentJoinMatchChannel  |           `int` (MatchId)           |
+| OsuTournamentLeaveMatchChannel |           `int` (MatchId)           |
