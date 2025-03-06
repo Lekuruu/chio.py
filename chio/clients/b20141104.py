@@ -7,7 +7,7 @@ from ..io import *
 
 class b20141104(b20140731):
     """
-    b20141104 allows the client to switch to a tournament server.
+    b20141104 allows the client to switch to a tournament server & abort a match.
     """
     version = 20141104
 
@@ -16,3 +16,7 @@ class b20141104(b20140731):
         stream = MemoryStream()
         write_string(stream, server)
         yield PacketType.BanchoSwitchTournamentServer, stream.data
+
+    @classmethod
+    def read_match_abort(cls, stream: MemoryStream) -> None:
+        pass
