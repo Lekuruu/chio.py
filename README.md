@@ -38,7 +38,7 @@ stream = chio.Stream()
 # The client version is how chio determines what
 # protocol to use. This one can be parsed through the
 # initial login request, that the client makes.
-client_version = 282
+client_version = 20140127
 
 # Chio has combined the user presence, stats and status
 # into one class, to support more clients. You are also
