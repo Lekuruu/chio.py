@@ -80,5 +80,4 @@ class b558(b535):
 
     @classmethod
     def read_match_change_team(cls, stream: MemoryStream) -> None:
-        # In later iterations, this actually contains data
         pass
