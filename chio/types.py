@@ -49,7 +49,6 @@ class UserPresence:
             f"{self.country_name} / {self.city}"
         )
 
-
 @dataclass
 class UserStats:
     rank: int = 0
