@@ -22,4 +22,4 @@ class b20130801(b20130604):
             reply = LoginError.InvalidLogin
             yield next(cls.write_announce(InactiveAccountMessage))
 
-        yield next(cls.write_login_reply(reply))
+        yield next(super().write_login_reply(reply))
