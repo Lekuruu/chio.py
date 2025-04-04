@@ -32,3 +32,13 @@ def patch(packet: PacketType, version: int) -> Callable:
         setattr(client, packet.handler_name, wrapper)
         return wrapper
     return decorator
+
+def set_protocol_version(protocol_version: int, version: int) -> None:
+    """Override the protocol version for a specific client version."""
+    client = ClientDict[version]
+    client.protocol_version = protocol_version
+
+def set_slot_size(slot_size: int, version: int) -> None:
+    """Override the slot size for a specific client version."""
+    client = ClientDict[version]
+    client.slot_size = slot_size
