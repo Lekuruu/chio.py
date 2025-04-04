@@ -1,7 +1,7 @@
 
 __author__ = "Lekuru"
 __email__ = "contact@lekuru.xyz"
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 __license__ = "MIT"
 
 from .clients import select_client, set_protocol_version
