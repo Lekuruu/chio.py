@@ -103,6 +103,16 @@ def write_user_stats(cls, info: UserInfo):
     yield PacketType.BanchoUserStats, stream.data
 ```
 
+Additionally, it's possible to set a certain slot size & protocol version for each version:
+
+```python
+# Set protocol version to 10 for b20120818
+chio.set_protocol_version(10, 20120818)
+
+# Override slot size to 32 for b20160716
+chio.set_slot_size(32, 20160716)
+```
+
 ### Datatypes
 
 Depending on the packet you send or receive, you will need to account for different datatypes.  
