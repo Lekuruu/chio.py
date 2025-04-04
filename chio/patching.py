@@ -1,5 +1,6 @@
 
 from typing import Callable
+from functools import wraps
 from .clients import ClientDict
 from .constants import *
 
@@ -23,9 +24,10 @@ def patch(packet: PacketType, version: int) -> Callable:
     ```
     """
     def decorator(func: Callable) -> Callable:
+        @wraps(func)
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
-        
+
         client = ClientDict[version]
         setattr(client, packet.handler_name, wrapper)
         return wrapper
