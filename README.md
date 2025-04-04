@@ -109,8 +109,8 @@ Additionally, it's possible to set a certain slot size & protocol version for ea
 # Set protocol version to 10 for b20120818
 chio.set_protocol_version(10, 20120818)
 
-# Override slot size to 32 for b20160716
-chio.set_slot_size(32, 20160716)
+# Override slot size to 32 for b20160404
+chio.set_slot_size(32, 20160404)
 ```
 
 ### Datatypes
