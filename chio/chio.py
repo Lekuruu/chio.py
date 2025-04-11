@@ -1,5 +1,5 @@
 
-from .io import Stream, MemoryStream
+from .io import Stream, MemoryStream, AsyncStream
 from .constants import PacketType
 from typing import Any, Tuple
 
@@ -26,6 +26,21 @@ class BanchoIO:
     def write_packet(cls, stream: Stream, packet: PacketType, *args) -> None:
         """
         Encodes a packet and writes it to the stream.
+        """
+        ...
+
+    @classmethod
+    async def read_packet_async(cls, stream: AsyncStream) -> Tuple[PacketType, Any]:
+        """
+        Reads a packet from the stream asynchronously, and returns the packet type and
+        decoded data. The type of the decoded data depends on the received packet.
+        """
+        ...
+
+    @classmethod
+    async def write_packet_async(cls, stream: AsyncStream, packet: PacketType, *args) -> None:
+        """
+        Encodes a packet and writes it to the stream, asynchronously.
         """
         ...
 

@@ -22,6 +22,24 @@ class Stream(ABC):
         """
         pass
 
+class AsyncStream(ABC):
+    """
+    Abstract class for asynchronous I/O operations.
+    """
+    @abstractmethod
+    async def read(self, size: int = -1) -> bytes:
+        """
+        Read a number of bytes from the stream asynchronously.
+        """
+        pass
+
+    @abstractmethod
+    async def write(self, data: bytes) -> None:
+        """
+        Write a number of bytes to the stream asynchronously.
+        """
+        pass
+
 class MemoryStream(Stream):
     """
     Stream implementation that uses an in-memory buffer.
