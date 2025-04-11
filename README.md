@@ -83,6 +83,14 @@ encoded = io.write_packet_to_bytes(chio.PacketType.BanchoLoginReply, info.id)
 packet, data = io.read_packet_from_bytes(b"...")
 ```
 
+If you are using **asyncio**, you may want to use the `read_packet_async` & `write_packet_async` functions respectively for asynchronous usage.
+This feature is currently untested, but should work in theory. If you encounter any bugs with it, don't be afraid to report them.
+
+```python
+encoded = await io.write_packet_async(stream, chio.PacketType.BanchoLoginReply, info.id)
+packet, data = await io.read_packet_async(stream)
+```
+
 ### Patching
 
 You are able to overwrite specifc packet readers/writers, with the `chio.patch` decorator.

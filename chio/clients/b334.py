@@ -63,6 +63,57 @@ class b334(b323):
             stream.write(packet_data)
 
     @classmethod
+    async def read_packet_async(cls, stream: AsyncStream) -> Tuple[PacketType, Any]:
+        input_stream = MemoryStream()
+        input_stream.write(await stream.read(cls.header_size))
+
+        packet_id = read_u16(input_stream)
+        packet = cls.convert_input_packet(packet_id)
+
+        if not packet.is_client_packet:
+            raise ValueError(f"Packet '{packet.name}' is not a client packet")
+
+        packet_reader = getattr(cls, packet.handler_name, None)
+
+        if not packet_reader:
+            raise NotImplementedError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
+
+        compression = read_boolean(input_stream)
+        packet_length = read_u32(input_stream)
+        packet_data = await stream.read(packet_length)
+
+        if compression:
+            packet_data = decompress(packet_data)
+
+        return packet, packet_reader(MemoryStream(packet_data))
+
+    @classmethod
+    async def write_packet_async(cls, stream: AsyncStream, packet: PacketType, *args) -> None:
+        if not packet.is_server_packet:
+            raise ValueError(f"Packet '{packet.name}' is not a server packet")
+
+        packet_writer = getattr(cls, packet.handler_name, None)
+
+        if not packet_writer:
+            return
+
+        packets = packet_writer(*args)
+        output_stream = MemoryStream()
+
+        for packet, packet_data in packets:
+            packet_id = cls.convert_output_packet(packet)
+            compression_enabled = len(packet_data) > 150
+
+            if compression_enabled:
+                packet_data = compress(packet_data)
+
+            write_u16(output_stream, packet_id)
+            write_boolean(output_stream, compression_enabled)
+            write_u32(output_stream, len(packet_data))
+            output_stream.write(packet_data)
+            await stream.write(output_stream.data)
+
+    @classmethod
     def convert_input_packet(cls, packet: int) -> PacketType:
         if packet == 11:
             # "IrcJoin" packet
