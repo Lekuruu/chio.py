@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b1797 import b1797
+from .b1800 import b1800
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b1817(b1797):
+class b1817(b1800):
     """
     b1817 adds the ability to send multiplayer match invites to other users.
     """
