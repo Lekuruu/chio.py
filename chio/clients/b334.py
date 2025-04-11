@@ -46,8 +46,6 @@ class b334(b323):
         packet_writer = getattr(cls, packet.handler_name, None)
 
         if not packet_writer:
-            # We won't raise an exception here, to make our lives
-            # easier later on, when we broadcast packets.
             return
 
         packets = packet_writer(*args)
