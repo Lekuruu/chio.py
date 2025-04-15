@@ -18,7 +18,6 @@ class b1788(b1600):
     """
     version = 1788
     protocol_version = 6
-    requires_status_updates = False
 
     @classmethod
     def convert_input_packet(cls, packet: int) -> PacketType:
