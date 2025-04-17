@@ -79,11 +79,11 @@ class UserStatus:
 
 @dataclass
 class UserInfo:
-    id: int
-    name: str
-    presence: UserPresence
-    status: UserStatus
-    stats: UserStats
+    id: int = 0
+    name: str = ""
+    presence: UserPresence = field(default_factory=UserPresence)
+    status: UserStatus = field(default_factory=UserStatus)
+    stats: UserStats = field(default_factory=UserStats)
 
     @property
     def avatar_filename(self) -> str:
@@ -91,8 +91,8 @@ class UserInfo:
 
 @dataclass
 class UserQuit:
-    info: UserInfo
-    state: QuitState
+    info: UserInfo = field(default_factory=UserInfo)
+    state: QuitState = QuitState.Gone
 
 @dataclass
 class Message:

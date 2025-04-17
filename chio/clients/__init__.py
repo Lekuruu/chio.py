@@ -168,5 +168,11 @@ def select_client(version: int) -> BanchoIO:
     # This should never happen, but just in case
     return ClientDict[HighestVersion]
 
+def select_latest_client() -> BanchoIO:
+    return ClientDict[HighestVersion]
+
+def select_oldest_client() -> BanchoIO:
+    return ClientDict[LowestVersion]
+
 def set_protocol_version(client: int, version: int) -> None:
     ClientDict[client].protocol_version = version
