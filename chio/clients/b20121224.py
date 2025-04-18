@@ -17,7 +17,7 @@ class b20121224(b20121221):
     @classmethod
     def write_user_quit(cls, quit: UserQuit) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_s32(stream, quit.user_id)
+        write_s32(stream, quit.info.id)
         write_u8(stream, quit.state)
         yield PacketType.BanchoUserQuit, stream.data
 
