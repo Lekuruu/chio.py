@@ -171,7 +171,7 @@ def select_client(version: int) -> BanchoIO:
 def select_latest_client() -> BanchoIO:
     return ClientDict[HighestVersion]
 
-def select_oldest_client() -> BanchoIO:
+def select_initial_client() -> BanchoIO:
     return ClientDict[LowestVersion]
 
 def set_protocol_version(client: int, version: int) -> None:
