@@ -137,31 +137,31 @@ def read_list_s16(stream: Stream) -> List[int]:
     return [read_s32(stream) for _ in range(read_u16(stream))]
 
 def write_s8(stream: Stream, value: int) -> None:
-    stream.write(pack("<b", value))
+    stream.write(pack("<b", max(-0x80, min(value, 0x7F))))
 
 def write_u8(stream: Stream, value: int) -> None:
-    stream.write(pack("<B", value))
+    stream.write(pack("<B", max(0x00, min(value, 0xFF))))
 
 def write_s16(stream: Stream, value: int) -> None:
-    stream.write(pack("<h", value))
+    stream.write(pack("<h", max(-0x8000, min(value, 0x7FFF))))
 
 def write_u16(stream: Stream, value: int) -> None:
-    stream.write(pack("<H", value))
+    stream.write(pack("<H", max(0x0000, min(value, 0xFFFF))))
 
 def write_s32(stream: Stream, value: int) -> None:
-    stream.write(pack("<i", value))
+    stream.write(pack("<i", max(-0x80000000, min(value, 0x7FFFFFFF))))
 
 def write_u32(stream: Stream, value: int) -> None:
-    stream.write(pack("<I", value))
+    stream.write(pack("<I", max(0x00000000, min(value, 0xFFFFFFFF))))
 
 def write_s64(stream: Stream, value: int) -> None:
-    stream.write(pack("<q", value))
+    stream.write(pack("<q", max(-0x8000000000000000, min(value, 0x7FFFFFFFFFFFFFFF))))
 
 def write_u64(stream: Stream, value: int) -> None:
-    stream.write(pack("<Q", value))
+    stream.write(pack("<Q", max(0x0000000000000000, min(value, 0xFFFFFFFFFFFFFFFF))))
 
 def write_boolean(stream: Stream, value: bool) -> None:
-    write_u8(stream, int(value))
+    write_u8(stream, int(bool(value)))
 
 def write_f32(stream: Stream, value: float) -> None:
     stream.write(pack("<f", value))
