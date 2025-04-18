@@ -4,7 +4,7 @@ __email__ = "contact@lekuru.xyz"
 __version__ = "1.1.6"
 __license__ = "MIT"
 
-from .clients import select_client, select_latest_client, select_initial_client, set_protocol_version
+from .utils import select_client, select_latest_client, select_initial_client
 from .patching import patch, set_protocol_version, set_slot_size
 from .chio import BanchoIO
 from .io import Stream
