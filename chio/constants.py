@@ -259,14 +259,14 @@ class Mods(IntFlag):
     NoMod       = 0
     NoFail      = 1 << 0
     Easy        = 1 << 1
-    NoVideo     = 1 << 2
+    NoVideo     = 1 << 2 # replaced by "Touchscreen" in later versions
     Hidden      = 1 << 3
     HardRock    = 1 << 4
     SuddenDeath = 1 << 5
     DoubleTime  = 1 << 6
     Relax       = 1 << 7
     HalfTime    = 1 << 8
-    Nightcore   = 1 << 9
+    Nightcore   = 1 << 9 # used as "Taiko" mod in older versions
     Flashlight  = 1 << 10
     Autoplay    = 1 << 11
     SpunOut     = 1 << 12
