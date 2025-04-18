@@ -1,7 +1,7 @@
 
+from typing import Any, Tuple, Iterable
 from .io import Stream, MemoryStream, AsyncStream
 from .constants import PacketType
-from typing import Any, Tuple
 
 class BanchoIO:
     """
@@ -60,10 +60,32 @@ class BanchoIO:
         return cls.read_packet(stream)
 
     @classmethod
+    def read_many_packets_from_bytes(cls, data: bytes) -> Iterable[Tuple[PacketType, Any]]:
+        """
+        Reads multiple packets from the given bytes, and yields the packet type and decoded data.
+        """
+        stream = MemoryStream(data)
+
+        while stream.available() >= cls.header_size:
+            yield cls.read_packet(stream)
+
+    @classmethod
     def write_packet_to_bytes(cls, packet: PacketType, *args) -> bytes:
         """
         Encodes a packet and returns it as bytes.
         """
         stream = MemoryStream()
         cls.write_packet(stream, packet, *args)
+        return stream.data
+
+    @classmethod
+    def write_many_packets_to_bytes(cls, packets: Iterable[Tuple[PacketType, Any]]) -> bytes:
+        """
+        Encodes multiple packets and returns them as bytes.
+        """
+        stream = MemoryStream()
+
+        for packet, *args in packets:
+            cls.write_packet(stream, packet, *args)
+
         return stream.data
