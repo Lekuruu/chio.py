@@ -330,6 +330,7 @@ class RankedStatus(IntEnum):
     Ranked    = 1
     Approved  = 2
     Qualified = 3
+    Loved     = 4
 
 InactiveAccountMessage = (
     "Your account is not yet activated. "
