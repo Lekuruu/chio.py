@@ -34,7 +34,7 @@ class b1788(b1600):
     @classmethod
     def write_user_stats(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_u32(stream, cls.convert_user_id(info))
+        write_s32(stream, cls.convert_user_id(info))
         stream.write(cls.write_status_update(info.status))
         write_u64(stream, info.stats.rscore)
         write_f32(stream, info.stats.accuracy)
@@ -46,7 +46,7 @@ class b1788(b1600):
     @classmethod
     def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_u32(stream, cls.convert_user_id(info))
+        write_s32(stream, cls.convert_user_id(info))
         write_string(stream, info.name)
         write_u8(stream, AvatarExtension.Png)
         write_u8(stream, info.presence.timezone+24)
