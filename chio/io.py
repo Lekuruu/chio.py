@@ -2,6 +2,7 @@
 from gzip import decompress, compress
 from abc import ABC, abstractmethod
 from struct import pack, unpack
+from logging import getLogger
 from typing import List
 
 class Stream(ABC):
@@ -75,6 +76,16 @@ class MemoryStream(Stream):
     def available(self) -> int:
         return len(self.data) - self.position
 
+logger = getLogger('chio.py')
+
+def clamp(value: int, min_value: int, max_value: int) -> int:
+    clamped = max(min_value, min(value, max_value))
+
+    if clamped != value:
+        logger.warning(f"Value '{value}' was clamped to '{clamped}'.")
+
+    return clamped
+
 def read_s8(stream: Stream) -> int:
     return stream.read(1)[0]
 
@@ -144,28 +155,28 @@ def read_list_s16(stream: Stream) -> List[int]:
     return [read_s32(stream) for _ in range(read_u16(stream))]
 
 def write_s8(stream: Stream, value: int) -> None:
-    stream.write(pack("<b", max(-0x80, min(value, 0x7F))))
+    stream.write(pack("<b", clamp(value, -0x80, 0x7F)))
 
 def write_u8(stream: Stream, value: int) -> None:
-    stream.write(pack("<B", max(0x00, min(value, 0xFF))))
+    stream.write(pack("<B", clamp(value, 0x00, 0xFF)))
 
 def write_s16(stream: Stream, value: int) -> None:
-    stream.write(pack("<h", max(-0x8000, min(value, 0x7FFF))))
+    stream.write(pack("<h", clamp(value, -0x8000, 0x7FFF)))
 
 def write_u16(stream: Stream, value: int) -> None:
-    stream.write(pack("<H", max(0x0000, min(value, 0xFFFF))))
+    stream.write(pack("<H", clamp(value, 0x0000, 0xFFFF)))
 
 def write_s32(stream: Stream, value: int) -> None:
-    stream.write(pack("<i", max(-0x80000000, min(value, 0x7FFFFFFF))))
+    stream.write(pack("<i", clamp(value, -0x80000000, 0x7FFFFFFF)))
 
 def write_u32(stream: Stream, value: int) -> None:
-    stream.write(pack("<I", max(0x00000000, min(value, 0xFFFFFFFF))))
+    stream.write(pack("<I", clamp(value, 0x00000000, 0xFFFFFFFF)))
 
 def write_s64(stream: Stream, value: int) -> None:
-    stream.write(pack("<q", max(-0x8000000000000000, min(value, 0x7FFFFFFFFFFFFFFF))))
+    stream.write(pack("<q", clamp(value, -0x8000000000000000, 0x7FFFFFFFFFFFFFFF)))
 
 def write_u64(stream: Stream, value: int) -> None:
-    stream.write(pack("<Q", max(0x0000000000000000, min(value, 0xFFFFFFFFFFFFFFFF))))
+    stream.write(pack("<Q", clamp(value, 0x0000000000000000, 0xFFFFFFFFFFFFFFFF)))
 
 def write_boolean(stream: Stream, value: bool) -> None:
     write_u8(stream, int(bool(value)))
