@@ -42,13 +42,16 @@ class b282(BanchoIO):
             return
 
         packets = packet_writer(*args)
+        output_stream = MemoryStream()
 
         for packet, packet_data in packets:
             packet_id = cls.convert_output_packet(packet)
             packet_data = compress(packet_data)
-            write_u16(stream, packet_id)
-            write_u32(stream, len(packet_data))
-            stream.write(packet_data)
+            write_u16(output_stream, packet_id)
+            write_u32(output_stream, len(packet_data))
+            output_stream.write(packet_data)
+            stream.write(output_stream.data)
+            output_stream.clear()
 
     @classmethod
     async def read_packet_async(cls, stream: AsyncStream) -> Tuple[PacketType, Any]:
@@ -91,6 +94,7 @@ class b282(BanchoIO):
             write_u32(output_stream, len(packet_data))
             output_stream.write(packet_data)
             await stream.write(output_stream.data)
+            output_stream.clear()
 
     @classmethod
     def convert_input_packet(cls, packet: int) -> PacketType:
