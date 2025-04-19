@@ -42,15 +42,13 @@ class b504(b490):
             return
 
         # NOTE: See b365 for the level overflow bug
-        info.stats.tscore = min(info.stats.tscore, 26931190827)
-
         write_u32(stream, info.id)
         write_u8(stream, Completeness.Statistics)
         stream.write(cls.write_status_update(info.status))
         write_u64(stream, info.stats.rscore)
         write_f32(stream, info.stats.accuracy)
         write_u32(stream, info.stats.playcount)
-        write_u64(stream, info.stats.tscore)
+        write_u64(stream, min(info.stats.tscore, 26931190827))
         write_u16(stream, info.stats.rank)
         yield PacketType.BanchoUserStats, stream.data
     
@@ -63,15 +61,13 @@ class b504(b490):
             return
 
         # NOTE: See b365 for the level overflow bug
-        info.stats.tscore = min(info.stats.tscore, 26931190827)
-
         write_u32(stream, info.id)
         write_u8(stream, Completeness.Full)
         stream.write(cls.write_status_update(info.status))
         write_u64(stream, info.stats.rscore)
         write_f32(stream, info.stats.accuracy)
         write_u32(stream, info.stats.playcount)
-        write_u64(stream, info.stats.tscore)
+        write_u64(stream, min(info.stats.tscore, 26931190827))
         write_u16(stream, info.stats.rank)
         write_string(stream, info.name)
         write_string(stream, info.avatar_filename)
