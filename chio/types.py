@@ -179,6 +179,73 @@ class ScoreFrame:
         )
         return md5(data.encode()).hexdigest()
 
+    def total_hits(self, mode: Mode) -> int:
+        if mode == Mode.CatchTheBeat:
+            return self.total_50 + self.total_100 + self.total_300 + self.total_miss + self.total_katu
+
+        elif mode == Mode.OsuMania:
+            return self.total_300 + self.total_100 + self.total_50 + self.total_geki + self.total_katu + self.total_miss
+
+        return self.total_50 + self.total_100 + self.total_300 + self.total_miss
+
+    def accuracy(self, mode: Mode) -> float:
+        if self.total_hits(mode) == 0:
+            return 0.0
+
+        if mode == Mode.Osu:
+            return (
+                ((self.total_300 * 300.0) + (self.total_100 * 100.0) + (self.total_50 * 50.0))
+                / (self.total_hits(mode) * 300.0)
+            )
+
+        elif mode == Mode.Taiko:
+            return ((self.total_100 * 0.5) + self.total_300) / self.total_hits(mode)
+
+        elif mode == Mode.CatchTheBeat:
+            return (self.total_300 + self.total_100 + self.total_50) / self.total_hits(mode)
+
+        elif mode == Mode.OsuMania:
+            return  (
+                (
+                    (self.total_50 * 50.0) + (self.total_100 * 100.0) + (self.total_katu * 200.0) + ((self.total_300 + self.total_geki) * 300.0)
+                )
+                / (self.total_hits(mode) * 300.0)
+            )
+
+        else:
+            return 0.0
+
+    def rank(self, mode: Mode, mods: Mods) -> Rank:
+        r300 = self.total_300 / self.total_hits(mode)
+        r50 = self.total_50 / self.total_hits(mode)
+
+        if r300 == 1:
+            return (
+                Rank.XH
+                if Mods.Hidden in mods
+                or Mods.Flashlight in mods
+                else Rank.X
+            )
+
+        if r300 > 0.9 and r50 <= 0.01 and self.total_miss == 0:
+            return (
+                Rank.SH
+                if Mods.Hidden in mods
+                or Mods.Flashlight in mods
+                else Rank.S
+            )
+
+        if (r300 > 0.8 and self.total_miss == 0) or (r300 > 0.9):
+            return Rank.A
+
+        if (r300 > 0.7 and self.total_miss == 0) or (r300 > 0.8):
+            return Rank.B
+
+        if (r300 > 0.6):
+            return Rank.C
+
+        return Rank.D
+
 @dataclass
 class ReplayFrameBundle:
     action: ReplayAction = ReplayAction.Standard
