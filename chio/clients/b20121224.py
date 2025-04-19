@@ -17,20 +17,20 @@ class b20121224(b20121221):
     @classmethod
     def write_user_quit(cls, quit: UserQuit) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_s32(stream, cls.convert_user_id(quit.info))
+        write_s32(stream, quit.info.id)
         write_u8(stream, quit.state)
         yield PacketType.BanchoUserQuit, stream.data
 
     @classmethod
     def write_user_presence_bundle(cls, infos: List[UserInfo]) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_list_s16(stream, [cls.convert_user_id(info) for info in infos])
+        write_list_s16(stream, [info.id for info in infos])
         yield PacketType.BanchoUserPresenceBundle, stream.data
 
     @classmethod
     def write_user_presence_single(cls, info):
         stream = MemoryStream()
-        write_s32(stream, cls.convert_user_id(info))
+        write_s32(stream, info.id)
         yield PacketType.BanchoUserPresenceSingle, stream.data
 
     @classmethod
