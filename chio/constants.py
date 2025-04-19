@@ -303,7 +303,7 @@ class TeamType(IntEnum):
     HeadToHead = 0
     TagCoop    = 1
     TeamVs     = 2
-    TagTeam    = 3
+    TagTeamVs  = 3
 
 class SlotStatus(IntFlag):
     Open      = 1 << 0
