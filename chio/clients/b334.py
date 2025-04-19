@@ -49,7 +49,6 @@ class b334(b323):
             return
 
         packets = packet_writer(*args)
-        output_stream = MemoryStream()
 
         for packet, packet_data in packets:
             packet_id = cls.convert_output_packet(packet)
@@ -58,12 +57,10 @@ class b334(b323):
             if compression_enabled:
                 packet_data = compress(packet_data)
 
-            write_u16(output_stream, packet_id)
-            write_boolean(output_stream, compression_enabled)
-            write_u32(output_stream, len(packet_data))
-            output_stream.write(packet_data)
-            stream.write(output_stream.data)
-            output_stream.clear()
+            write_u16(stream, packet_id)
+            write_boolean(stream, compression_enabled)
+            write_u32(stream, len(packet_data))
+            stream.write(packet_data)
 
     @classmethod
     async def read_packet_async(cls, stream: AsyncStream) -> Tuple[PacketType, Any]:
