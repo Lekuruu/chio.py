@@ -50,6 +50,9 @@ class MemoryStream(Stream):
         self.position = 0
         self.struct_endian = endian
 
+    def __del__(self):
+        self.clear()
+
     @property
     def endian(self) -> str:
         return self.struct_endian
@@ -64,6 +67,10 @@ class MemoryStream(Stream):
         data = self.data[self.position:self.position + size]
         self.position += size
         return data
+    
+    def clear(self) -> None:
+        self.data = b""
+        self.position = 0
 
     def available(self) -> int:
         return len(self.data) - self.position
