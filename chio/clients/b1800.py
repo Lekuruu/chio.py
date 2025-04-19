@@ -8,6 +8,7 @@ class b1800(b1797):
     """
     b1800 deprecates the usage of gzip compression inside packets.
     """
+    requires_status_updates = False
     version = 1800
 
     @classmethod

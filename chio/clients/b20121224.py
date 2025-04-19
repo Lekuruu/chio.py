@@ -12,7 +12,6 @@ class b20121224(b20121221):
     when the client first joins the server, to reduce bandwidth usage.
     """
     version = 20121224
-    requires_status_updates = False
 
     @classmethod
     def write_user_quit(cls, quit: UserQuit) -> Iterable[Tuple[PacketType, bytes]]:
