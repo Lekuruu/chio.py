@@ -6,7 +6,7 @@ from ..io import *
 
 class b340(b338):
     """
-    b340 removes the "MatchChangeBeatmap" packet.
+    b340 removes the "MatchChangeBeatmap" packet, and introduces the "MatchHasBeatmap" packet.
     """
     version = 340
 
@@ -35,3 +35,7 @@ class b340(b338):
     @classmethod
     def read_match_change_beatmap(cls, stream: MemoryStream) -> ...:
         ...
+
+    @classmethod
+    def read_match_has_beatmap(self, stream: MemoryStream) -> None:
+        pass
