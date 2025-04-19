@@ -182,10 +182,10 @@ class Status(IntEnum):
     StatsUpdate = 10
 
 class Mode(IntEnum):
-    Osu   = 0
-    Taiko = 1
-    Catch = 2
-    Mania = 3
+    Osu          = 0
+    Taiko        = 1
+    CatchTheBeat = 2
+    OsuMania     = 3
 
 class LoginError(IntEnum):
     InvalidLogin          = -1
