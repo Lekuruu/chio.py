@@ -13,6 +13,14 @@ class b1796(b1788):
     version = 1796
 
     @classmethod
+    def write_match_update(cls, match: Match) -> Iterable[Tuple[PacketType, bytes]]:
+        yield PacketType.BanchoMatchUpdate, cls.write_match(match)
+
+    @classmethod
+    def write_match_new(cls, match: Match) -> Iterable[Tuple[PacketType, bytes]]:
+        yield PacketType.BanchoMatchNew, cls.write_match(match)
+
+    @classmethod
     def write_user_presence(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_s32(stream, cls.convert_user_id(info))

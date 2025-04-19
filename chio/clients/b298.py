@@ -13,10 +13,18 @@ class b298(b296):
 
     @classmethod
     def write_match_update(cls, match: Match) -> Iterable[Tuple[PacketType, bytes]]:
+        if match.id > 0xFF:
+            # Match IDs greater than 255 are not supported in this client
+            return []
+
         yield PacketType.BanchoMatchUpdate, cls.write_match(match)
 
     @classmethod
     def write_match_new(cls, match: Match) -> Iterable[Tuple[PacketType, bytes]]:
+        if match.id > 0xFF:
+            # Match IDs greater than 255 are not supported in this client
+            return []
+
         yield PacketType.BanchoMatchNew, cls.write_match(match)
 
     @classmethod
