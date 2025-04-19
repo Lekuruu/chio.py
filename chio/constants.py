@@ -189,15 +189,20 @@ class Mode(IntEnum):
 
     @classmethod
     def from_alias(cls, input: str):
-        if input not in ('osu', 'taiko', 'fruits', 'mania'):
-            return
-
-        return {
+        mapping = {
+            'std': Mode.Osu,
             'osu': Mode.Osu,
             'taiko': Mode.Taiko,
             'fruits': Mode.CatchTheBeat,
+            'ctb': Mode.CatchTheBeat,
+            'catch': Mode.CatchTheBeat,
             'mania': Mode.OsuMania
-        }[input]
+        }
+
+        if input not in mapping:
+            return
+
+        return mapping[input]
 
     @property
     def formatted(self) -> str:
