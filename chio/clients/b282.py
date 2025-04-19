@@ -277,6 +277,12 @@ class b282(BanchoIO):
                 yield packet
 
     @classmethod
+    def write_invite(cls, invite_message: Message) -> Iterable[Tuple[PacketType, bytes]]:
+        # b282 does not support invites, so instead
+        # we will send the message directly
+        return cls.write_message(invite_message)
+
+    @classmethod
     def read_user_status(cls, stream: MemoryStream) -> UserStatus:
         status = UserStatus()
         status.action = Status(read_u8(stream))
