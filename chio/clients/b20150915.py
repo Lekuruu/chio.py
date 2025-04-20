@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b20141104 import b20141104
+from .b20150826 import b20150826
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b20150915(b20141104):
+class b20150915(b20150826):
     """
     b20150915 drops support for 8-player multiplayer matches entirely.
     """
