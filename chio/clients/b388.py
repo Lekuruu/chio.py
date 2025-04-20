@@ -1,5 +1,5 @@
 
-from typing import Iterable, Tuple
+from typing import Iterable, Tuple, Union
 from .b374 import b374
 from ..constants import *
 from ..types import *
@@ -12,7 +12,7 @@ class b388(b374):
     version = 388
 
     @classmethod
-    def convert_ranked_status(cls, status: RankedStatus | int) -> int:
+    def convert_ranked_status(cls, status: Union[RankedStatus, int]) -> int:
         if type(status) is int:
             # A custom status was sent
             return status
