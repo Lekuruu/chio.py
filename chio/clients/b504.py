@@ -22,7 +22,7 @@ class b504(b490):
             write_s32(stream, info.beatmap_id)
             write_s32(stream, info.beatmapset_id)
             write_s32(stream, info.thread_id)
-            write_s8(stream, info.ranked_status)
+            write_s8(stream, cls.convert_ranked_status(info.ranked_status))
             write_s8(stream, info.osu_rank)
 
             if cls.protocol_version >= 2:

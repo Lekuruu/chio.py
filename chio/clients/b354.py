@@ -14,7 +14,7 @@ class b354(b349):
     @classmethod
     def read_beatmap_info_request(cls, stream: MemoryStream) -> BeatmapInfoRequest:
         return BeatmapInfoRequest([read_string(stream) for _ in range(read_u32(stream))])
-    
+
     @classmethod
     def write_beatmap_info_reply(cls, reply: BeatmapInfoReply) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
