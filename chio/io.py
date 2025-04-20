@@ -2,8 +2,10 @@
 from gzip import decompress, compress
 from abc import ABC, abstractmethod
 from struct import pack, unpack
-from logging import getLogger
 from typing import List
+
+import traceback
+import logging
 
 class Stream(ABC):
     """
@@ -76,13 +78,18 @@ class MemoryStream(Stream):
     def available(self) -> int:
         return len(self.data) - self.position
 
-logger = getLogger('chio.py')
+logger = logging.getLogger('chio.py')
 
 def clamp(value: int, min_value: int, max_value: int) -> int:
     clamped = max(min_value, min(value, max_value))
 
     if clamped != value:
-        logger.warning(f"Value '{value}' was clamped to '{clamped}'.")
+        stack = traceback.extract_stack()
+        caller = stack[-2]
+        logger.warning(
+            f"Value '{value}' was clamped to '{clamped}' "
+            f"({caller.filename}:{caller.lineno} in '{caller.name}')"
+        )
 
     return clamped
 
