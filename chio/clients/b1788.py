@@ -34,7 +34,7 @@ class b1788(b1600):
     @classmethod
     def write_user_stats(cls, info: UserInfo) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_s32(stream, cls.convert_user_id(info))
+        write_s32(stream, info.id)
         stream.write(cls.write_status_update(info.status))
         write_u64(stream, info.stats.rscore)
         write_f32(stream, info.stats.accuracy)

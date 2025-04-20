@@ -100,7 +100,7 @@ As an example, to patch the `BanchoUserStats` packet inside of `b20120723`:
 @chio.patch(PacketType.BanchoUserStats, 20120723)
 def write_user_stats(cls, info: UserInfo):
     stream = MemoryStream()
-    write_s32(stream, cls.convert_user_id(info))
+    write_s32(stream, info.id)
     stream.write(cls.write_status_update(info.status))
     write_u64(stream, info.stats.rscore)
     write_f32(stream, info.stats.accuracy)
