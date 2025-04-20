@@ -133,6 +133,26 @@ class b282(BanchoIO):
         return packet.value
 
     @classmethod
+    def convert_input_status(cls, status: int) -> Status:
+        if status == 10:
+            return Status.Unknown
+
+        if status > 9:
+            return Status(status - 1)
+
+        return Status(status)
+
+    @classmethod
+    def convert_output_status(cls, status: UserStatus) -> Status:
+        if status.update_stats:
+            return Status.StatsUpdate
+
+        if status.action > 9:
+            return Status(status.action.value - 1)
+
+        return status.action
+
+    @classmethod
     def write_login_reply(cls, reply: Union[int, LoginError]) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_s32(stream, reply)
@@ -182,7 +202,7 @@ class b282(BanchoIO):
 
     @classmethod
     def write_status_update(cls, status: UserStatus) -> bytes:
-        action = status.action if not status.update_stats else Status.StatsUpdate
+        action = cls.convert_output_status(status)
         stream = MemoryStream()
         write_u8(stream, action)
 
@@ -289,7 +309,7 @@ class b282(BanchoIO):
     @classmethod
     def read_user_status(cls, stream: MemoryStream) -> UserStatus:
         status = UserStatus()
-        status.action = Status(read_u8(stream))
+        status.action = cls.convert_input_status(read_u8(stream))
 
         if status.action != Status.Unknown:
             status.text = read_string(stream)
