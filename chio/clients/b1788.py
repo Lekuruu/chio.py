@@ -87,7 +87,7 @@ class b1788(b1600):
     @classmethod
     def read_user_stats_request(cls, stream: MemoryStream) -> Iterable[int]:
         return read_list_s16(stream)
-    
+
     @classmethod
     def write_restart(cls, retry_after_ms: int = 5000) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()

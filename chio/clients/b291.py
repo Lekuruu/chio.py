@@ -19,3 +19,9 @@ class b291(b282):
         stream = MemoryStream()
         write_string(stream, message)
         yield PacketType.BanchoAnnounce, stream.data
+
+    @classmethod
+    def write_restart(cls, retry_after_ms: int = 5000) -> Iterable[Tuple[PacketType, bytes]]:
+        # NOTE: This is a backport of the actual restart packet, that
+        #       simply announces the server restart to the user.
+        return cls.write_announce(f"Bancho is restarting, please wait...")
