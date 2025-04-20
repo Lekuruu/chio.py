@@ -361,11 +361,12 @@ class SlotTeam(IntEnum):
         return SlotTeam.Red if self != SlotTeam.Red else SlotTeam.Blue
 
 class RankedStatus(IntEnum):
-    Pending   = 0
-    Ranked    = 1
-    Approved  = 2
-    Qualified = 3
-    Loved     = 4
+    NotSubmitted = -1
+    Pending      = 0
+    Ranked       = 1
+    Approved     = 2
+    Qualified    = 3
+    Loved        = 4
 
 InactiveAccountMessage = (
     "Your account is not yet activated. "
