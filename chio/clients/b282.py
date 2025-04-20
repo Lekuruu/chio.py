@@ -296,6 +296,11 @@ class b282(BanchoIO):
             status.beatmap_checksum = read_string(stream)
             status.mods = Mods(read_u16(stream))
 
+        if status.action == Status.Idle and status.beatmap_checksum:
+            # There is a bug where the client starts playing but
+            # doesn't set the status to "Playing".
+            status.action = Status.Playing
+
         return status
 
     @classmethod
