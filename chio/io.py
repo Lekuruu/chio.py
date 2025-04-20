@@ -85,7 +85,7 @@ def clamp(value: int, min_value: int, max_value: int) -> int:
 
     if clamped != value:
         stack = traceback.extract_stack()
-        caller = stack[-2]
+        caller = stack[-3]
         logger.warning(
             f"Value '{value}' was clamped to '{clamped}' "
             f"({caller.filename}:{caller.lineno} in '{caller.name}')"
