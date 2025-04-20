@@ -1,11 +1,11 @@
 
 from typing import Iterable, Tuple
-from .b20160404 import b20160404
+from .b20161101 import b20161101
 from ..constants import *
 from ..types import *
 from ..io import *
 
-class b20250306(b20160404):
+class b20250306(b20161101):
     """
     b20250306 changes the pp datatype from s16 to u16, due
     to mrekk exceeding the integer limit.
