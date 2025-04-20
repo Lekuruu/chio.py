@@ -35,7 +35,7 @@ class b20160404(b20151107):
         stream = MemoryStream()
 
         if cls.protocol_version >= 18:
-            write_u32(stream, bundle.extra)
+            write_s32(stream, bundle.extra)
 
         write_u16(stream, len(bundle.frames))
 
