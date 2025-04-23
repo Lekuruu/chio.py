@@ -324,6 +324,45 @@ class Mods(IntFlag):
     ScoreV2     = 1 << 29
     Mirror      = 1 << 30
 
+    KeyMod = Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 | KeyCoop
+    FreeModAllowed = NoFail | Easy | Hidden | HardRock | SuddenDeath | Flashlight | FadeIn | Relax | Autopilot | SpunOut | KeyMod
+    SpeedMods = DoubleTime | HalfTime| Nightcore
+
+    @property
+    def members(self) -> list:
+        return [flag for flag in Mods if self & flag]
+
+    @property
+    def short(self) -> str:
+        if not self:
+            return "NM"
+
+        return "".join(
+            [ModAcronyms.get(flag, "") for flag in self.members]
+        )
+    
+    @classmethod
+    def from_string(cls, acronym_string: str) -> "Mods":
+        mods = Mods.NoMod
+
+        if not acronym_string:
+            return mods
+
+        # Parse mods into multiple acronyms
+        # .e.g. "HDHR" -> ["HR", "HD"]
+        parsed_mods = [
+            acronym_string[idx : idx + 2].upper()
+            for idx in range(0, len(acronym_string), 2)
+        ]
+
+        for acronym in parsed_mods:
+            mod = ModAcronymsFromString.get(acronym)
+
+            if mod:
+                mods |= mod
+
+        return mods
+
 class MatchType(IntEnum):
     Standard  = 0
     Powerplay = 1
@@ -372,6 +411,79 @@ InactiveAccountMessage = (
     "Your account is not yet activated. "
     "Please check your email for activation instructions!"
 )
+
+ModAcronyms = {
+    Mods.NoMod: "NM",
+    Mods.NoFail: "NF",
+    Mods.Easy: "EZ",
+    Mods.NoVideo: "NV",
+    Mods.Hidden: "HD",
+    Mods.HardRock: "HR",
+    Mods.SuddenDeath: "SD",
+    Mods.DoubleTime: "DT",
+    Mods.Relax: "RX",
+    Mods.HalfTime: "HT",
+    Mods.Nightcore: "NC",
+    Mods.Flashlight: "FL",
+    Mods.Autoplay: "AT",
+    Mods.SpunOut: "SO",
+    Mods.Autopilot: "AP",
+    Mods.Perfect: "PF",
+    Mods.Key4: "K4",
+    Mods.Key5: "K5",
+    Mods.Key6: "K6",
+    Mods.Key7: "K7",
+    Mods.Key8: "K8",
+    Mods.FadeIn: "FI",
+    Mods.Random: "RD",
+    Mods.Cinema: "CN",
+    Mods.Target: "TP",
+    Mods.Key9: "K9",
+    Mods.KeyCoop: "CP",
+    Mods.Key1: "K1",
+    Mods.Key3: "K3",
+    Mods.Key2: "K2",
+    Mods.ScoreV2: "V2",
+    Mods.Mirror: "MR",
+    Mods.SpeedMods: "",
+    Mods.KeyMod: "",
+    Mods.FreeModAllowed: ""
+}
+
+ModAcronymsFromString = {
+    "NM": Mods.NoMod,
+    "NF": Mods.NoFail,
+    "EZ": Mods.Easy,
+    "NV": Mods.NoVideo,
+    "HD": Mods.Hidden,
+    "HR": Mods.HardRock,
+    "SD": Mods.SuddenDeath,
+    "DT": Mods.DoubleTime,
+    "RX": Mods.Relax,
+    "HT": Mods.HalfTime,
+    "NC": Mods.Nightcore,
+    "FL": Mods.Flashlight,
+    "AT": Mods.Autoplay,
+    "SO": Mods.SpunOut,
+    "AP": Mods.Autopilot,
+    "PF": Mods.Perfect,
+    "K4": Mods.Key4,
+    "K5": Mods.Key5,
+    "K6": Mods.Key6,
+    "K7": Mods.Key7,
+    "K8": Mods.Key8,
+    "FI": Mods.FadeIn,
+    "RD": Mods.Random,
+    "CN": Mods.Cinema,
+    "TP": Mods.Target,
+    "K9": Mods.Key9,
+    "CP": Mods.KeyCoop,
+    "K1": Mods.Key1,
+    "K3": Mods.Key3,
+    "K2": Mods.Key2,
+    "V2": Mods.ScoreV2,
+    "MR": Mods.Mirror
+}
 
 Countries = {
     "XX": "Unknown",
