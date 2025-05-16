@@ -53,9 +53,9 @@ class b334(b323):
 
         for packet, packet_data in packets:
             packet_id = cls.convert_output_packet(packet)
-            compression_enabled = len(packet_data) > 150
+            compression_enabled = len(packet_data) > 150 and not cls.disable_compression
 
-            if compression_enabled and not cls.disable_compression:
+            if compression_enabled:
                 packet_data = compress(packet_data)
 
             write_u16(output_stream, packet_id)
