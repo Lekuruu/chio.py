@@ -1,7 +1,7 @@
 
 __author__ = "Lekuru"
 __email__ = "contact@lekuru.xyz"
-__version__ = "1.1.14"
+__version__ = "1.1.15"
 __license__ = "MIT"
 
 from .utils import select_client, select_latest_client, select_initial_client, resolve_country_index
