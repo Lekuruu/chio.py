@@ -28,6 +28,10 @@ class b282(BanchoIO):
             raise NotImplementedError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
 
         packet_length = read_u32(stream)
+
+        if packet_length >= 2**14:
+            raise ValueError(f"Packet '{packet.name}' with length '{packet_length}' is too large")
+
         packet_data = read_gzip(stream, packet_length)
         return packet, packet_reader(MemoryStream(packet_data))
 
@@ -70,6 +74,10 @@ class b282(BanchoIO):
             raise NotImplementedError(f"Version '{cls.version}' does not implement packet '{packet.name}'")
         
         packet_length = read_u32(input_stream)
+
+        if packet_length >= 2**14:
+            raise ValueError(f"Packet '{packet.name}' with length '{packet_length}' is too large")
+
         packet_data = await stream.read(packet_length)
         packet_data = decompress(packet_data)
         return packet, packet_reader(MemoryStream(packet_data))
