@@ -32,7 +32,7 @@ class b334(b323):
         compression = read_boolean(stream)
         packet_length = read_u32(stream)
 
-        if packet_length >= 2**14:
+        if packet_length >= packet.max_size:
             raise ValueError(f"Packet '{packet.name}' with length '{packet_length}' is too large")        
 
         packet_data = stream.read(packet_length)
@@ -88,7 +88,7 @@ class b334(b323):
         compression = read_boolean(input_stream)
         packet_length = read_u32(input_stream)
 
-        if packet_length >= 2**14:
+        if packet_length >= packet.max_size:
             raise ValueError(f"Packet '{packet.name}' with length '{packet_length}' is too large")
 
         packet_data = await stream.read(packet_length)

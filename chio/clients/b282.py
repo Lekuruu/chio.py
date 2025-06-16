@@ -29,7 +29,7 @@ class b282(BanchoIO):
 
         packet_length = read_u32(stream)
 
-        if packet_length >= 2**14:
+        if packet_length >= packet.max_size:
             raise ValueError(f"Packet '{packet.name}' with length '{packet_length}' is too large")
 
         packet_data = read_gzip(stream, packet_length)
@@ -75,7 +75,7 @@ class b282(BanchoIO):
         
         packet_length = read_u32(input_stream)
 
-        if packet_length >= 2**14:
+        if packet_length >= packet.max_size:
             raise ValueError(f"Packet '{packet.name}' with length '{packet_length}' is too large")
 
         packet_data = await stream.read(packet_length)

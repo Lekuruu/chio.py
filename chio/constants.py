@@ -148,6 +148,11 @@ class PacketType(IntEnum):
     OsuMatchChangeBeatmap = 0xFFFE
 
     @cached_property
+    def max_size(self) -> int:
+        # In some cases, the beatmap info request packet can get really large
+        return 2**14 if self != PacketType.OsuBeatmapInfoRequest else 2**18
+
+    @cached_property
     def is_server_packet(self) -> bool:
         return self.name.startswith("Bancho")
 
