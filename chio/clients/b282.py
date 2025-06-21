@@ -335,9 +335,9 @@ class b282(BanchoIO):
     def read_message(cls, stream: MemoryStream) -> Message:
         # Private messages & channels have not been implemented yet
         return Message(
+            sender=read_string(stream),
             content=read_string(stream),
             target="#osu",
-            sender=""
         )
 
     @classmethod
