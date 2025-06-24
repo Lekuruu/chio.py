@@ -6,7 +6,7 @@ from ..io import *
 
 class b291(b282):
     """
-    b291 implements the GetAttension & Announce packets.
+    b291 implements the GetAttention & Announce packets.
     """
     version = 291
 

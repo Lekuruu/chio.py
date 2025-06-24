@@ -5,7 +5,7 @@ from ..io import *
 
 class b374(b365):
     """
-    b374 adds the ButtonState constant, which deprectaes
+    b374 adds the ButtonState constant, which deprecates
     the old button left/right booleans.
     """
     version = 374
