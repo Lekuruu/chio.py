@@ -207,7 +207,8 @@ class ScoreFrame:
         elif mode == Mode.OsuMania:
             return  (
                 (
-                    (self.total_50 * 50.0) + (self.total_100 * 100.0) + (self.total_katu * 200.0) + ((self.total_300 + self.total_geki) * 300.0)
+                    (self.total_50 * 50.0) + (self.total_100 * 100.0) +
+                    (self.total_katu * 200.0) + ((self.total_300 + self.total_geki) * 300.0)
                 )
                 / (self.total_hits(mode) * 300.0)
             )

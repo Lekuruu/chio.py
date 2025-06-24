@@ -333,7 +333,7 @@ class Mods(IntFlag):
 
     KeyMod = Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 | KeyCoop
     FreeModAllowed = NoFail | Easy | Hidden | HardRock | SuddenDeath | Flashlight | FadeIn | Relax | Autopilot | SpunOut | KeyMod
-    SpeedMods = DoubleTime | HalfTime| Nightcore
+    SpeedMods = DoubleTime | HalfTime | Nightcore
 
     @property
     def members(self) -> list:
