@@ -14,6 +14,8 @@ class b20160404(b20151107):
 
     @classmethod
     def read_spectate_frames(cls, stream: MemoryStream) -> ReplayFrameBundle:
+        extra = -1
+
         if cls.protocol_version >= 18:
             extra = read_u32(stream)
 
