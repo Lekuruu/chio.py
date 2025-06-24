@@ -15,5 +15,5 @@ class b20130604(b20130509):
     @classmethod
     def write_switch_server(cls, after_idle_time: int = 3600) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
-        write_s32(after_idle_time)
+        write_s32(stream, after_idle_time)
         yield PacketType.BanchoSwitchServer, stream.data
