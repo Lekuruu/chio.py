@@ -114,7 +114,7 @@ class b282(BanchoIO):
             # "IrcJoin" packet
             return PacketType.BanchoIrcJoin
 
-        if packet > 11 and packet <= 45:
+        if 11 < packet <= 45:
             packet -= 1
 
         if packet > 50:
@@ -132,7 +132,7 @@ class b282(BanchoIO):
             # "IrcJoin" packet
             return 11
 
-        if packet >= 11 and packet < 45:
+        if 11 <= packet < 45:
             return packet.value + 1
 
         if packet > 50:

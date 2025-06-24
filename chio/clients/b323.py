@@ -22,7 +22,7 @@ class b323(b320):
             # "MatchChangeBeatmap" packet
             return PacketType.OsuMatchChangeBeatmap
 
-        if packet > 11 and packet <= 45:
+        if 11 < packet <= 45:
             packet -= 1
 
         return PacketType(packet)
@@ -37,7 +37,7 @@ class b323(b320):
             # "MatchChangeBeatmap" packet
             return 50
 
-        if packet >= 11 and packet < 45:
+        if 11 <= packet < 45:
             return packet.value + 1
 
         return packet.value
