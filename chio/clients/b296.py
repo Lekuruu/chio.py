@@ -1,6 +1,5 @@
 
 from .b294 import b294
-from ..constants import *
 from ..types import *
 from ..io import *
 

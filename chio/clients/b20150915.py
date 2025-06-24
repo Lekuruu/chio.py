@@ -1,5 +1,3 @@
-
-from typing import Iterable, Tuple
 from .b20150826 import b20150826
 from ..constants import *
 from ..types import *

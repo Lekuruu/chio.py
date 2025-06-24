@@ -1,6 +1,5 @@
 
-from typing import List, Any, Tuple, Iterable, Union
-from gzip import compress
+from typing import Any, Tuple, Iterable, Union
 
 from ..chio import BanchoIO
 from ..constants import *

@@ -1,10 +1,10 @@
 
 from copy import copy
 from typing import Iterable, Tuple
+
 from .b354 import b354
 from ..constants import *
 from ..types import *
-from ..io import *
 
 class b365(b354):
     """

@@ -1,7 +1,6 @@
 
 from .b1797 import b1797
 from ..constants import *
-from ..types import *
 from ..io import *
 
 class b1800(b1797):

@@ -1,6 +1,5 @@
-
-from copy import copy
 from typing import Iterable, Tuple
+
 from .b425 import b425
 from ..constants import *
 from ..types import *

@@ -1,8 +1,8 @@
 
 from typing import Iterable, Tuple
+
 from .b402 import b402
 from ..constants import *
-from ..types import *
 from ..io import *
 
 class b425(b402):

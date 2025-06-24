@@ -1,5 +1,3 @@
-
-from typing import Iterable, Tuple
 from .b365 import b365
 from ..constants import *
 from ..types import *

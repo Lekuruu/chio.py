@@ -1,8 +1,8 @@
 
 from typing import Optional, Iterable, Tuple
+
 from .b470 import b470
 from ..constants import *
-from ..types import *
 from ..io import *
 
 class b487(b470):

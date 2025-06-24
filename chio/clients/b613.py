@@ -1,8 +1,4 @@
-
-from typing import Iterable, Tuple
 from .b591 import b591
-from ..constants import *
-from ..types import *
 from ..io import *
 
 class b613(b591):

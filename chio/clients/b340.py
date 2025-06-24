@@ -1,7 +1,6 @@
 
 from .b338 import b338
 from ..constants import *
-from ..types import *
 from ..io import *
 
 class b340(b338):
