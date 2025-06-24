@@ -234,6 +234,8 @@ class LoginError(IntEnum):
     UserInactive          = -4
     ServerError           = -5
     UnauthorizedTestBuild = -6
+    PasswordReset         = -7
+    VerificationRequired  = -8
 
 class Permissions(IntFlag):
     NoPermissions = 0
