@@ -37,5 +37,5 @@ class b340(b338):
         ...
 
     @classmethod
-    def read_match_has_beatmap(self, stream: MemoryStream) -> None:
+    def read_match_has_beatmap(cls, stream: MemoryStream) -> None:
         pass
