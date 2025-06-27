@@ -171,6 +171,9 @@ class b282(BanchoIO):
 
     @classmethod
     def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
+        if message.target not in ("#osu", "#announce"):
+            return []
+        
         stream = MemoryStream()
         write_string(stream, message.sender)
         write_string(stream, message.content)
