@@ -13,7 +13,7 @@ class b294(b291):
 
     @classmethod
     def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
-        if not message.is_direct_message and message.target != "#osu":
+        if not message.is_direct_message and message.target not in ("#osu", "#announce"):
             # Channel selection has not been implemented yet
             return []
 
