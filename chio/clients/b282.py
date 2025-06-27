@@ -171,10 +171,6 @@ class b282(BanchoIO):
 
     @classmethod
     def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
-        if message.target != "#osu":
-            # Private messages & channels have not been implemented yet
-            return []
-
         stream = MemoryStream()
         write_string(stream, message.sender)
         write_string(stream, message.content)
