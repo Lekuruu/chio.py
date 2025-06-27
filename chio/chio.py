@@ -14,6 +14,7 @@ class BanchoIO:
     protocol_version: int = 0
     disable_compression: bool = False
     requires_status_updates: bool = True
+    autojoin_channels: Tuple[str, ...] = ("#osu", "#announce")
 
     @classmethod
     def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:

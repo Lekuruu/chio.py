@@ -171,7 +171,7 @@ class b282(BanchoIO):
 
     @classmethod
     def write_message(cls, message: Message) -> Iterable[Tuple[PacketType, bytes]]:
-        if message.target != "#osu":
+        if message.target not in cls.autojoin_channels:
             # Private messages & channels have not been implemented yet
             return []
 
