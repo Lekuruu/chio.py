@@ -33,6 +33,12 @@ __all__ = [
 # Example: "OsuSendUserStatus" -> "osu_send_user_status"
 convert_pattern = compile(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
 
+# Chat link regex patterns:
+# Modern: [http://example.com Example]
+# Legacy: (Example)[http://example.com]
+chat_link_modern = compile(r"\[((?:https?:\/\/)[^\s\]]+)\s+(.+?)\]")
+chat_link_legacy = compile(r"\[([^\]]+)\]\((https?:\/\/[^)]+)\)")
+
 class PacketType(IntEnum):
     OsuUserStatus                  = 0
     OsuMessage                     = 1
