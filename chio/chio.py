@@ -47,6 +47,11 @@ class BanchoIO:
         ...
 
     @classmethod
+    def format_chat_link(cls, text: str, url: str) -> str:
+        """Format a chat link for this client"""
+        ...
+
+    @classmethod
     def implements_packet(cls, packet: PacketType) -> bool:
         """
         Returns whether the current client version implements the given packet.

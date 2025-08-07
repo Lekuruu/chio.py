@@ -160,6 +160,10 @@ class b282(BanchoIO):
         return status.action
 
     @classmethod
+    def format_chat_link(cls, text: str, url: str) -> str:
+        return f"({text})[{url}]"
+
+    @classmethod
     def write_login_reply(cls, reply: Union[int, LoginError]) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_s32(stream, reply)
