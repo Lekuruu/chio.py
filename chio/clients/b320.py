@@ -15,7 +15,7 @@ class b320(b312):
     def write_message(cls, message) -> Iterable[Tuple[PacketType, bytes]]:
         stream = MemoryStream()
         write_string(stream, message.sender)
-        write_string(stream, message.content)
+        write_string(stream, message.content_formatted)
         write_string(stream, message.target)
         yield PacketType.BanchoMessage, stream.data
 

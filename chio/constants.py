@@ -26,18 +26,20 @@ __all__ = [
     "InactiveAccountMessage",
     "Countries",
     "CountryNames",
-    "CountryAcronyms"
+    "CountryAcronyms",
+    "ChatLinkModern",
+    "ChatLinkLegacy"
 ]
 
 # Regex to convert camelCase to snake_case
 # Example: "OsuSendUserStatus" -> "osu_send_user_status"
-convert_pattern = compile(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
+CaseConvertPattern = compile(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
 
 # Chat link regex patterns:
 # Modern: [http://example.com Example]
 # Legacy: (Example)[http://example.com]
-chat_link_modern = compile(r"\[((?:https?:\/\/)[^\s\]]+)\s+(.+?)\]")
-chat_link_legacy = compile(r"\[([^\]]+)\]\((https?:\/\/[^)]+)\)")
+ChatLinkModern = compile(r"\[((?:https?:\/\/)[^\s\]]+)\s+(.+?)\]")
+ChatLinkLegacy = compile(r"\[([^\]]+)\]\((https?:\/\/[^)]+)\)")
 
 class PacketType(IntEnum):
     OsuUserStatus                  = 0
@@ -168,7 +170,7 @@ class PacketType(IntEnum):
 
     @cached_property
     def handler_name(self) -> str:
-        name = convert_pattern.sub("_", self.name).lower()
+        name = CaseConvertPattern.sub("_", self.name).lower()
         name = name.replace("osu_", "read_")
         name = name.replace("bancho_", "write_")
         return name

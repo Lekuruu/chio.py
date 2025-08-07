@@ -102,6 +102,10 @@ class Message:
     sender_id: int = -1
 
     @property
+    def content_formatted(self) -> str:
+        return ChatLinkModern.sub(r"(\2)[\1]", self.content)
+
+    @property
     def is_direct_message(self) -> bool:
         return not self.target.startswith("#")
 
