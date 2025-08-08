@@ -38,7 +38,7 @@ CaseConvertPattern = compile(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
 # Chat link regex patterns:
 # Modern: [http://example.com Example]
 # Legacy: (Example)[http://example.com]
-ChatLinkModern = compile(r"\[((?:https?:\/\/)[^\s\]]+)\s+(.+?)\]")
+ChatLinkModern = compile(r"\[((?:https?:\/\/)[^\s\]]+)\s+((?:[^\[\]]|\[[^\[\]]*\])*)\]")
 ChatLinkLegacy = compile(r"\[([^\]]+)\]\((https?:\/\/[^)]+)\)")
 
 class PacketType(IntEnum):
