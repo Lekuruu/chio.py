@@ -39,7 +39,7 @@ def select_initial_client() -> BanchoIO:
     """Select the oldest client available."""
     return ClientDict[LowestVersion]
 
-strip_link = lambda m: m.group(2)
+strip_link = lambda m: f"{m.group(2)} ({m.group(1)})"
 format_last = lambda m: f"({m.group(2)})[{m.group(1)}]"
 
 def format_chat_message_to_markdown(message: str) -> str:
