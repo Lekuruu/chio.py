@@ -39,11 +39,11 @@ def select_initial_client() -> BanchoIO:
     """Select the oldest client available."""
     return ClientDict[LowestVersion]
 
-strip_link = lambda m: f"{m.group(2)} ({m.group(1)})"
-format_last = lambda m: f"({m.group(2)})[{m.group(1)}]"
+format_link_basic = lambda m: f"{m.group(2)} ({m.group(1)})"
+format_link_markdown = lambda m: f"({m.group(2)})[{m.group(1)}]"
 
 def format_chat_message_to_markdown(message: str) -> str:
-    """Run a filter that converts modern chat links to legacy (markdown-ish) format."""
+    """Run a filter that converts modern chat links to the legacy, markdown-ish format."""
     matches = ChatLinkModern.findall(message)
 
     if not matches:
@@ -53,14 +53,14 @@ def format_chat_message_to_markdown(message: str) -> str:
     #       We want to make sure we are keeping the link for the last message
     #       but replace all others with their regular link text without URL
     #       Example: "[http://osu.ppy.sh osu!] is a game about [http://en.wikipedia.org/wiki/Circle circles]"
-    #                -> "osu! is a game about (circles)[http://en.wikipedia.org/wiki/Circle]"
+    #                -> "osu! (http://osu.ppy.sh) is a game about (circles)[http://en.wikipedia.org/wiki/Circle]"
 
     if len(matches) <= 1:
         # If there's only one match, return it formatted
-        return ChatLinkModern.sub(format_last, message, count=1)
+        return ChatLinkModern.sub(format_link_markdown, message, count=1)
 
-    # Strip all links except for the last
-    text = ChatLinkModern.sub(strip_link, message, count=len(matches) - 1)
+    # Use "basic" formatter except for the last
+    text = ChatLinkModern.sub(format_link_basic, message, count=len(matches) - 1)
     
-    # Format last with the legacy chat link format
-    return ChatLinkModern.sub(format_last, text, count=1)
+    # Format last with the legacy/markdown chat link format
+    return ChatLinkModern.sub(format_link_markdown, text, count=1)
