@@ -181,7 +181,7 @@ class b282(BanchoIO):
 
         stream = MemoryStream()
         write_string(stream, message.sender)
-        write_string(stream, message.content_formatted)
+        write_string(stream, message.content_markdown_formatted)
         yield PacketType.BanchoMessage, stream.data
 
     @classmethod

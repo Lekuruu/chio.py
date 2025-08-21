@@ -19,7 +19,7 @@ class b294(b291):
 
         stream = MemoryStream()
         write_string(stream, message.sender)
-        write_string(stream, message.content_formatted)
+        write_string(stream, message.content_markdown_formatted)
         write_boolean(stream, message.is_direct_message)
         yield PacketType.BanchoMessage, stream.data
 
