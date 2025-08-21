@@ -1,0 +1,49 @@
+Chio.py Go - Bancho Protocol Library
+=====================================
+
+--- Supported Client Versions ---
+Version 282 (b282): Initial implementation of the bancho protocol
+Version 490 (b490): Adds beatmap ID in user status updates and extended beatmap info requests
+
+--- Testing Client Selection ---
+Selected client for version 282: version 282
+Selected client for version 490: version 490
+Latest client version: 490
+
+--- Comparing Client Implementations ---
+B282 Client:
+  Version: 282
+  Login reply packet size: 34 bytes
+  User stats packet size: 87 bytes
+  Ping packet size: 29 bytes
+  Slot size: 8, Header size: 6
+
+B490 Client:
+  Version: 490
+  Login reply packet size: 34 bytes
+  User stats packet size: 87 bytes
+  Ping packet size: 29 bytes
+  Slot size: 8, Header size: 6
+
+--- Testing Version-Specific Features ---
+B282 supports BeatmapInfoRequest: false
+B490 supports BeatmapInfoRequest: true
+
+--- Testing IO Functions ---
+String: Hello, World!
+Number: 12345
+Float: 3.141590
+Boolean: true
+
+--- Testing Packet Features ---
+BanchoMessage is server packet: true
+OsuUserStatus is client packet: true
+BanchoMessage max size: 16384
+BanchoMessage handler name: write_message
+User avatar filename: 1_000.png
+Message is DM: false
+Country string: Unknown / Test City
+Mode formatted: osu!
+Mode alias: taiko
+
+Example completed successfully!

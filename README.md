@@ -5,14 +5,40 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/chio)
 ![GitHub License](https://img.shields.io/github/license/Lekuruu/chio.py)
 
-**Chio (Bancho I/O)** is a python library for serializing and deserializing bancho packets, with support for all versions of osu! that use bancho (2008-2025).
+**Chio (Bancho I/O)** is a library for serializing and deserializing bancho packets, with support for all versions of osu! that use bancho (2008-2025).
+
+> **🎉 NEW: Go Version Available!**  
+> We now offer a complete Go rewrite of the library in the [`chio-go/`](./chio-go/) directory. The Go version provides the same functionality with improved performance, type safety, and Go idioms. [See the Go README](./chio-go/README.md) for details.
 
 It was made with the intention of documenting everything about the bancho protocol, and to provide a base for server frameworks, since the packet handling part is most often the annoying part.  
 Having *any* client be able to connect to it is a very sweet addition on top, if you are interested in those as well.
 
 **If you wish to use this library, I would appreciate some credit for my work. Thanks!**
 
-## Usage
+## Available Versions
+
+### Python Version (Original)
+
+- **Language**: Python 3.8+
+- **Installation**: `pip install chio`
+- **Performance**: Good for most use cases
+- **Documentation**: Complete with examples below
+
+### Go Version (New!)
+
+- **Language**: Go 1.21+
+- **Installation**: `go get github.com/Lekuruu/chio.py/chio-go`
+- **Performance**: Significantly faster, lower memory usage
+- **Type Safety**: Compile-time type checking
+- **Documentation**: [Go-specific README](./chio-go/README.md)
+
+```go
+// Go Example
+client := chio.SelectClient(490)
+data, err := chio.WritePacketToBytes(client, constants.BanchoLoginReply, userID)
+```
+
+## Usage (Python)
 
 This library requires an installation of python **3.8** or higher.  
 You can install the library with pip:

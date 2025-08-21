@@ -13,25 +13,25 @@ import (
 // b282 is the initial implementation of the bancho protocol.
 // Every following version will be based on it.
 type B282Client struct {
-	version                int
-	slotSize               int
-	headerSize             int  
-	protocolVersion        int
-	disableCompression     bool
-	requiresStatusUpdates  bool
-	autojoinChannels       []string
+	version               int
+	slotSize              int
+	headerSize            int
+	protocolVersion       int
+	disableCompression    bool
+	requiresStatusUpdates bool
+	autojoinChannels      []string
 }
 
 // NewB282Client creates a new B282 client
 func NewB282Client() *B282Client {
 	return &B282Client{
-		version:                282,
-		slotSize:               8,
-		headerSize:             6,
-		protocolVersion:        0,
-		disableCompression:     false,
-		requiresStatusUpdates:  true,
-		autojoinChannels:       []string{"#osu", "#announce"},
+		version:               282,
+		slotSize:              8,
+		headerSize:            6,
+		protocolVersion:       0,
+		disableCompression:    false,
+		requiresStatusUpdates: true,
+		autojoinChannels:      []string{"#osu", "#announce"},
 	}
 }
 

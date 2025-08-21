@@ -41,25 +41,25 @@ type PacketResult struct {
 
 // BaseBanchoIO provides a base implementation of BanchoIO
 type BaseBanchoIO struct {
-	version                int
-	slotSize               int
-	headerSize             int
-	protocolVersion        int
-	disableCompression     bool
-	requiresStatusUpdates  bool
-	autojoinChannels       []string
+	version               int
+	slotSize              int
+	headerSize            int
+	protocolVersion       int
+	disableCompression    bool
+	requiresStatusUpdates bool
+	autojoinChannels      []string
 }
 
 // NewBaseBanchoIO creates a new base BanchoIO implementation
 func NewBaseBanchoIO() *BaseBanchoIO {
 	return &BaseBanchoIO{
-		version:                0,
-		slotSize:               8,
-		headerSize:             6,
-		protocolVersion:        0,
-		disableCompression:     false,
-		requiresStatusUpdates:  true,
-		autojoinChannels:       []string{"#osu", "#announce"},
+		version:               0,
+		slotSize:              8,
+		headerSize:            6,
+		protocolVersion:       0,
+		disableCompression:    false,
+		requiresStatusUpdates: true,
+		autojoinChannels:      []string{"#osu", "#announce"},
 	}
 }
 

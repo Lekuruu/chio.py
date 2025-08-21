@@ -246,7 +246,7 @@ func ReadF64(stream Stream) (float64, error) {
 func ReadGzip(stream Stream, size int) ([]byte, error) {
 	var data []byte
 	var err error
-	
+
 	if size == -1 {
 		// Read all available data
 		if ms, ok := stream.(*MemoryStream); ok {
@@ -257,7 +257,7 @@ func ReadGzip(stream Stream, size int) ([]byte, error) {
 	} else {
 		data, err = stream.Read(size)
 	}
-	
+
 	if err != nil {
 		return nil, err
 	}
@@ -453,17 +453,17 @@ func WriteF64(stream Stream, value float64) error {
 func WriteGzip(stream Stream, data []byte) error {
 	var buf bytes.Buffer
 	writer := gzip.NewWriter(&buf)
-	
+
 	_, err := writer.Write(data)
 	if err != nil {
 		return err
 	}
-	
+
 	err = writer.Close()
 	if err != nil {
 		return err
 	}
-	
+
 	return stream.Write(buf.Bytes())
 }
 

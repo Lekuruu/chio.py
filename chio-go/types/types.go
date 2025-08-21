@@ -16,18 +16,18 @@ var CountryNames = []string{
 
 var CountryAcronyms = []string{
 	"XX", "SP", "AD", "AE", "AF",
-	// ... would include all country codes from Python version  
+	// ... would include all country codes from Python version
 }
 
 // UserPresence represents user presence information
 type UserPresence struct {
-	IsIRC        bool                    `json:"is_irc"`
-	Timezone     int                     `json:"timezone"`
-	CountryIndex int                     `json:"country_index"`
-	Permissions  constants.Permissions   `json:"permissions"`
-	Longitude    float64                 `json:"longitude"`
-	Latitude     float64                 `json:"latitude"`
-	City         string                  `json:"city"`
+	IsIRC        bool                  `json:"is_irc"`
+	Timezone     int                   `json:"timezone"`
+	CountryIndex int                   `json:"country_index"`
+	Permissions  constants.Permissions `json:"permissions"`
+	Longitude    float64               `json:"longitude"`
+	Latitude     float64               `json:"latitude"`
+	City         string                `json:"city"`
 }
 
 // CountryName returns the country name
@@ -67,13 +67,13 @@ type UserStats struct {
 
 // UserStatus represents user status
 type UserStatus struct {
-	Action           constants.Status `json:"action"`
-	Text             string           `json:"text"`
-	Mods             constants.Mods   `json:"mods"`
-	Mode             constants.Mode   `json:"mode"`
-	BeatmapChecksum  string           `json:"beatmap_checksum"`
-	BeatmapID        int              `json:"beatmap_id"`
-	UpdateStats      bool             `json:"update_stats"`
+	Action          constants.Status `json:"action"`
+	Text            string           `json:"text"`
+	Mods            constants.Mods   `json:"mods"`
+	Mode            constants.Mode   `json:"mode"`
+	BeatmapChecksum string           `json:"beatmap_checksum"`
+	BeatmapID       int              `json:"beatmap_id"`
+	UpdateStats     bool             `json:"update_stats"`
 }
 
 // Reset resets the user status to default values
@@ -103,8 +103,8 @@ func (ui *UserInfo) AvatarFilename() string {
 
 // UserQuit represents user quit information
 type UserQuit struct {
-	Info  UserInfo              `json:"info"`
-	State constants.QuitState   `json:"state"`
+	Info  UserInfo            `json:"info"`
+	State constants.QuitState `json:"state"`
 }
 
 // Message represents a chat message
@@ -138,16 +138,16 @@ type Channel struct {
 
 // BeatmapInfo represents beatmap information
 type BeatmapInfo struct {
-	Index        int                      `json:"index"`
-	BeatmapID    int                      `json:"beatmap_id"`
-	BeatmapsetID int                      `json:"beatmapset_id"`
-	ThreadID     int                      `json:"thread_id"`
-	RankedStatus constants.RankedStatus   `json:"ranked_status"`
-	Checksum     string                   `json:"checksum"`
-	OsuRank      constants.Rank           `json:"osu_rank"`
-	TaikoRank    constants.Rank           `json:"taiko_rank"`
-	FruitsRank   constants.Rank           `json:"fruits_rank"`
-	ManiaRank    constants.Rank           `json:"mania_rank"`
+	Index        int                    `json:"index"`
+	BeatmapID    int                    `json:"beatmap_id"`
+	BeatmapsetID int                    `json:"beatmapset_id"`
+	ThreadID     int                    `json:"thread_id"`
+	RankedStatus constants.RankedStatus `json:"ranked_status"`
+	Checksum     string                 `json:"checksum"`
+	OsuRank      constants.Rank         `json:"osu_rank"`
+	TaikoRank    constants.Rank         `json:"taiko_rank"`
+	FruitsRank   constants.Rank         `json:"fruits_rank"`
+	ManiaRank    constants.Rank         `json:"mania_rank"`
 }
 
 // IsRanked returns true if the beatmap is ranked or approved
@@ -177,32 +177,32 @@ type ReplayFrame struct {
 
 // ScoreFrame represents a score frame
 type ScoreFrame struct {
-	Time          int                  `json:"time"`
-	ID            int                  `json:"id"`
-	Count300      int                  `json:"count_300"`
-	Count100      int                  `json:"count_100"`
-	Count50       int                  `json:"count_50"`
-	CountGeki     int                  `json:"count_geki"`
-	CountKatu     int                  `json:"count_katu"`
-	CountMiss     int                  `json:"count_miss"`
-	TotalScore    int                  `json:"total_score"`
-	MaxCombo      int                  `json:"max_combo"`
-	CurrentCombo  int                  `json:"current_combo"`
-	Perfect       bool                 `json:"perfect"`
-	CurrentHP     int                  `json:"current_hp"`
-	TagByte       int                  `json:"tag_byte"`
-	ScoreV2       bool                 `json:"score_v2"`
-	ComboPortion  float64              `json:"combo_portion"`
-	BonusPortion  float64              `json:"bonus_portion"`
+	Time         int     `json:"time"`
+	ID           int     `json:"id"`
+	Count300     int     `json:"count_300"`
+	Count100     int     `json:"count_100"`
+	Count50      int     `json:"count_50"`
+	CountGeki    int     `json:"count_geki"`
+	CountKatu    int     `json:"count_katu"`
+	CountMiss    int     `json:"count_miss"`
+	TotalScore   int     `json:"total_score"`
+	MaxCombo     int     `json:"max_combo"`
+	CurrentCombo int     `json:"current_combo"`
+	Perfect      bool    `json:"perfect"`
+	CurrentHP    int     `json:"current_hp"`
+	TagByte      int     `json:"tag_byte"`
+	ScoreV2      bool    `json:"score_v2"`
+	ComboPortion float64 `json:"combo_portion"`
+	BonusPortion float64 `json:"bonus_portion"`
 }
 
 // ReplayFrameBundle represents a bundle of replay frames
 type ReplayFrameBundle struct {
-	Frames    []ReplayFrame           `json:"frames"`
-	Action    constants.ReplayAction  `json:"action"`
+	Frames     []ReplayFrame          `json:"frames"`
+	Action     constants.ReplayAction `json:"action"`
 	ScoreFrame *ScoreFrame            `json:"score_frame,omitempty"`
-	Extra     int                     `json:"extra"`
-	RawData   []byte                  `json:"raw_data,omitempty"`
+	Extra      int                    `json:"extra"`
+	RawData    []byte                 `json:"raw_data,omitempty"`
 }
 
 // MatchSlot represents a multiplayer match slot
@@ -220,22 +220,22 @@ func (ms *MatchSlot) HasPlayer() bool {
 
 // Match represents a multiplayer match
 type Match struct {
-	ID               int                    `json:"id"`
-	InProgress       bool                   `json:"in_progress"`
-	Type             constants.MatchType    `json:"type"`
-	Mods             constants.Mods         `json:"mods"`
-	Name             string                 `json:"name"`
-	Password         string                 `json:"password"`
-	BeatmapText      string                 `json:"beatmap_text"`
-	BeatmapID        int                    `json:"beatmap_id"`
-	BeatmapChecksum  string                 `json:"beatmap_checksum"`
-	Slots            []MatchSlot            `json:"slots"`
-	HostID           int                    `json:"host_id"`
-	Mode             constants.Mode         `json:"mode"`
-	ScoringType      constants.ScoringType  `json:"scoring_type"`
-	TeamType         constants.TeamType     `json:"team_type"`
-	Freemod          bool                   `json:"freemod"`
-	Seed             int                    `json:"seed"`
+	ID              int                   `json:"id"`
+	InProgress      bool                  `json:"in_progress"`
+	Type            constants.MatchType   `json:"type"`
+	Mods            constants.Mods        `json:"mods"`
+	Name            string                `json:"name"`
+	Password        string                `json:"password"`
+	BeatmapText     string                `json:"beatmap_text"`
+	BeatmapID       int                   `json:"beatmap_id"`
+	BeatmapChecksum string                `json:"beatmap_checksum"`
+	Slots           []MatchSlot           `json:"slots"`
+	HostID          int                   `json:"host_id"`
+	Mode            constants.Mode        `json:"mode"`
+	ScoringType     constants.ScoringType `json:"scoring_type"`
+	TeamType        constants.TeamType    `json:"team_type"`
+	Freemod         bool                  `json:"freemod"`
+	Seed            int                   `json:"seed"`
 }
 
 // MatchJoin represents a match join request
