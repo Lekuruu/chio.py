@@ -93,7 +93,7 @@ packet, data = await io.read_packet_async(stream)
 
 ### Patching
 
-You are able to overwrite specifc packet readers/writers, with the `chio.patch` decorator.
+You are able to overwrite specific packet readers/writers, with the `chio.patch` decorator.
 As an example, to patch the `BanchoUserStats` packet inside of `b20120723`:
 
 ```python

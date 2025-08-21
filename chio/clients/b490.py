@@ -6,7 +6,7 @@ from ..io import *
 class b490(b489):
     """
     b490 now sends the beatmap ID in user status updates and
-    can request a list of set IDs inside of the beatmap info request.
+    can request a list of set IDs inside the beatmap info request.
     """
     version = 490
 

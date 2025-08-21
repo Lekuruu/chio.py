@@ -8,7 +8,7 @@ from ..io import *
 class b20121224(b20121221):
     """
     b20121224 deprecates the irc quit packet, in favor of a unified quit packet.
-    Additionally it changes the way how user presences are sent to the client,
+    Additionally, it changes the way how user presences are sent to the client,
     when the client first joins the server, to reduce bandwidth usage.
     """
     version = 20121224

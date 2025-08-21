@@ -196,7 +196,7 @@ class ScoreFrame:
         return self.total_50 + self.total_100 + self.total_300 + self.total_miss
 
     def accuracy(self, mode: Mode) -> float:
-        if self.total_hits(mode) == 0:
+        if self.total_hits(mode) <= 0:
             return 0.0
 
         if mode == Mode.Osu:
@@ -205,14 +205,14 @@ class ScoreFrame:
                 / (self.total_hits(mode) * 300.0)
             )
 
-        elif mode == Mode.Taiko:
+        if mode == Mode.Taiko:
             return ((self.total_100 * 0.5) + self.total_300) / self.total_hits(mode)
 
-        elif mode == Mode.CatchTheBeat:
+        if mode == Mode.CatchTheBeat:
             return (self.total_300 + self.total_100 + self.total_50) / self.total_hits(mode)
 
-        elif mode == Mode.OsuMania:
-            return  (
+        if mode == Mode.OsuMania:
+            return (
                 (
                     (self.total_50 * 50.0) + (self.total_100 * 100.0) +
                     (self.total_katu * 200.0) + ((self.total_300 + self.total_geki) * 300.0)
@@ -220,8 +220,7 @@ class ScoreFrame:
                 / (self.total_hits(mode) * 300.0)
             )
 
-        else:
-            return 0.0
+        return 0.0
 
     def rank(self, mode: Mode, mods: Mods) -> Rank:
         r300 = self.total_300 / self.total_hits(mode)
