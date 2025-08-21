@@ -1,10 +1,9 @@
 
+from .constants import *
 from dataclasses import dataclass, field
 from functools import cached_property
 from typing import List, Optional
 from hashlib import md5
-from .constants import *
-from . import utils
 
 __all__ = [
     "UserInfo",
@@ -105,10 +104,12 @@ class Message:
 
     @cached_property
     def content_markdown_formatted(self) -> str:
-        return utils.format_chat_message_to_markdown(self.content)
+        """Return the message content in the legacy, markdown-ish format"""
+        return ChatLinkModern.sub(r"(\2)[\1]", self.content)
 
     @property
     def is_direct_message(self) -> bool:
+        """Check if the message is a direct message"""
         return not self.target.startswith("#")
 
 @dataclass
