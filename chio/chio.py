@@ -12,6 +12,7 @@ class BanchoIO:
     slot_size: int = 8
     header_size: int = 6
     protocol_version: int = 0
+    format_chat_links: bool = True
     disable_compression: bool = False
     requires_status_updates: bool = True
     autojoin_channels: Tuple[str, ...] = ("#osu", "#announce")

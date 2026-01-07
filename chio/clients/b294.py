@@ -17,9 +17,15 @@ class b294(b291):
             # Channel selection has not been implemented yet
             return []
 
+        message_content = message.content
+
+        # Automatically format chat links, if enabled
+        if cls.format_chat_links:
+            message_content = message.content_markdown_formatted
+
         stream = MemoryStream()
         write_string(stream, message.sender)
-        write_string(stream, message.content_markdown_formatted)
+        write_string(stream, message_content)
         write_boolean(stream, message.is_direct_message)
         yield PacketType.BanchoMessage, stream.data
 

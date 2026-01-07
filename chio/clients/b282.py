@@ -179,9 +179,15 @@ class b282(BanchoIO):
             # Private messages & channels have not been implemented yet
             return []
 
+        message_content = message.content
+
+        # Automatically format chat links, if enabled
+        if cls.format_chat_links:
+            message_content = message.content_markdown_formatted
+
         stream = MemoryStream()
         write_string(stream, message.sender)
-        write_string(stream, message.content_markdown_formatted)
+        write_string(stream, message_content)
         yield PacketType.BanchoMessage, stream.data
 
     @classmethod
