@@ -1,9 +1,10 @@
 
 from typing import Any, Tuple, Iterable
+from abc import ABC, abstractmethod
 from .io import Stream, MemoryStream, AsyncStream
 from .constants import PacketType
 
-class BanchoIO:
+class BanchoIO(ABC):
     """
     BanchoIO is an interface that wraps the basic methods for
     reading and writing packets to a Bancho client.
@@ -18,6 +19,7 @@ class BanchoIO:
     autojoin_channels: Tuple[str, ...] = ("#osu", "#announce")
 
     @classmethod
+    @abstractmethod
     def read_packet(cls, stream: Stream) -> Tuple[PacketType, Any]:
         """
         Reads a packet from the stream, and returns the packet type and decoded data.
@@ -26,6 +28,7 @@ class BanchoIO:
         ...
 
     @classmethod
+    @abstractmethod
     def write_packet(cls, stream: Stream, packet: PacketType, *args) -> None:
         """
         Encodes a packet and writes it to the stream.
@@ -33,6 +36,7 @@ class BanchoIO:
         ...
 
     @classmethod
+    @abstractmethod
     async def read_packet_async(cls, stream: AsyncStream) -> Tuple[PacketType, Any]:
         """
         Reads a packet from the stream asynchronously, and returns the packet type and
@@ -41,6 +45,7 @@ class BanchoIO:
         ...
 
     @classmethod
+    @abstractmethod
     async def write_packet_async(cls, stream: AsyncStream, packet: PacketType, *args) -> None:
         """
         Encodes a packet and writes it to the stream, asynchronously.
@@ -48,6 +53,7 @@ class BanchoIO:
         ...
 
     @classmethod
+    @abstractmethod
     def format_chat_link(cls, text: str, url: str) -> str:
         """Format a chat link for this client"""
         ...
