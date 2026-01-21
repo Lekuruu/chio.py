@@ -134,7 +134,12 @@ class BeatmapInfo:
 
     @property
     def is_ranked(self) -> bool:
-        return self.ranked_status in (RankedStatus.Ranked, RankedStatus.Approved)
+        return self.ranked_status in (
+            RankedStatus.Ranked,
+            RankedStatus.Approved,
+            RankedStatus.Qualified,
+            RankedStatus.Loved
+        )
 
 @dataclass
 class BeatmapInfoReply:
