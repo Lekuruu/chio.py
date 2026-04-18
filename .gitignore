@@ -254,3 +254,5 @@ fabric.properties
 
 # Local application test
 test.py
+test_*.py
+tests/
