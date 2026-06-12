@@ -49,7 +49,8 @@ class MemoryStream(Stream):
     """
 
     def __init__(self, data: bytes = b"", endian: str = "<") -> None:
-        self.data = data
+        self._data = data
+        self._chunks: list | None = None
         self.position = 0
         self.struct_endian = endian
 
@@ -60,23 +61,51 @@ class MemoryStream(Stream):
     def endian(self) -> str:
         return self.struct_endian
 
+    def _join(self) -> bytes:
+        if self._chunks is not None:
+            joined = b"".join(self._chunks)
+            self._data = self._data + joined if self._data else joined
+            self._chunks = None
+        return self._data
+
+    @property
+    def data(self) -> bytes:
+        return self._join()
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        self._data = data
+        self._chunks = None
+
     def write(self, data: bytes) -> None:
-        self.data += data
+        if self._chunks is None:
+            self._chunks = [data]
+            return
+
+        self._chunks.append(data)
 
     def read(self, size: int = -1) -> bytes:
-        if size == -1:
-            size = len(self.data) - self.position
+        data = self._data if self._chunks is None else self._join()
+        position = self.position
 
-        data = self.data[self.position:self.position + size]
-        self.position += size
-        return data
-    
+        if size < 0:
+            size = len(data) - position
+
+        end = position + size
+        self.position = end
+        return data[position:end]
+
     def clear(self) -> None:
-        self.data = b""
+        self._data = b""
+        self._chunks = None
         self.position = 0
 
     def available(self) -> int:
-        return len(self.data) - self.position
+        if self._chunks is None:
+            return len(self._data) - self.position
+
+        length = len(self._data) + sum(len(c) for c in self._chunks)
+        return length - self.position
 
 logger = logging.getLogger('chio.py')
 
