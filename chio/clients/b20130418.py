@@ -14,6 +14,7 @@ class b20130418(b20130303):
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
+        slots = cls.get_match_slots(match)
         stream = MemoryStream()
         write_u16(stream, match.id)
         write_boolean(stream, match.in_progress)
@@ -25,13 +26,13 @@ class b20130418(b20130303):
         write_s32(stream, match.beatmap_id)
         write_string(stream, match.beatmap_checksum)
 
-        for slot in match.slots:
+        for slot in slots:
             write_u8(stream, slot.status.value)
 
-        for slot in match.slots:
+        for slot in slots:
             write_u8(stream, slot.team)
 
-        for slot in match.slots:
+        for slot in slots:
             if slot.has_player:
                 write_s32(stream, slot.user_id)
 
@@ -44,7 +45,7 @@ class b20130418(b20130303):
             write_boolean(stream, match.freemod)
 
         if match.freemod:
-            for slot in match.slots:
+            for slot in slots:
                 write_u32(stream, slot.mods)
 
         if cls.protocol_version >= 18:
