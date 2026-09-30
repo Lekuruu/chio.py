@@ -173,6 +173,9 @@ class b334(b323):
 
     @classmethod
     def write_match_player_failed(cls, user_id: int) -> Iterable[Tuple[PacketType, bytes]]:
+        if user_id >= cls.slot_size:
+            return []
+
         stream = MemoryStream()
         write_s32(stream, user_id)
         yield PacketType.BanchoMatchPlayerFailed, stream.data
@@ -242,6 +245,7 @@ class b334(b323):
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
+        slots = cls.adjusted_match_slots(match)
         stream = MemoryStream()
         write_u8(stream, match.id)
         write_boolean(stream, match.in_progress)
@@ -252,10 +256,10 @@ class b334(b323):
         write_s32(stream, match.beatmap_id)
         write_string(stream, match.beatmap_checksum)
 
-        for slot in match.slots:
+        for slot in slots:
             write_u8(stream, slot.status.value)
 
-        for slot in match.slots:
+        for slot in slots:
             if slot.has_player:
                 write_s32(stream, slot.user_id)
 

@@ -15,6 +15,7 @@ class b402(b388):
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
+        slots = cls.adjusted_match_slots(match)
         stream = MemoryStream()
         write_u8(stream, match.id)
         write_boolean(stream, match.in_progress)
@@ -25,10 +26,10 @@ class b402(b388):
         write_s32(stream, match.beatmap_id)
         write_string(stream, match.beatmap_checksum)
 
-        for slot in match.slots:
+        for slot in slots:
             write_u8(stream, slot.status.value)
 
-        for slot in match.slots:
+        for slot in slots:
             if slot.has_player:
                 write_s32(stream, slot.user_id)
 

@@ -13,6 +13,9 @@ class b1365(b1183):
 
     @classmethod
     def write_match_player_skipped(cls, slot_id: int) -> Iterable[Tuple[PacketType, bytes]]:
+        if slot_id >= cls.slot_size:
+            return []
+
         stream = MemoryStream()
         write_u32(stream, slot_id)
         yield PacketType.BanchoMatchPlayerSkipped, stream.data

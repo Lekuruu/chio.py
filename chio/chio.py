@@ -1,8 +1,9 @@
 
-from typing import Any, Tuple, Iterable
+from typing import Any, Tuple, Iterable, List
 from abc import ABC, abstractmethod
 from .io import Stream, MemoryStream, AsyncStream
-from .constants import PacketType
+from .constants import PacketType, SlotStatus
+from .types import Match, MatchSlot
 
 class BanchoIO(ABC):
     """
@@ -57,6 +58,16 @@ class BanchoIO(ABC):
     def format_chat_link(cls, text: str, url: str) -> str:
         """Format a chat link for this client"""
         ...
+
+    @classmethod
+    def adjusted_match_slots(cls, match: Match) -> List[MatchSlot]:
+        """Return the slots visible to this client, padding missing slots as "Locked"."""
+        slots = match.slots[:cls.slot_size]
+        slots += [
+            MatchSlot(status=SlotStatus.Locked)
+            for _ in range(cls.slot_size - len(slots))
+        ]
+        return slots
 
     @classmethod
     def implements_packet(cls, packet: PacketType) -> bool:
