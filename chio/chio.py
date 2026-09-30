@@ -60,8 +60,8 @@ class BanchoIO(ABC):
         ...
 
     @classmethod
-    def get_match_slots(cls, match: Match) -> List[MatchSlot]:
-        """Return the slots visible to this client, padding missing slots as locked."""
+    def adjusted_match_slots(cls, match: Match) -> List[MatchSlot]:
+        """Return the slots visible to this client, padding missing slots as "Locked"."""
         slots = match.slots[:cls.slot_size]
         slots += [
             MatchSlot(status=SlotStatus.Locked)

@@ -245,7 +245,7 @@ class b334(b323):
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
-        slots = cls.get_match_slots(match)
+        slots = cls.adjusted_match_slots(match)
         stream = MemoryStream()
         write_u8(stream, match.id)
         write_boolean(stream, match.in_progress)

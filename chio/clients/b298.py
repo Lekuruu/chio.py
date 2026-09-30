@@ -106,17 +106,16 @@ class b298(b296):
 
     @classmethod
     def write_match(cls, match: Match) -> bytes:
-        slots = cls.get_match_slots(match)
+        slots = cls.adjusted_match_slots(match)
+
         slots_open = [
             slot.status == SlotStatus.Open
             for slot in slots
         ]
-
         slots_used = [
             slot.has_player
             for slot in slots
         ]
-
         slots_ready = [
             slot.status == SlotStatus.Ready
             for slot in slots
