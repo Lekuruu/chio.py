@@ -40,9 +40,7 @@ jobs:
         if: matrix.python-version == 3.11
 
       - name: Create distribution package
-        run: |
-          echo "include requirements.txt" > MANIFEST.in
-          python -m build
+        run: python -m build
         if: matrix.python-version == 3.11
 
       - name: Upload distribution package
@@ -65,18 +63,16 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: |
-          pip install setuptools
+        run: pip install build
 
       - name: Create local build
-        run: |
-          python setup.py build
+        run: python -m build
 
       - name: Upload distribution folder
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: build
+          path: dist
 
   publish:
     runs-on: ubuntu-latest
