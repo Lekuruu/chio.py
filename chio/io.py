@@ -51,6 +51,7 @@ class MemoryStream(Stream):
     def __init__(self, data: bytes = b"", endian: str = "<") -> None:
         self._data = data
         self._chunks: list | None = None
+        self._length = len(data)
         self.position = 0
         self.struct_endian = endian
 
@@ -76,8 +77,11 @@ class MemoryStream(Stream):
     def data(self, data: bytes) -> None:
         self._data = data
         self._chunks = None
+        self._length = len(data)
 
     def write(self, data: bytes) -> None:
+        self._length += len(data)
+
         if self._chunks is None:
             self._chunks = [data]
             return
@@ -98,14 +102,11 @@ class MemoryStream(Stream):
     def clear(self) -> None:
         self._data = b""
         self._chunks = None
+        self._length = 0
         self.position = 0
 
     def available(self) -> int:
-        if self._chunks is None:
-            return len(self._data) - self.position
-
-        length = len(self._data) + sum(len(c) for c in self._chunks)
-        return length - self.position
+        return self._length - self.position
 
 logger = logging.getLogger('chio.py')
 
